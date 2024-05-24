@@ -1,0 +1,210 @@
+@import "../scss/themes/net-basic/important.scss";
+
+/*
+[ Light Mode ]
+*/
+:root,
+:host,
+.wj-theme-light {
+  color-scheme: light;
+
+  --wj-font-family: "Inter UI", -apple-system, BlinkMacSystemFont,  "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell","Fira Sans", "Droid Sans", "Helvetica Neue",sans-serif;
+  --wj-font-family-secondary: "Montserrat", -apple-system, BlinkMacSystemFont,  "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell","Fira Sans", "Droid Sans", "Helvetica Neue",sans-serif;
+  --wj-force-mac-font-family: -apple-system, BlinkMacSystemFont,"Inter UI",  "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell","Fira Sans", "Droid Sans", "Helvetica Neue",sans-serif;
+
+  --wj-font-size-x-small: 0.625rem;
+  --wj-font-size-small: 0.75rem;
+  --wj-font-size: 0.875rem;
+  --wj-font-size-medium: 1rem;
+  --wj-font-size-large:	1.25rem;
+  --wj-font-size-x-large: 1.5rem;
+  --wj-font-size-2x-large: 2.25rem;
+  --wj-font-size-3x-large: 3rem;
+  --wj-font-size-4x-large: 4.5rem;
+
+  --wj-line-height: 21px;
+
+  --wj-border-radius-small: .25rem; // 4px
+  --wj-border-radius-medium: .5rem; // 8px
+  --wj-border-radius-large: .75rem; // 2px
+  --wj-border-radius-x-large: 1rem; // 16px
+  --wj-border-radius-circle: 50%;
+  --wj-border-radius-pill: 50rem;
+
+  --wj-border-size: 0px;
+  --wj-border-style: solid;
+
+  --wj-box-shadow-medium: 0 1px 8px rgba(0,0,0,0.5);
+  --wj-box-shadow-large: rgba(0, 0, 0, 0.12) 0 4px 16px;
+
+  --wj-backdrop: rgb(0, 0, 0);
+  --wj-backdrop-opacity: .3;
+
+  // COLORS
+  --wj-color: hsl(0, 0%, 29%);
+  --wj-color-dark: hsl(0, 0%, 29%);
+  --wj-color-light: hsl(0 0% 95%);
+  --wj-background: var(--wj-color-contrast-0);
+  --wj-border-color: var(--wj-color-contrast-3);
+
+  --wj-card-background: var(--wj-color-contrast-0);
+  --wj-card-color: var(--wj-color);
+
+  --wj-color-primary: var(--wj-color-primary-11);
+  --wj-color-complete: var(--wj-color-complete-11);
+  --wj-color-success: var(--wj-color-success-11);
+  --wj-color-warning: var(--wj-color-warning-11);
+  --wj-color-danger: var(--wj-color-danger-11);
+  --wj-color-info: var(--wj-color-info-11);
+  --wj-color-menu: hsl(220, 15%, 15%);
+  --wj-color-contrast: hsl(0, 0%, 95%);
+
+  --wj-color-white: #fff;
+  --wj-color-black: #000;
+
+  // CONTRAST
+  --wj-color-contrast-lowest: #ffffff; //rgba(255, 255, 255, 1); //#ffffff
+  --wj-color-contrast-lower: #f4f4f4; //rgba(33, 33, 33, 0.05); //#f4f4f4
+  --wj-color-contrast-low: #e0e0e0; //rgba(33, 33, 33, 0.14); //#e0e0e0
+  --wj-color-contrast-medium: #757575; //rgba(33, 33, 33, 0.62); //#757575
+  --wj-color-contrast-high: #4b4b4b; //rgba(33, 33, 33, 0.81); //#4b4b4b
+  --wj-color-contrast-highter: #212121; //rgba(33, 33, 33, 1); //#212121
+  --wj-color-contrast-highest: #000000; //rgba(0, 0, 0, 1); //#000000
+
+  --wj-color-contrast-0: hsl(0, 0%, 100%);
+  --wj-color-contrast-1: hsl(0 0% 97.5%);
+  --wj-color-contrast-2: hsl(240 4.8% 95.9%);
+  --wj-color-contrast-3: hsl(240 5.9% 90%);
+  --wj-color-contrast-4: hsl(240 4.9% 83.9%);
+  --wj-color-contrast-5: hsl(240 5% 64.9%);
+  --wj-color-contrast-6: hsl(240 3.8% 46.1%);
+  --wj-color-contrast-7: hsl(240 5.2% 33.9%);
+  --wj-color-contrast-8: hsl(240 5.3% 26.1%);
+  --wj-color-contrast-9: hsl(240 3.7% 15.9%);
+  --wj-color-contrast-10: hsl(240 5.9% 10%);
+  --wj-color-contrast-11: hsl(240 7.3% 8%);
+
+
+  // PRIMARY
+  --wj-color-primary-1: hsl(261, 70%, 96%);
+  --wj-color-primary-2: hsl(260, 65%, 92%);
+  --wj-color-primary-3: hsl(260, 63%, 88%);
+  --wj-color-primary-4: hsl(260, 62%, 84%);
+  --wj-color-primary-5: hsl(260, 63%, 80%);
+  --wj-color-primary-6: hsl(259, 61%, 76%);
+  --wj-color-primary-7: hsl(258, 61%, 72%);
+  --wj-color-primary-8: hsl(257, 61%, 68%);
+  --wj-color-primary-9: hsl(257, 60%, 65%);
+  --wj-color-primary-10: hsl(256, 59%, 61%);
+  --wj-color-primary-11: hsl(254, 59%, 57%);
+
+  // COMPLETE
+  --wj-color-complete-1: hsl(232, 88%, 96%);
+  --wj-color-complete-2: hsl(229, 88%, 93%);
+  --wj-color-complete-3: hsl(229, 84%, 89%);
+  --wj-color-complete-4: hsl(229, 85%, 86%);
+  --wj-color-complete-5: hsl(227, 84%, 82%);
+  --wj-color-complete-6: hsl(226, 83%, 78%);
+  --wj-color-complete-7: hsl(225, 83%, 74%);
+  --wj-color-complete-8: hsl(223, 83%, 70%);
+  --wj-color-complete-9: hsl(221, 83%, 65%);
+  --wj-color-complete-10: hsl(218, 83%, 59%);
+  --wj-color-complete-11: hsl(211, 100%, 46%);
+
+  // SUCCESS
+  --wj-color-success-1: hsl(147, 44%, 95%);
+  --wj-color-success-2: hsl(148, 42%, 90%);
+  --wj-color-success-3: hsl(149, 41%, 85%);
+  --wj-color-success-4: hsl(150, 41%, 80%);
+  --wj-color-success-5: hsl(149, 42%, 75%);
+  --wj-color-success-6: hsl(150, 41%, 70%);
+  --wj-color-success-7: hsl(151, 42%, 65%);
+  --wj-color-success-8: hsl(152, 42%, 59%);
+  --wj-color-success-9: hsl(153, 42%, 54%);
+  --wj-color-success-10: hsl(155, 48%, 47%);
+  --wj-color-success-11: hsl(158, 74%, 38%);
+
+  // WARNING
+  --wj-color-warning-1: hsl(44, 100%, 96%);
+  --wj-color-warning-2: hsl(46, 100%, 93%);
+  --wj-color-warning-3: hsl(46, 100%, 90%);
+  --wj-color-warning-4: hsl(46, 100%, 87%);
+  --wj-color-warning-5: hsl(46, 100%, 84%);
+  --wj-color-warning-6: hsl(46, 100%, 81%);
+  --wj-color-warning-7: hsl(46, 100%, 77%);
+  --wj-color-warning-8: hsl(47, 100%, 74%);
+  --wj-color-warning-9: hsl(47, 100%, 71%);
+  --wj-color-warning-10: hsl(47, 100%, 67%);
+  --wj-color-warning-11: hsl(47, 100%, 63%);
+
+  // DANGER
+  --wj-color-danger-1: hsl(9, 100%, 96%);
+  --wj-color-danger-2: hsl(11, 100%, 91%);
+  --wj-color-danger-3: hsl(11, 93%, 87%);
+  --wj-color-danger-4: hsl(10, 90%, 83%);
+  --wj-color-danger-5: hsl(9, 86%, 79%);
+  --wj-color-danger-6: hsl(10, 82%, 74%);
+  --wj-color-danger-7: hsl(8, 80%, 70%);
+  --wj-color-danger-8: hsl(8, 77%, 65%);
+  --wj-color-danger-9: hsl(7, 73%, 61%);
+  --wj-color-danger-10: hsl(6, 71%, 56%);
+  --wj-color-danger-11: hsl(3, 68%, 51%);
+
+  // INFO
+  --wj-color-info-1: hsl(210, 5%, 92%);
+  --wj-color-info-2: hsl(204, 6%, 85%);
+  --wj-color-info-3: hsl(210, 7%, 78%);
+  --wj-color-info-4: hsl(206, 6%, 71%);
+  --wj-color-info-5: hsl(212, 6%, 65%);
+  --wj-color-info-6: hsl(207, 6%, 58%);
+  --wj-color-info-7: hsl(210, 6%, 52%);
+  --wj-color-info-8: hsl(210, 7%, 45%);
+  --wj-color-info-9: hsl(210, 9%, 39%);
+  --wj-color-info-10: hsl(208, 12%, 33%);
+  --wj-color-info-11: hsl(208, 16%, 27%);
+
+  // PRIMARY
+  --wj-color-primary-lighter: #eae0fb;
+  --wj-color-primary-light: #845ae0;
+  --wj-color-primary-dark: #4e37b6;
+  --wj-color-primary-darker: #2d218f;
+
+  // SUCCESS
+  --wj-color-success-lighter: #d6f7f0;
+  --wj-color-success-light: #26bf93;
+  --wj-color-success-dark: #0d935b;
+  --wj-color-success-darker: #04733e;
+
+  // COMPLETE
+  --wj-color-complete-lighter: #d3eeff;
+  --wj-color-complete-light: #0f8ff9;
+  --wj-color-complete-dark: #004fbf;
+  --wj-color-complete-darker: #00318e;
+
+  // WARNING
+  --wj-color-warning-lighter: #fffde1;
+  --wj-color-warning-light: #ffe858;
+  --wj-color-warning-dark: #daab2d;
+  --wj-color-warning-darker: #aa7918;
+
+  // DANGER
+  --wj-color-danger-lighter: #fde2da;
+  --wj-color-danger-light: #e6533c;
+  --wj-color-danger-dark: #b91e1e;
+  --wj-color-danger-darker: #900f17;
+
+  // INFO
+  --wj-color-info-lighter: #dbe6e8;
+  --wj-color-info-light: #475b6b;
+  --wj-color-info-dark: #2b3947;
+  --wj-color-info-darker: #1b2839;
+
+  // CONTRAST A
+  --wj-color-contrast-lower-a: rgba(33, 33, 33, 0.05); //#f4f4f4
+  --wj-color-contrast-low-a: rgba(33, 33, 33, 0.14); // #e0e0e0
+  --wj-color-contrast-medium-a: rgba(33, 33, 33, 0.62); //#757575
+  --wj-color-contrast-high-a: rgba(33, 33, 33, 0.81); //#4b4b4b
+}
+
+@import "../scss/modules/typography.scss";
+//@import "./responsive.scss";
