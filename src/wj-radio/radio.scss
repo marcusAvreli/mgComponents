@@ -1,0 +1,110 @@
+/*
+[ WJ Radio ]
+*/
+@import "../themes/light";
+:host {
+  --wj-radio-margin-top: 0;
+  --wj-radio-margin-bottom: .5rem;
+  --wj-radio-margin-inline: 0;
+
+  display: block;
+  margin-top: var(--wj-radio-margin-top);
+  margin-bottom: var(--wj-radio-margin-bottom);
+  margin-inline: var(--wj-radio-margin-inline);
+  line-height: 100%;
+  padding-left: 0;
+
+  label {
+    display: inline-flex;
+    cursor: pointer;
+    position: relative;
+    padding-left: 1.5rem;
+    min-width: 16px;
+    min-height: 16px;
+    margin-bottom: 0;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
+    align-items: center;
+    &:before {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      left: 0;
+      -webkit-box-sizing: inherit;
+      box-sizing: border-box;
+      background-color: var(--wj-color-contrast-1);
+      border: 1px solid var(--wj-color-contrast-4);
+    }
+  }
+}
+
+.native-radio {
+  input[type="radio"] +label {
+    &:before {
+      border-radius: var(--wj-border-radius-circle);
+      transition: border 0.3s 0s cubic-bezier(0.455, 0.03, 0.215, 1.33);
+    }
+  }
+  input[type="radio"]:checked {
+    & + label {
+      &:before {
+        border-color: var(--wj-color-contrast-6);
+        border-width: 5px;
+      }
+    }
+  }
+  input[type="radio"]:focus {
+    & + label {
+      color: var(--wj-color);
+      &:before{
+        outline: none !important;
+        box-shadow: 0 0 0 0 #78c8fe;
+      }
+    }
+  }
+
+  input[type="radio"] {
+    opacity: 0;
+    position: absolute;
+    top: 3px;
+    width: 16px;
+    height: 16px;
+  }
+
+  input[type="radio"][disabled] {
+    & + label {
+      cursor: not-allowed!important;
+      color: var(--wj-color-contrast-9);
+      opacity: 0.5;
+      &:before {
+        cursor: not-allowed!important;
+        //background: mix($color-contrast-higher, $color-contrast-lower, 04%);
+      }
+    }
+  }
+}
+// Colors
+input[type="radio"]:checked + label:before {
+  .success & {
+    border-color: var(--wj-color-success);
+  }
+  .primary & {
+    border-color: var(--wj-color-primary);
+  }
+  .complete & {
+    border-color: var(--wj-color-complete);
+  }
+  .warning & {
+    border-color: var(--wj-color-warning);
+  }
+  .danger & {
+    border-color: var(--wj-color-danger);
+  }
+  .neutral & {
+    border-color: var(--wj-color-info);
+  }
+}

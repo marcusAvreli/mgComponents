@@ -1,0 +1,71 @@
+/*
+[ WJ Icon ]
+*/
+
+:host(.wj-color-primary) {
+  --wj-icon-color: var(--wj-color-primary);
+}
+
+:host(.wj-color-complete) {
+  --wj-icon-color: var(--wj-color-complete);
+}
+
+:host(.wj-color-success) {
+  --wj-icon-color: var(--wj-color-success);
+}
+
+:host(.wj-color-warning) {
+  --wj-icon-color: var(--wj-color-warning);
+}
+
+:host(.wj-color-danger) {
+  --wj-icon-color: var(--wj-color-danger);
+}
+
+:host(.wj-color-info) {
+  --wj-icon-color: var(--wj-color-info);
+}
+
+:host {
+  --wj-icon-size: 1rem;
+  --wj-icon-width: var(--wj-icon-size, 100%);
+  --wj-icon-height: var(--wj-icon-size, 100%);
+
+  //background: transparent !important;
+  display: inline-block;
+
+  width: var(--wj-icon-width);
+  height: var(--wj-icon-height);
+
+  contain: strict;
+  fill: currentColor;
+  box-sizing: content-box !important;
+}
+
+.icon-inner, svg {
+  display: block;
+
+  width: var(--wj-icon-width);
+  height: var(--wj-icon-height);
+}
+
+:host(.wj-size-small) {
+  --wj-icon-size: 18px;
+}
+
+:host(.wj-size-large) {
+  --wj-icon-size: 32px;
+}
+
+:host(.wj-size) {
+  font-size: var(--wj-icon-size);
+}
+
+:host(.wj-color) {
+  color: var(--wj-icon-color) !important;
+}
+:host(.circle-meter__circle) {
+  --radius: 47px; // 1
+  --pi: 3.14; // 1 - Close enough for our use case!
+  --circumference: calc(var(--radius) * 2 * var(--pi)); // 1
+  }

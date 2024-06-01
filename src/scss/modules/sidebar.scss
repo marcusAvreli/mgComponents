@@ -527,7 +527,7 @@ body {
 
 .left-menu-divider-wrapper {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 
   .dropdown-divider {
     border-top: 1px solid #3d4551;

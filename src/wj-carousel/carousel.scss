@@ -1,0 +1,117 @@
+@import "../scss/themes/net-basic/important.scss";
+@import "../themes/light";
+/*
+[ Carousel ]
+*/
+
+:host {
+  --wj-scroll-hint: 0px;
+  --wj-carousel-width: 100%;
+  --wj-carousel-height: auto;
+  //display: flex;
+}
+
+.native-carousel {
+  position: relative;
+  width: var(--wj-carousel-width, 100%);
+  height: var(--wj-carousel-height, 300px);
+  scroll-behavior: smooth;
+}
+
+.carousel-slides {
+  display: flex;
+  transition: transform 0.5s ease;
+  align-items: center;
+  justify-items: center;
+  overflow: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  aspect-ratio: var(--wj-aspect-ratio, 4 / 3);
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 0;
+  overflow-y: hidden;
+  padding-inline: var(--wj-spacing-inline, 0);
+  gap: .5rem;
+}
+
+.carousel-slides::-webkit-scrollbar{
+  display: none;
+}
+
+::slotted(wj-carousel-item) {
+  flex: 0 0 var(--wj-carousel-size, 100%);
+  height: 100%;
+}
+
+// NAVIGATION
+
+wj-button {
+  position: absolute;
+  top: 50%;
+
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.prev {
+  left: -1rem;
+  transform: translate(-100%, -50%);
+}
+
+.next {
+  right: -.5rem;
+  transform: translate(100%, -50%);
+}
+
+// PAGINATION
+
+.pagination {
+  position: absolute;
+  bottom: -.5rem;
+  left: 50%;
+  transform: translate(-50%, 100%);
+  display: flex;
+  z-index: 2;
+}
+.pagination-item {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: var(--wj-color-contrast-4);
+  display: inline-block;
+  border-radius: 50%;
+}
+.pagination-item.active {
+  background-color: var(--wj-color);
+}
+
+// THUMBNAILS
+
+.thumbnails {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+  gap: .5rem;
+  padding: 0 .5rem;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+  box-sizing: border-box;
+  overflow-y: hidden;
+  wj-thumbnail {
+    --wj-thumbnail-width: 48px;
+    --wj-thumbnail-height: 48px;
+    --wj-thumbnail-border-radius: 0;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .active {
+    border: 1px solid var(--wj-color-primary-11);
+  }
+}
+
+
+

@@ -1,0 +1,90 @@
+/*
+[ Wj Icon Picker ]
+*/
+@import "../themes/light";
+:host {
+  --wj-icon-picker-radius: var(--wj-border-radius-small);
+  --wj-icon-picker-icon-size: 1.5rem;
+  --wj-icon-picker-border-width: 1px;
+  --wj-icon-picker-border-style: solid;
+  --wj-icon-picker-border-color: var(--wj-border-color);
+  --wj-icon-picker-padding: .25rem;
+  padding: 0 1rem;
+}
+
+.anchor {
+  width: var(--wj-icon-picker-icon-size);
+  height: var(--wj-icon-picker-icon-size);
+  padding: var(--wj-icon-picker-padding);
+  border-width: var(--wj-icon-picker-border-width);
+  border-style: var(--wj-icon-picker-border-style);
+  border-color: var(--wj-icon-picker-border-color);
+  box-sizing: border-box;
+  border-radius: var(--wj-icon-picker-radius);
+}
+
+.picker {
+  width: 320px;
+  height: 271px;
+  box-shadow: 0 0 5px rgba(0,0,0,.05), 0 5px 20px rgba(0,0,0,.1);
+  border-radius: var(--wj-icon-picker-radius);
+  border-width: var(--wj-icon-picker-border-width);
+  border-style: var(--wj-icon-picker-border-style);
+  border-color: var(--wj-icon-picker-border-color);
+  overflow: auto;
+  padding: 1rem;
+  background: var(--wj-background);
+}
+
+.icon-items {
+  --icon-min-width: 2rem;
+  display: grid;
+  grid-gap: .5rem;
+  grid-template-columns: repeat(auto-fit,minmax(var(--icon-min-width),1fr));
+}
+
+.icon-item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: inherit;
+  padding: .25rem;
+  min-height: var(--wj-icon-picker-icon-size);
+  min-width: var(--wj-icon-picker-icon-size);
+  text-decoration: none;
+
+  &:hover {
+    border-radius: .25rem;
+    background: var(--wj-border-color);
+  }
+}
+
+.wj-size {
+  --wj-icon-size: 24px !important;
+}
+
+icon-item svg {
+  width: var(--wj-icon-picker-icon-size);
+  height: var(--wj-icon-picker-icon-size);
+}
+
+wj-input {
+  --wj-input-border-radius: 4px;
+  --wj-input-margin-bottom: 0;
+}
+
+wj-infinite-scroll {
+  margin-top: 1rem;
+}
+
+wj-select {
+  --wj-select-border-width: 0 0 1px 0 !important;
+  --wj-select-border-radius: 0 !important;
+  margin-bottom: 1rem;
+}
+
+.anchor wj-icon {
+  --wj-icon-size: 100% !important;
+}

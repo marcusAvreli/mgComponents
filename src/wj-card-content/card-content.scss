@@ -1,0 +1,31 @@
+/*
+[ WJ Card - Content ]
+*/
+@import "../themes/light";
+:host {
+  --wj-card-padding: 0 1rem 1rem;
+  display: block;
+  padding: var(--wj-card-padding);
+  &.no-padding {
+    .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  &.no-bottom-padding {
+    padding-bottom: 0;
+  }
+  &.no-top-padding {
+    padding-top: 0;
+  }
+  .title {
+    margin-top: 0;
+  }
+  &.scrollable {
+    margin-bottom: 20px;
+  }
+  h3 {
+    line-height: 34px;
+    font-size: 26px;
+  }
+}

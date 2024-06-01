@@ -1,0 +1,20 @@
+/*
+[ WJ Button Group ]
+*/
+
+:host {
+  display: inline-block;
+  .native-button-group {
+    display: flex;
+    flex-wrap: nowrap;
+    line-height: 1;
+  }
+
+  slot {
+    display: contents;
+  }
+}
+
+::slotted(wj-button) {
+  margin: 0 !important;
+}

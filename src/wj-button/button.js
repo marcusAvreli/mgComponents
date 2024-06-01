@@ -153,6 +153,7 @@ export class Button extends WJElement {
         span.appendChild(slot);
 
         element.appendChild(span);
+		
         fragment.appendChild(element);
 
         return fragment;

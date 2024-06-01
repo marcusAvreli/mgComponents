@@ -11,7 +11,7 @@ const config = [
 		,output: [{
 			file:'dist/css/pages.css',
 			name:'mgComponents',
-			format: 'es',
+			format: 'umd',
 			//exports: 'named',
 			//sourcemap: true,
 			//inlineDynamicImports: true,

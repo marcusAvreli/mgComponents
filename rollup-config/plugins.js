@@ -1,5 +1,5 @@
 import injectInnerHTML from './injectInnerHTML.js';
-import fs from 'fs'
+//import fs from 'fs'
 import path from 'path'
 import autoprefixer from 'autoprefixer';
 //import { terser } from 'rollup-plugin-terser';
@@ -7,7 +7,7 @@ import  terser from '@rollup/plugin-terser';
 import packageJson from '../package.json' assert { type: "json" };
 let dev = process.env.NODE_ENV == 'local';
 
-import commonjs from '@rollup/plugin-commonjs'
+//import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve';
 import license  from 'rollup-plugin-license';
 
@@ -19,7 +19,7 @@ export const plugins = [
 		jsnext: true,
 		browser: true
 	})
-	,commonjs()
+	//,commonjs()
 	,license({
 		banner
 	})

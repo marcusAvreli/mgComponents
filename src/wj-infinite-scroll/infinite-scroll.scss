@@ -1,0 +1,12 @@
+/*
+[ Wj nfinite Scroll ]
+*/
+@import "../themes/light";
+:host {
+  --wj-infinite-scroll-width: 100%;
+  --wj-infinite-scroll-height: 300px;
+  overflow-x: auto;
+  width: var(--wj-infinite-scroll-width);
+  height: var(--wj-infinite-scroll-height);
+  display: block;
+}

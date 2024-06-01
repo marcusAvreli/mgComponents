@@ -1,0 +1,43 @@
+/*
+[ WJ Rate ]
+*/
+@import "../themes/light";
+:host {
+  display: flex;
+}
+
+.native-rate {
+  position: relative;
+  display: flex;
+  gap: var(--wj-rate-gap, .25rem);
+}
+
+.wj-rate-icon {
+  position: relative;
+  cursor: pointer;
+}
+
+.selected {
+  color: var(--wj-color-danger);
+}
+
+:host(:not([readonly])) .wj-rate-icon:hover {
+  transform: scale(1.2);
+}
+
+.half wj-icon:first-child {
+  color: white;
+}
+
+.half wj-icon:last-child {
+  color: currentColor;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+:host([disabled]) .native-rate {
+  pointer-events: none;
+  opacity: .5;
+}
+

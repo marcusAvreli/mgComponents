@@ -1,0 +1,12 @@
+/*
+[ WJ Menu Label ]
+*/
+
+:host {
+  display: inline-flex;
+}
+@media (min-width: 768px) {
+  :host {
+    display: none;
+  }
+}

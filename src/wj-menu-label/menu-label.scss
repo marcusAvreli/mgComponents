@@ -1,0 +1,25 @@
+@import "../scss/themes/net-basic/important.scss";
+@import "../themes/light";
+/*
+[ Menu Label ]
+*/
+
+:host {
+  --wj-menu-label-font-size: .75rem;
+  --wj-menu-label-weight: 600;
+  --wj-letter-spacing: .025rem;
+  --wj-menu-label-color: var(--wj-color-contrast-6);
+  --wj-padding-top: 0;
+  --wj-padding-bottom: 0;
+  --wj-padding-start: 1.5rem;
+  --wj-padding-end: 1.5rem;
+
+  .native-menu-label {
+    font-size: var(--wj-menu-label-font-size);
+    display: inline-block;
+    font-weight: var(--wj-menu-label-weight);
+    letter-spacing: var(--wj-letter-spacing);
+    color: var(--wj-menu-label-color);
+    padding: var(--wj-padding-top) var(--wj-padding-start) var(--wj-padding-bottom) var(--wj-padding-end);
+  }
+}

@@ -1,0 +1,56 @@
+@import "../scss/themes/net-basic/important.scss";
+@import "./scss/grid.scss";
+@import "../themes/light";
+/*
+[ Row ]
+*/
+
+:host {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+:host(.wj-wrap){
+  flex-wrap: wrap !important;
+}
+
+// Row
+
+@if $enable-grid-classes {
+  :host {
+    @include make-row();
+  }
+}
+
+@if $enable-grid-classes {
+  @include make-grid-columns();
+}
+
+:host(.wj-justify-content-center) {
+  justify-content: center !important;
+}
+
+:host(.wj-justify-content-end) {
+  justify-content: flex-end !important;
+}
+
+:host(.wj-justify-content-between) {
+  justify-content: space-between !important;
+}
+
+:host(.wj-justify-content-around) {
+  justify-content: space-around !important;
+}
+
+:host(.wj-align-items-start) {
+  align-items: baseline !important;
+}
+
+:host(.wj-align-items-center) {
+  align-items: center !important;
+}
+
+:host(.wj-align-items-end) {
+  align-items: flex-end !important;
+}
+

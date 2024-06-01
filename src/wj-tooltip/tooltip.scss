@@ -1,0 +1,28 @@
+/*
+[ WJ Tooltip ]
+*/
+@import "../themes/light";
+:host {
+  --wj-tooltip-arrow-color: var(--wj-color-contrast-11);
+}
+
+.native-tooltip {
+  display: block;
+  padding: .5rem;
+  color: var(--wj-color-contrast-0);
+  background-color: var(--wj-color-contrast-11);
+  font-weight: normal;
+  font-size: .75rem !important;
+  border-radius: var(--wj-border-radius-small);
+  line-height: 1;
+  box-sizing: border-box;
+  box-shadow: var(--wj-box-shadow-medium);
+}
+
+.arrow {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--wj-tooltip-arrow-color);
+  transform: rotate(45deg);
+}

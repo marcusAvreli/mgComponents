@@ -1,0 +1,89 @@
+/*
+[ WJ Split View ]
+*/
+@import "../themes/light";
+:host {
+  --wj-split-view-divider-area: 12px;
+  --wj-split-view-divider-width: 4px;
+  --wj-split-view-min: 0%;
+  --wj-split-view-max: 100%;
+  --wj-split-view-calc-a: 50%;
+  --wj-split-view-calc-b: 50%;
+  --wj-split-view-clamp-a: clamp(var(--wj-split-view-min), var(--wj-split-view-calc-a), var(--wj-split-view-max));
+  --wj-split-view-clamp-b: clamp(var(--wj-split-view-min), var(--wj-split-view-calc-b), var(--wj-split-view-max));
+
+  --wj-split-view-divider-background: var(--wj-border-color);
+  --wj-split-view-divider-size: 4px;
+  height: 100%;
+  width: 100%;
+}
+
+::slotted([slot=start]), ::slotted([slot=end]) {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+:host(:not([vertical])) ::slotted([slot=start]) {
+  width: var(--wj-split-view-clamp-a);
+}
+
+:host(:not([vertical])) ::slotted([slot=end]) {
+  width: var(--wj-split-view-clamp-b);
+}
+
+:host([vertical]) ::slotted([slot=start]) {
+  height: var(--wj-split-view-clamp-a);
+  width: 100%;
+}
+
+:host([vertical]) ::slotted([slot=end]) {
+  height: var(--wj-split-view-clamp-b);
+  width: 100%;
+}
+
+.native-split-view {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  position: relative;
+}
+
+:host([vertical]) .native-split-view {
+  flex-direction: column;
+}
+
+.wj-divider {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  background-color: var(--wj-split-view-divider-background);
+  height: 100%;
+  width: var(--wj-split-view-divider-size);
+  cursor: col-resize;
+  &:after {
+    display: flex;
+    content: "";
+    position: absolute;
+    height: 100%;
+    left: calc(var(--wj-split-view-divider-area) / -2 + var(--wj-split-view-divider-width) / 2);
+    width: var(--wj-split-view-divider-area);
+  }
+}
+
+:host([vertical]) .wj-divider {
+  height: var(--wj-split-view-divider-size);
+  width: 100%;
+  cursor: row-resize;
+  &:after {
+    width: 100%;
+    top: calc(var(--wj-split-view-divider-area) / -2 + var(--wj-split-view-divider-width) / 2);
+    height: var(--wj-split-view-divider-area);
+  }
+}

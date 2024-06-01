@@ -1,5 +1,5 @@
 
-var path = require('path');
+import path from 'path';
 import sass from 'sass';
 import CleanCSS from 'clean-css';
 import { run_postcss,buildFileExtension} from './fileUtils';
@@ -11,7 +11,7 @@ export default function injectInnerHTML() {
 			const fileName = path.parse(id).base;
 
 			const fileExtension = buildFileExtension(id);			
-			if(fileName === 'pages.scss'){
+			if(fileName === 'pages.scss' || fileName=='light.scss'){
 				//required part, even though returns empty string			
 				
 				const result =  await run_postcss(id)    

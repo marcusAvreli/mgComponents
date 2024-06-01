@@ -1,0 +1,35 @@
+/*
+[ WJ Masonry ]
+*/
+
+:host {
+  display: flex;
+  align-items: flex-start;
+  justify-content: stretch;
+  width: 100%;
+}
+
+.column {
+  max-width: calc((100% / var(--wj-masonry-layout-col-count, 1) - ((var(--wj-masonry-layout-gap, 1rem) * (var(--wj-masonry-layout-col-count, 1) - 1) / var(--wj-masonry-layout-col-count, 1)))));
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.column:not(:last-child) {
+  margin-inline-end: var(--wj-masonry-layout-gap, 1rem);
+}
+
+.column ::slotted(*) {
+  margin-block-end: var(--wj-masonry-layout-gap, 1rem);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Hide the items that has not yet found the correct slot */
+#unset-items {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}

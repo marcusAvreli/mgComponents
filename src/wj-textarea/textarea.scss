@@ -1,0 +1,169 @@
+/*
+[ WJ Textarea ]
+*/
+@import "../themes/light";
+:host {
+  --wj-textarea-font-family: var(--wj-font-family);
+  --wj-textarea-background-color: var(--wj-background);
+  --wj-textarea-color: var(--wj-color);
+  --wj-textarea-color-invalid: var(--wj-color-danger);
+  --wj-textarea-border-width: 1px;
+  --wj-textarea-border-style: solid;
+  --wj-textarea-border-color: var(--wj-border-color);
+  --wj-textarea-border-color-focus: var(--wj-color-primary);
+  --wj-textarea-border-radius: 4px;
+  --wj-textarea-margin-bottom: .5rem;
+  --wj-textarea-line-height: 20px;
+  --wj-textarea-padding: 0.5rem;
+
+  width: 100%;
+  margin-bottom: var(--wj-textarea-margin-bottom);
+  display: block;
+  .wrapper {
+    display: flex;
+    width: 100%;
+    border-width: var(--wj-textarea-border-width);
+    border-style: var(--wj-textarea-border-style);
+    border-color: var(--wj-textarea-border-color);
+    border-radius: var(--wj-textarea-border-radius);
+  }
+  textarea {
+    font-family: var(--wj-textarea-font-family);
+    color: var(--wj-textarea-color);
+    font-size: 14px;
+    border: 0 none;
+    padding: 0 var(--wj-textarea-padding);
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+:host([resize="auto"]) textarea,
+:host([resize="none"]) textarea {
+  resize: none;
+}
+
+.native-textarea {
+  .input-wrapper {
+    width: 100%;
+    line-height: normal;
+  }
+  &.default {
+    background-color: var(--wj-textarea-background-color);
+    font-family: var(--wj-textarea-font-family);
+    position: relative;
+    padding-inline: 0;
+    padding-top: 0;
+    transition: background-color 0.2s ease;
+    cursor: text;
+    &.focused {
+      .wrapper {
+        border-color: var(--wj-textarea-border-color-focus) !important;
+      }
+      label {
+        opacity: 0.67;
+        font-size: 12px;
+        letter-spacing: normal;
+      }
+    }
+    textarea {
+      border: none;
+      padding-top: 0;
+      background: none;
+      box-shadow: none;
+      width: calc(100% - var(--wj-textarea-padding) * 2);
+      max-width: calc(100% - var(--wj-textarea-padding) * 2);
+      min-width: calc(100% - var(--wj-textarea-padding) * 2);
+    }
+    label {
+      padding: 0 var(--wj-textarea-padding);
+      display: block;
+      opacity: 1;
+      cursor: text;
+      transition: opacity 0.2s ease;
+      line-height: var(--wj-textarea-line-height);
+      padding-top: .25rem;
+      &.fade {
+        opacity: 0.5;
+        font-size: 12px;
+        letter-spacing: normal;
+      }
+    }
+    ::slotted([slot="start"]) {
+      border-left: none;
+      border-top: none;
+      border-bottom: none;
+    }
+
+    ::slotted([slot="end"]) {
+      border-right: none;
+      border-top: none;
+      border-bottom: none;
+    }
+  }
+  &.standard {
+    background-color: var(--wj-textarea-background-color);
+    font-family: var(--wj-textarea-font-family);
+    position: relative;
+    border-radius: var(--wj-textarea-border-radius);
+    padding: 0;
+    transition: background-color 0.2s ease;
+    cursor: text;
+    &.focused {
+      .wrapper {
+        border-color: var(--wj-textarea-border-color-focus) !important;
+      }
+    }
+    textarea {
+      display: block;
+      min-height: 32px;
+      background: none;
+      box-shadow: none;
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: var(--wj-textarea-border-radius);
+    }
+    label {
+      margin: 0;
+      display: inline-block;
+      opacity: 1;
+      cursor: text;
+      transition: opacity 0.2s ease;
+      line-height: var(--wj-textarea-line-height);
+    }
+    ::slotted([slot="start"]) {
+      border-right: none;
+      border-radius: var(--wj-textarea-border-radius) 0 0 var(--wj-textarea-border-radius);
+    }
+
+    ::slotted([slot="end"]) {
+      border-left: none;
+      border-radius: 0 var(--wj-textarea-border-radius) var(--wj-textarea-border-radius) 0;
+    }
+
+    &.has-start textarea{
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    &.has-end textarea{
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    .error-message {
+      position: static;
+      background: transparent;
+      padding: 0.25rem 0;
+      left: auto;
+      transform: none;
+      color: var(--wj-textarea-color-invalid);
+      font-size: 12px;
+      line-height: normal;
+    }
+  }
+}
+
+.counter {
+  float: right;
+}

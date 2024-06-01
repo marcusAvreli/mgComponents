@@ -1,0 +1,25 @@
+/*
+[ WJ Thumbnail ]
+*/
+@import "../themes/light";
+:host {
+  --wj-thumbnail-width: 48px;
+  --wj-thumbnail-height: 48px;
+  --wj-thumbnail-border-radius: var(--wj-border-radius-medium);
+}
+
+:host {
+  width: var(--wj-thumbnail-width);
+  height: var(--wj-thumbnail-height);
+  display: block;
+  border-radius: var(--wj-border-radius);
+}
+
+::slotted(wj-img),
+::slotted(img) {
+  border-radius: var(--wj-thumbnail-border-radius);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+}

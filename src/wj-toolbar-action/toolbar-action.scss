@@ -1,0 +1,11 @@
+@import "../scss/themes/net-basic/important.scss";
+
+/*
+[ WJ Toolbar Action ]
+*/
+
+:host {
+  .native-toolbar-action {
+    display: flex;
+  }
+}

@@ -1,0 +1,23 @@
+/*
+[ WJ Divider ]
+*/
+@import "../themes/light";
+:host {
+  --wj-border-size: 1px;
+  --wj-divider-border-color: var(--wj-border-color);
+  --wj-divider-border-width: var(--wj-border-size, 1px);
+  --wj-divider-spacing: 0;
+}
+
+:host(:not([vertical])) {
+  display: block;
+  border-top: solid var(--wj-divider-border-width) var(--wj-divider-border-color);
+  margin: var(--wj-divider-spacing) 0;
+}
+
+:host([vertical]) {
+  display: inline-block;
+  height: 100%;
+  border-left: solid var(--wj-divider-border-width) var(--wj-divider-border-color);
+  margin: 0 var(--wj-divider-spacing);
+}

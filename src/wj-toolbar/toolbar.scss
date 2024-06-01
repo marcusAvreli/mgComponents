@@ -1,0 +1,42 @@
+/*
+[ WJ Toolbar ]
+*/
+@import "../themes/light";
+:host {
+  --wj-toolbar-background: var(--wj-background);
+  --wj-toolbar-min-height: 70px;
+  --wj-toolbar-padding-top: 1rem;
+  --wj-toolbar-padding-bottom: 1rem;
+  --wj-toolbar-padding-inline: 1.5rem;
+  --wj-toolbar-border-color: var(--wj-border-color);
+  --wj-toolbar-top: 0;
+  width: 100%;
+  height: var(--wj-toolbar-height);
+}
+
+.native-toolbar {
+  background-color: var(--wj-toolbar-background);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  border-bottom: 1px solid var(--wj-toolbar-border-color);
+  padding-inline: var(--wj-toolbar-padding-inline);
+  padding-top: var(--wj-toolbar-padding-top);
+  padding-bottom: var(--wj-toolbar-padding-bottom);
+  box-shadow: 0 10px 30px 0 rgba(82,63,105,.05);
+}
+
+::slotted {
+  grid-column: span 4;
+}
+
+::slotted([slot="start"]) {
+  margin-right: auto;
+}
+
+:host([sticky]) {
+  position: sticky;
+  top: var(--wj-toolbar-top);
+  z-index: 999;
+}

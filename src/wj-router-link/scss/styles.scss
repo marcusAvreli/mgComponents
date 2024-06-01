@@ -1,0 +1,13 @@
+/*
+[ WJ Router Link ]
+*/
+
+:host{
+    display: block;
+    background: transparent !important;
+}
+
+:host(.active){
+    cursor: pointer;
+    font-weight: bold;
+}

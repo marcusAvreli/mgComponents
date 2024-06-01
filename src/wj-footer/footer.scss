@@ -1,0 +1,11 @@
+/*
+[ Wj Footer ]
+*/
+@import "../themes/light";
+:host {
+    --wj-footer-height: 60px;
+    padding: 0 20px;
+    flex-shrink: 0;
+    height: var(--wj-footer-height);
+    display: block;
+}

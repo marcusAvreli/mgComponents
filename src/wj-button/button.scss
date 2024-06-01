@@ -1,6 +1,10 @@
 /*
 [ WJ Button ]
 */
+@import "../themes/light";
+/*
+[ WJ Button ]
+*/
 
 :host(.wj-button-solid.wj-color-primary) {
   --wj-button-background-color: var(--wj-color-primary-10);

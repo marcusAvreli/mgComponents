@@ -1,0 +1,49 @@
+@import "../themes/light";
+/* mixins */
+@mixin breakpoint($point) {
+	@media (max-width: $point + "px") { @content ; }
+}
+
+/* vars */
+:host {
+	--color--black: #191919;
+
+	--color--grey-90: #1C1D1F;
+	--color--grey-80: #2D2E2F;
+	--color--grey-70: #3D4551;
+	--color--grey-60: #565C65;
+	--color--grey-50: #71767A;
+	--color--grey-40: #8D9297;
+	--color--grey-30: #A9AEB1;
+	--color--grey-20: #C6CACE;
+	--color--grey-10: #DFE1E2;
+	--color--grey-5: #EDEFF0;
+	--color--grey-4: #F1F3F6;
+	--color--grey-3: #F5F6F7;
+	--color--grey-2: #F7F9FA;
+	--color--grey-1: #FBFCFD;
+
+	--color--teal-4: #EAFBFF;
+	--color--teal-10: #C0EEF9;
+	--color--teal-20: #9EDEEE;
+	--color--teal-30: #84CDDF;
+	--color--teal-40: #50ACC3;
+	--color--teal-50: #0097BD;
+	--color--teal-60: #006D88;
+	--color--teal-70: #00576C;
+
+	--color--violet-4: #fef2ff;
+	--color--violet-50: #be32d0;
+	--color--violet-60: #93348c;
+	--color--violet-70: #711e6c;
+}
+
+body {
+	//background: var(--color--grey-1);
+	color: var(--color--black);
+	font-family: 'Helvetica Neue', 'Helvetica', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	padding: 2em;
+}

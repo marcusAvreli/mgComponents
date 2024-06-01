@@ -1,0 +1,71 @@
+/*
+[ WJ Tab ]
+*/
+@import "../themes/light";
+:host {
+  --wj-font-size: 10px;
+  --wj-tab-text-transfrom: uppercase;
+  --wj-tab-font-weight: 500;
+  --wj-tab-letter-spacing: 0.06em;
+  --wj-tab-padding-inline: 1rem;
+  --wj-tab-padding-top: .75rem;
+  --wj-tab-padding-bottom: .75rem;
+  --wj-tab-color-active: var(--wj-color-primary-11);
+  --wj-tab-color-hover: var(--wj-color-primary-1);
+
+  display: block;
+  position: relative;
+  a {
+    display: block;
+    align-items: center;
+    white-space: nowrap;
+    font-family: var(--wj-font-family-secondary);
+    font-size: var(--wj-font-size);
+    letter-spacing: var(--wj-tab-letter-spacing);
+    text-transform: var(--wj-tab-text-transfrom);
+    font-weight: var(--wj-tab-font-weight);
+    text-decoration: none;
+    padding-inline: var(--wj-tab-padding-inline);
+    padding-top: var(--wj-tab-padding-top);
+    padding-bottom: var(--wj-tab-padding-bottom);
+    color: var(--wj-color);
+
+    & > svg {
+      inline-size: 1.5em;
+      pointer-events: none;
+    }
+
+    &:hover {
+      background: var(--wj-tab-color-hover);
+      &:after {
+        display: block;
+      }
+    }
+
+    &:after {
+      content: " ";
+      display: none;
+      block-size: 0.15rem;
+      writing-mode: var(--wj-tab-writing-mode);
+      background: var(--wj-tab-color-active);
+      position: absolute;
+      bottom: var(--wj-tab-bottom);
+      left: var(--wj-tab-start);
+      right: var(--wj-tab-end);
+      top: var(--wj-tab-top);
+    }
+  }
+}
+
+:host([disabled]) a {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: inherit;
+  &:after {
+    display: none;
+  }
+}
+
+:host([active]) a:after {
+  display: block;
+}

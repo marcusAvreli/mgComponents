@@ -1,0 +1,32 @@
+@import "../scss/themes/net-basic/important.scss";
+@import "./styles.scss";
+
+/*
+[ Grid ]
+*/
+
+:host {
+    width: 100%;
+    flex-grow: 0;
+}
+
+/*
+[ Row ]
+*/
+
+wj-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+// Row
+
+@if $enable-grid-classes {
+    wj-row {
+        @include make-row();
+    }
+}
+
+@if $enable-grid-classes {
+    @include make-grid-columns();
+}
