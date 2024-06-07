@@ -95,21 +95,19 @@ export const getSvgContent = (url, sanitize) => {
 };
 
 export const getUrl = (i) => {
-	console.log("start_get_url");
-  let url = getSrc(i.src);
-  if (url) {
-	  console.log("finish_get_url");
-    return url;
-  }
+	
+	let url = getSrc(i.src);
+	if (url) {
+		return url;
+	}
 
-  url = getName(i.name);
+	url = getName(i.name);
 
-  if (url) {
-	  console.log("finish_get_url");
-    return getNamedUrl(url);
-  }
-console.log("finish_get_url");
-  return null;
+	if (url) {
+		return getNamedUrl(url);
+	}
+
+	return null;
 };
 
 export const getName = (iconName) => {

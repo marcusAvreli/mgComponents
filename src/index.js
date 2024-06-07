@@ -86,82 +86,84 @@ import {Toolbar} from './wj-toolbar/toolbar.js';
 import {ToolbarAction} from './wj-toolbar-action/toolbar-action.js';
 import {VisuallyHidden} from './wj-visually-hidden/visually-hidden.js';
 
-
-export { WJElement, defaultStoreActions, store, 
-  Aside
-  ,Button
-  ,Label
-  ,Container
-  ,Input
-  ,Form
-  ,Item
-  ,List
-  ,Icon
-  ,Localizer
-  ,Avatar
-  ,Animation
-  ,Img
-  ,Badge
-  ,Breadcrumb
-  ,Breadcrumbs
-  ,ButtonGroup
-  ,Card
-  ,CardContent
-  ,CardControls
-  ,CardHeader
-  ,CardSubtitle
-  ,CardTitle
-  ,Carousel
-  ,CarouselItem
-  ,Checkbox
-  ,Chip
-  ,Col
-  //,ColorPicker
-  ,CopyButton
-  ,Divider
-  ,Dialog
-  //31-05-2024
-  ,Dropdown
-  ,Footer
-  ,FormatDigital
-  ,Grid
-  ,Header
-  //,IconPicker
-  ,InfiniteScroll
-  ,Tooltip
-  /*,ImgComparer */
-  ,InputFile
-  ,Main
-  //Module not found: Error: Can't resolve 'process/browser'
-  //,Masonry
-  ,Toast
-  ,Menu
-  ,MenuButton
-  ,MenuItem
-  ,MenuLabel
-  ,Option
-  ,Options
-  
-  ,Panel
-  ,ProgressBar
-,Radio
-,RadioGroup
-,Rate
-,RelativeTime
-
-,Row
-,Select
-,Slider
-,SplitView
-  
-  ,Tab
-,TabGroup
-,TabPanel
-,Textarea
-,Thumbnail
-,Toggle
-,Toolbar
-,ToolbarAction
-,VisuallyHidden
+import {Wizard} from './wj-wizard/wizard.js';
+import {WizardNav} from './wj-wizard-nav/wizard-nav.js';
+import {WizardButton} from './wj-wizard-button/wizard-button.js';
+export { WJElement, defaultStoreActions, store
+	,Animation
+	,Aside
+	,Avatar
+	,Badge
+	,Button
+	,Breadcrumb
+	,Breadcrumbs
+	,ButtonGroup
+	,Card
+	,CardContent
+	,CardControls
+	,CardHeader
+	,CardSubtitle
+	,CardTitle
+	,Carousel
+	,CarouselItem
+	,Checkbox
+	,Chip
+	,Col
+	,Container
+	//,ColorPicker
+	,CopyButton
+	,Divider
+	,Dialog
+	//31-05-2024
+	,Dropdown
+	,Footer
+	,FormatDigital
+	,Grid
+	,Header
+	,Label
+	,Input
+	,Form
+	,Item
+	,List
+	,Icon
+	,Localizer
+	,Img
+	//,IconPicker
+	,InfiniteScroll
+	,Tooltip
+	/*,ImgComparer */
+	,InputFile
+	,Main
+	//Module not found: Error: Can't resolve 'process/browser'
+	//,Masonry
+	,Toast
+	,Menu
+	,MenuButton
+	,MenuItem
+	,MenuLabel
+	,Option
+	,Options
+	,Panel
+	,ProgressBar
+	,Radio
+	,RadioGroup
+	,Rate
+	,RelativeTime
+	,Row
+	,Select
+	,Slider
+	,SplitView
+	,Tab
+	,TabGroup
+	,TabPanel
+	,Textarea
+	,Thumbnail
+	,Toggle
+	,Toolbar
+	,ToolbarAction
+	,VisuallyHidden
+	,Wizard
+	,WizardNav
+	,WizardButton
  
 };

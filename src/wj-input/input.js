@@ -101,7 +101,7 @@ static get formAssociated(){
     }
 
     draw(context, store, params) {
-		console.log("draw_input_start");
+	
         let hasSlotStart = this.hasSlot(this, "start");
         let hasSlotEnd = this.hasSlot(this, "end");
         let fragment = document.createDocumentFragment();
@@ -123,7 +123,7 @@ static get formAssociated(){
         // Label
         let label = document.createElement("label");
         label.innerText = this.label;
-		console.log("=======:text label:"+this.label);
+		
         if(this.value && !this.hasAttribute("error"))
             label.classList.add("fade");
 
@@ -205,7 +205,7 @@ static get formAssociated(){
         this.labelElement = label;
         this.input = input;
         this.errorMessage = error;
-console.log("draw_input_finish");
+
         return fragment;
     }
 

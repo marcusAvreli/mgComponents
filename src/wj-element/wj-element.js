@@ -15,7 +15,7 @@ static processTemplates (pTemplate, template){
 	};
 	constructor(componentTemplate) {
 		super();
-console.log("wj_element_constructor");
+
 		this.template = componentTemplate || template;
 
 

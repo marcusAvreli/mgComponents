@@ -65,6 +65,7 @@ export class Avatar extends WJElement {
     isImage(){
         return this.getElementsByTagName("wj-img").length > 0;
     }
+	unregister(){}
 }
 
 customElements.get(Avatar.is) || window.customElements.define(Avatar.is, Avatar);

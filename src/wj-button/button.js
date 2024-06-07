@@ -1,4 +1,4 @@
-import { default as WJElement, event } from "../wj-element/wj-element.js";
+import { default as WJElement,WjElementUtils, event } from "../wj-element/wj-element.js";
 import { bool } from "../utils/wj-utils.js";
 import { elementPrefix } from '../shared/index.js';
 import  "./button.scss";
@@ -80,7 +80,11 @@ export class Button extends WJElement {
         this.isShadowRoot = "open";
     }
 
-    draw(context, store, params) {
+       setupAttributes() {
+        this.isShadowRoot = "open";
+    }
+
+   draw(context, store, params) {
         let fragment = document.createDocumentFragment();
 
         if(this.disabled)
@@ -89,8 +93,11 @@ export class Button extends WJElement {
         if(this.variant)
             this.classList.add("wj-button-" + this.variant);
 
-        if(this.round)
+        if(this.hasAttribute("round"))
             this.classList.add("wj-button-round")
+
+        if(this.hasAttribute("circle"))
+            this.classList.add("wj-button-circle")
 
         if(this.outline)
             this.classList.add("wj-outline");
@@ -141,7 +148,7 @@ export class Button extends WJElement {
         slot.setAttribute("name", "start");
         span.appendChild(slot);
 
-        slot = document.createElement("slot");
+       slot = document.createElement("slot");
         span.appendChild(slot);
 
         slot = document.createElement("slot");
@@ -152,29 +159,62 @@ export class Button extends WJElement {
         slot.setAttribute("name", "caret");
         span.appendChild(slot);
 
+        this.hasToggle = WjElementUtils.hasSlot(this, "toggle");
+
+        if(this.hasToggle) {
+            this.slotToggle = document.createElement("slot");
+            this.slotToggle.setAttribute("name", "toggle");
+
+            span.appendChild(this.slotToggle);
+        }
+
         element.appendChild(span);
-		
         fragment.appendChild(element);
 
         return fragment;
     }
 
     afterDraw() {
+        // nastavenie toggle podla atributu, ak nie je nastaveny, tak sa zobrazi vzdy prvy element
+        if(this.hasToggle) {
+            if (this.toggle === "off") {
+                this.slotToggle.assignedNodes()[1].classList.add("show");
+            } else {
+                this.slotToggle.assignedNodes()[0].classList.add("show");
+            }
+        }
+
         event.addListener(this, "click", "wj:button-click", null, { stopPropagation: this.stopPropagation });
         event.addListener(this, "click", null, this.eventDialogOpen);
+
+        if(this.hasToggle)
+            event.addListener(this, "click", "wj-button:toggle", this.toggleStates, { stopPropagation: this.stopPropagation });
     }
 
     beforeDisconnect() {
         this.removeEventListener("click", this.eventDialogOpen);
     }
 
-    eventDialogOpen (e){
+    eventDialogOpen = (e) => {
         document.dispatchEvent(
             new CustomEvent(this.dialog, {
                 bubbles: true
             }
         ));
     }
+
+    toggleStates = () => {
+        const nodes = this.slotToggle.assignedNodes().filter(node => node.nodeType === Node.ELEMENT_NODE);
+
+        nodes.forEach(node => {
+            if (node.classList.contains('show')) {
+                node.classList.remove('show');
+            } else {
+                node.classList.add('show');
+            }
+        });
+    }
 }
+
 
 customElements.get(Button.is) || window.customElements.define(Button.is, Button);

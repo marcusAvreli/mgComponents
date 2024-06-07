@@ -1,6 +1,6 @@
 import { default as WJElement, WjElementUtils } from "../wj-element/wj-element.js";
 import { getName, getUrl, getSvgContent, iconContent } from "./service/service.js";
-import  "./icon.scss";
+
 import { elementPrefix } from '../shared/index.js';
 
 

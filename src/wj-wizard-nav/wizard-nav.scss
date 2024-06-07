@@ -1,0 +1,18 @@
+ :host {
+	display:  block;
+
+         
+
+	
+}
+
+
+
+
+::slotted([slot="toggle"]) {
+  display: none;
+}
+
+::slotted([slot="toggle"].show) {
+  display: inline-block;
+}
