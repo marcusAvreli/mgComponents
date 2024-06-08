@@ -81,6 +81,7 @@ export class Item extends WJElement {
 	beforeDraw( context, store, params ) {}
 
 	draw( context, store, params ) {
+		 this.selectedValues = [];
 		const TagType = this.isClickable() ? this.hasAttribute('href') === undefined ? 'button' : 'a' : 'div';
 		console.log("draw_item_start");
 		if(this.hostContext('wj-list', this)) {
@@ -102,6 +103,57 @@ export class Item extends WJElement {
 				<slot name="helper"></slot>
 		</div>`;
 	}
+	handleOptionClick(e){
+		const target = e.target
+		const targetTagName = target.tagName
+		console.log("handleOptionClick:"+targetTagName);
+		if(targetTagName === 'wj-label'.toUpperCase()){	
+			const parentElement = target.parentElement;
+			  if (parentElement.classList.contains('selected')) {
+                parentElement.classList.remove('selected');
+				this.selectOption(parentElement,"remove");
+            } else {
+				this.selectOption(parentElement,"add");
+                parentElement.classList.add('selected');
+            }
+			
+			
+		}
+		
+		//  this.selectOption(option);
+	/*	 if (!this.disabled) {
+      if (this.multiple) {
+        this.toggleOption(option);
+      } else {
+        this.selectOption(option);
+        this.hideOptions();
+      }
+      this.renderOptions();
+    }
+	*/
+	}
+			
+	selectOption(option,action) {
+		console.log("select option");
+		
+		
+		/* this.updateSelectedValuesDisplay();
+		this.updateClearButtonVisibility();
+		this.dispatchChangeEvent();
+		this.renderOptions();
+		*/
+		  this.dispatchEvent(new CustomEvent('wj-selected-values', {
+            bubbles: true,
+            composed: true,
+            detail: {
+                tab: this,
+                data: option,
+				action: action
+               
+            },
+        }));
+	}
+
 
 	hostContext(selector, el){
 		return el.closest(selector) !== null;
@@ -121,6 +173,7 @@ export class Item extends WJElement {
 		this.addEventListener('dragover', this.itemDragOver);
 		this.addEventListener('drop', this.itemDrop);
 		this.addEventListener('focus', this.itemFocus);
+		this.addEventListener('click', (e) => this.handleOptionClick(e));
 		/*
 		let buttonUp =	this.querySelector('#buttonUp');
 		let buttonDown =	this.querySelector('#buttonDown');

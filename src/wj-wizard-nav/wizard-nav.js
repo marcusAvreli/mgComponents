@@ -100,7 +100,7 @@ export class WizardNav extends WJElement {
 		 
 	}
  	_dispatchNext(e){
-		console.log("next");
+		console.log("Wizard_nav","next");
 	
 		e.preventDefault();
         e.stopImmediatePropagation();
@@ -119,8 +119,8 @@ export class WizardNav extends WJElement {
 		
 	}
 	_dispatchPrevious(e){
-		console.log("previous");
 		
+		console.log("Wizard_nav","previous");
 		e.preventDefault();
         e.stopImmediatePropagation();
         e.stopPropagation();

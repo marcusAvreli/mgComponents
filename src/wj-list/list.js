@@ -29,6 +29,7 @@ export class List extends WJElement {
     }
 
     draw(context, store, params) {
+		this.selectedValues=[];
         let fragment = document.createDocumentFragment();
 
         let element = document.createElement("slot");
@@ -40,10 +41,34 @@ export class List extends WJElement {
 
     afterDraw() {
 		console.log("finished_draw_list");
+		this.shadowRoot.addEventListener('wj-selected-values', ( e ) => this.selectedChange(e));
         this.classList.toggle("wj-lines-" + this.lines, this.hasAttribute("lines"));
         this.classList.toggle("wj-inset", this.hasAttribute("inset"));
     }
+	set values(e){
+		if(!this.selectedValues.includes(e,0)){
+			this.selectedValues.push(e);
+		}
+		console.log("size_of_selected:"+this.selectedValues.length);
+	}
+	get values(){
+		
+		return this.selectedValues;
+	}
+	selectedChange(e){
+	
+		const selectedOption = e.detail.data;
+		const action = e.detail.action;
+		if(action=="add"){
+			this.values=selectedOption;
+		}else{
+			if(action=="remove"){
+				const previousSecondElementOfTheArray = this.values.splice(selectedOption, 1);
+			}
+		}
+	}
 	afterDisconnect(){
+		this.removeEventListener("wj-selected-values", this.selectedChange);
 	}
 }
 

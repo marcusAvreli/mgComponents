@@ -23,6 +23,7 @@
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-sass": "^1.12.22",
     "sass": "^1.76.0",
-    "tinycolor2": "^1.6.0"
+    "tinycolor2": "^1.6.0",
+	"@floating-ui/dom": "^1.6.4"
   }
 }

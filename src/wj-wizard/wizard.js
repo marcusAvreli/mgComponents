@@ -116,12 +116,23 @@ export class Wizard extends WJElement {
         } else {
             this.index = index;
         }
-		console.log("Wizard","before_set_active:"+panels.length);
-		console.log("Wizard","before_set_active:"+index);
+		console.log("Wizard","size_of_panels:"+panels.length);
+		console.log("Wizard","current_index:"+index);
 		console.log("Wizard","before_set_active panel active:"+panels[index].active);
 		panels[index].active = true;
 		panels[index].style.display="block";
-		panels[index].querySelector('wj-wizard-button[part="previous"]').classList.remove('show');
+		const nextButton = panels[index].querySelector('wj-wizard-button[part="next"]');
+		if(panels.length-1==index){
+			if (nextButton.classList.contains('show')) {
+				//nextButton.classList.remove('show');
+			} else {
+                //node.classList.add('show');
+            }
+		}else{
+			if (!nextButton.classList.contains('show')) {
+				nextButton.classList.add('show');
+			}
+		}
 		console.log("Wizard","after _set_active");
 		this.style.setProperty('--zc-panel-index', this.index);
 		if (oldIndex !== this.index) {
@@ -149,6 +160,7 @@ export class Wizard extends WJElement {
         }
     }
 	  finish() {
+		console.log("Wizard","Finish");
         this.dispatchEvent(new CustomEvent('ziro-wizard-successful', {
             bubbles: true
         }));

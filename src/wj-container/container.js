@@ -1,6 +1,6 @@
 import { default as WJElement, WjElementUtils } from "../wj-element/wj-element.js";
 import { elementPrefix } from '../shared/index.js';
-import  "./container.scss";
+
 /**
  * @injectHTML
  */

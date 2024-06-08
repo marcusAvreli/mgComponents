@@ -36,7 +36,7 @@ import {Col}  from './wj-col/col.js';
 import {CopyButton} from './wj-copy-button/copy-button.js';
 import {Dialog} from './wj-dialog/dialog.js';
 import {Divider} from './wj-divider/divider.js';
-
+import {Popup} from './wj-popup/popup.js';
  //31-05-2024
 import {Dropdown} from './wj-dropdown/dropdown.js';
 
@@ -144,6 +144,7 @@ export { WJElement, defaultStoreActions, store
 	,Option
 	,Options
 	,Panel
+	,Popup
 	,ProgressBar
 	,Radio
 	,RadioGroup
