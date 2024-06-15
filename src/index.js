@@ -64,7 +64,7 @@ import {MenuLabel} from './wj-menu-label/menu-label.js'
 import {Option} from './wj-option/option.js';
 import {Options} from './wj-options/options.js';
 import {Panel} from './wj-panel/panel.js';
-
+import {Paginator} from './wj-paginator/paginator.js';
 import {ProgressBar} from './wj-progress-bar/progress-bar.js';
 import {Radio} from './wj-radio/radio.js';
 import {RadioGroup} from './wj-radio-group/radio-group.js';
@@ -89,6 +89,9 @@ import {VisuallyHidden} from './wj-visually-hidden/visually-hidden.js';
 import {Wizard} from './wj-wizard/wizard.js';
 import {WizardNav} from './wj-wizard-nav/wizard-nav.js';
 import {WizardButton} from './wj-wizard-button/wizard-button.js';
+//MG_COMPONENTS
+import {NumberFormatter} from './mg-number-formatter/number-formatter.js';
+
 export { WJElement, defaultStoreActions, store
 	,Animation
 	,Aside
@@ -144,6 +147,7 @@ export { WJElement, defaultStoreActions, store
 	,Option
 	,Options
 	,Panel
+	,Paginator
 	,Popup
 	,ProgressBar
 	,Radio
@@ -166,5 +170,9 @@ export { WJElement, defaultStoreActions, store
 	,Wizard
 	,WizardNav
 	,WizardButton
+ 
+ 
+ //MG_COMPONENTS
+ ,NumberFormatter
  
 };

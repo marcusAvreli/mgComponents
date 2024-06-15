@@ -3,6 +3,7 @@
 */
 @import "../themes/light";
 :host {
+	@extend .show;
     --wj-border-width: 0 0 1px 0;
     --wj-item-background: transparent;
     --wj-item-background-hover: var(--wj-color-contrast-3); //#{$color-contrast-lower};
@@ -18,7 +19,7 @@
     --wj-item-inner-box-shadow: none;
     --wj-item-min-height: 40px;
     --wj-item-transition: opacity 15ms linear, background-color 15ms linear;
-    display: block;
+  //  display: block;
     position: relative;
     align-items: center;
     justify-content: space-between;
@@ -125,4 +126,10 @@ a {
 
 ::slotted(wj-label:not([slot="end"])) {
     flex: 1 1 0;
+}
+:host(.show){
+	display:block;
+}
+:host(.hide){
+	display:node;
 }

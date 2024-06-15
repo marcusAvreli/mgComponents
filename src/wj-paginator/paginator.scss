@@ -1,0 +1,14 @@
+:host(.container) {
+	//width:100%;
+	//height:auto;
+	//width:100%;height:auto;
+//display: inline-block;
+}
+
+::slotted(.content){
+
+	width:20%;
+	display:inline-block;
+	vertical-align:top;
+
+}

@@ -1,7 +1,7 @@
 import { default as WJElement,WjElementUtils, event } from "../wj-element/wj-element.js";
 import { bool } from "../utils/wj-utils.js";
 import { elementPrefix } from '../shared/index.js';
-import  "./button.scss";
+
 /**
  * @injectHTML
  */
@@ -80,9 +80,7 @@ export class Button extends WJElement {
         this.isShadowRoot = "open";
     }
 
-       setupAttributes() {
-        this.isShadowRoot = "open";
-    }
+       
 
    draw(context, store, params) {
         let fragment = document.createDocumentFragment();
@@ -173,7 +171,9 @@ export class Button extends WJElement {
 
         return fragment;
     }
-
+	setDisplayLabel(lblValue){
+		this.textContent = lblValue;
+	}
     afterDraw() {
         // nastavenie toggle podla atributu, ak nie je nastaveny, tak sa zobrazi vzdy prvy element
         if(this.hasToggle) {
@@ -214,6 +214,7 @@ export class Button extends WJElement {
             }
         });
     }
+	unregister(){}
 }
 
 

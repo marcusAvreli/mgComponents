@@ -159,6 +159,7 @@ export class WizardNav extends WJElement {
             }
         });
     }
+	unregister(){}
 	
 }
 customElements.get(WizardNav.is) || window.customElements.define(WizardNav.is, WizardNav);

@@ -1,5 +1,5 @@
 import { default as WJElement, WjElementUtils } from "../wj-element/wj-element.js";
-import  "./item.scss";
+
 import { elementPrefix } from '../shared/index.js';
 ///https://www.darins.page/articles/designing-a-reorderable-list-component#text-input
 
@@ -83,7 +83,7 @@ export class Item extends WJElement {
 	draw( context, store, params ) {
 		 this.selectedValues = [];
 		const TagType = this.isClickable() ? this.hasAttribute('href') === undefined ? 'button' : 'a' : 'div';
-		console.log("draw_item_start");
+		
 		if(this.hostContext('wj-list', this)) {
 			this.classList.add('wj-item-list');
 		}
@@ -106,7 +106,7 @@ export class Item extends WJElement {
 	handleOptionClick(e){
 		const target = e.target
 		const targetTagName = target.tagName
-		console.log("handleOptionClick:"+targetTagName);
+		
 		if(targetTagName === 'wj-label'.toUpperCase()){	
 			const parentElement = target.parentElement;
 			  if (parentElement.classList.contains('selected')) {
@@ -132,9 +132,12 @@ export class Item extends WJElement {
     }
 	*/
 	}
-			
+	get value(){
+
+		const byValue = this.querySelector("wj-label").value
+		return byValue;
+	}
 	selectOption(option,action) {
-		console.log("select option");
 		
 		
 		/* this.updateSelectedValuesDisplay();
@@ -496,6 +499,7 @@ itemDragOver(e) {
 		this.removeEventListener("slotchange", (event) => {console.log("slot_change")});
 		
     }
+	unregister(){}
 
 }
 

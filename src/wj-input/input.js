@@ -1,6 +1,8 @@
 import { default as WJElement, event } from "../wj-element/wj-element.js";
 import { elementPrefix } from '../shared/index.js';
-import  "./input.scss";
+import  {ServiceLocator} from './locator/serviceLocator.js';
+import {ServiceText} from './locator/serviceText.js';
+import {ServiceInteger} from './locator/serviceInteger.js';
 /**
  * @injectHTML
  */
@@ -12,8 +14,24 @@ export class Input extends WJElement {
         this.invalid = false;
         this.pristine = true;
         this.internals = this.attachInternals();
+		
+		this.services = new ServiceLocator();
+		
+		
+		this.services.register({
+		  name: 'ServiceText',
+		  constructor: ServiceText,
+		  args: ['option'],
+		});
+
+		this.services.register({
+		  name: 'ServiceInteger',
+		  constructor: ServiceInteger,
+		 // deps: ['Service1'],
+		  singleton: false,  args: [this],
+		});
     }
- static get className(){
+	static get className(){
 		return "Input";
 	}
 
@@ -26,6 +44,33 @@ export class Input extends WJElement {
     static get cssStyleSheet() {		
         return this.styles;
     }
+	
+	isIntTextBox(){
+		return this.hasAttribute("intTextBox");
+	}
+	isUintTextBox(){
+		return this.hasAttribute("uintTextBox");
+	}
+	
+	isIntLimitTextBox(){
+		return this.hasAttribute("intLimitTextBox");
+	}
+	isFloatTextBox(){
+		return this.hasAttribute("floatTextBox");
+	}
+
+	isCurrencyTextBox(){
+		return this.hasAttribute("currencyTextBox");
+	}
+	isLatinTextBox(){
+		return this.hasAttribute("latinTextBox");
+	}
+	isHexTextBox(){
+		return this.hasAttribute("hexTextBox");
+	}
+	getDefaultValue(){
+		return this.getAttribute("defaultvalue") ;//|| "115";
+	}
 	get label (){
 		return this.getAttribute("label") || "";
 	}
@@ -77,7 +122,6 @@ export class Input extends WJElement {
     get willValidate() {
         return this.internals.willValidate;
     }
-
     checkValidity() {
         return this.internals.checkValidity();
     }
@@ -85,13 +129,11 @@ export class Input extends WJElement {
     reportValidity() {
         return this.internals.reportValidity();
     }
-static get formAssociated(){
-	return true;
-}
+
+	static get formAssociated(){
+		return true;
+	}
   
-
-    
-
     static get observedAttributes() {
         return ["value"];
     }
@@ -133,6 +175,7 @@ static get formAssociated(){
         input.setAttribute("part", "input");
         input.setAttribute("value", this.value || "");
         input.classList.add("form-control");
+		input.defaultValue = this.getDefaultValue();
 
         if(this.hasAttribute("placeholder"))
             input.setAttribute("placeholder", this.placeholder);
@@ -208,8 +251,31 @@ static get formAssociated(){
 
         return fragment;
     }
+	
+	set input(input){
+		this.txtField=input;
+	}
+	get input(){
+		return this.txtField;
+	}
+	set errorMessage(error){
+		this.txtError= error;
+	}
+	get errorMessage(){
+		return this.txtError;
+	}
+	isPristine(){
+		return this.pristine;
+	}
+	setPristine(value){
+		this.pristine=value;
+	}
 
     afterDraw() {
+		this.input.defaultValue=this.getAttribute("defaultvalue");
+		console.log("input","input outer_html:"+this.outerHTML);
+		console.log("input","input default_outer_html:"+this.getAttribute("defaultvalue"));
+		console.log("input","after_draw_1");
         [
             'type',
             'value',
@@ -223,100 +289,56 @@ static get formAssociated(){
         ].forEach((attr) => {
             const attrValue = attr === 'required' ? this.hasAttribute(attr) : this.getAttribute(attr);
             if(attrValue !== null && attrValue !== undefined) {
-                this.input[attr] = attrValue;
+				const field = this.input;
+                field[attr] = attrValue;
             }
         });
+			const serviceInteger = this.services.resolve('ServiceInteger');
+			serviceInteger.setCustom();
+			this.addEventListener('invalid', (e) => {			
+				this.invalid = true;
+				this.pristine = false;
+				console.log("input","invalid_called");
+				this.errorMessage.textContent = this.internals.validationMessage;
+				if(this.customErrorDisplay) {
+					e.preventDefault();
+				}
+			})
+		
+			
+			this.input.addEventListener("focus", (e) => {
+				this.labelElement.classList.add("fade");
+				this.native.classList.add("focused");
+			});
+		
+			this.input.addEventListener("blur", (e) => {
+				this.native.classList.remove("focused");
+				if(!e.target.value)
+					this.labelElement.classList.remove("fade")
+			});
 
-        this.input.addEventListener("focus", (e) => {
-            this.labelElement.classList.add("fade");
-            this.native.classList.add("focused");
-        });
 
-        this.input.addEventListener("blur", (e) => {
-            this.native.classList.remove("focused");
-            if(!e.target.value)
-                this.labelElement.classList.remove("fade")
-        });
 
-        this.input.addEventListener('input', (e) => {
-            if(this.validateOnChange) {
-                this.pristine = false;
-            }
-            this.input.classList.remove("pristine");
+			
 
-            this.labelElement.classList.add("fade");
+			this.addEventListener('focus', () => this.input.focus());
 
-            const clone = new e.constructor(e.type, e);
-            this.dispatchEvent(clone);
-
-            this.validateInput();
-
-            event.dispatchCustomEvent(this, "wj-input:input", {
-                value: this.input.value
-            });
-        });
-
-        this.addEventListener('invalid', (e) => {
-            this.invalid = true;
-            this.pristine = false;
-
-            this.errorMessage.textContent = this.internals.validationMessage;
-
-            if(this.customErrorDisplay) {
-                e.preventDefault();
-            }
-        });
-
-        this.addEventListener('focus', () => this.input.focus());
-
-        if(this.clear) {
-            this.clear.addEventListener("wj:button-click", (e) => {
-                this.input.value = "";
-                event.dispatchCustomEvent(this.clear, "wj-input:clear");
-            });
-        }
+			if(this.clear) {
+				this.clear.addEventListener("wj:button-click", (e) => {
+					this.input.value = "";
+					event.dispatchCustomEvent(this.clear, "wj-input:clear");
+				});
+			}
+		
     }
 
-    validateInput() {
-        const validState = this.input.validity;
-        this.invalid = false;
-
-        if(!validState.valid) {
-            for(let state in validState) {
-                const attr = `message-${state.toString()}`;
-
-                if(validState[state]) {
-                    this.validationError = state.toString();
-                    this.invalid = !this.pristine && !validState.valid;
-
-                    let errorMessage = this.message;
-
-                    if(!this.hasAttribute("message"))
-                        errorMessage = this.hasAttribute(attr) ? this.getAttribute(attr) : this.input.validationMessage;
-
-                    this.internals.setValidity(
-                      {[this.validationError]: true},
-                      errorMessage
-                    );
-
-                    if(this.invalid && this.customErrorDisplay) {
-                        this.dispatchEvent(new Event('invalid'));
-                    }
-                }
-            }
-        }
-        else {
-            this.internals.setValidity({});
-            this.pristine = false;
-            this.errorMessage.textContent = this.input.validationMessage;
-        }
-    }
 
     hasSlot(el, slotName = null) {
         let selector = slotName ? `[slot="${slotName}"]` : "[slot]";
 
         return el.querySelectorAll(selector).length > 0 ? true : false;
     }
+	unregister(){}
 }
 
 customElements.get(Input.is) || window.customElements.define(Input.is, Input);

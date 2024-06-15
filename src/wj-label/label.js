@@ -37,7 +37,7 @@ export class Label extends WJElement {
     draw(context, store, params) {
         let fragment = document.createDocumentFragment();
 		const translationText = this.localizer.translate("wj.file.upload.button");
-		console.log("translationText:"+translationText);
+		
         if(params.color)
             this.classList.add("wj-color-" + params.color, "wj-color");
 
@@ -47,6 +47,12 @@ export class Label extends WJElement {
 
         return fragment;
     }
+	get value(){
+		return this.textContent;
+	}
+	set value(lblValue){
+		this.textContent=lblValue;
+	}
 	afterDisconnect(){}
 }
 
