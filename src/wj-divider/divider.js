@@ -9,7 +9,7 @@ export class Divider extends WJElement {
     }
 
      static get is() {
-		return `${elementPrefix}-dialog`;
+		return `${elementPrefix}-divider`;
 	}
 	static get className(){
 		return "Divider";

@@ -40,10 +40,10 @@ export class ServiceInteger {
 		if(this._component.isIntTextBox()){
 			myValid = this.isCustomValid(this.validationMap.get("intTextBox"),this._component.input);	
 		}
-		console.log("service_integer","myValid:"+myValid);
+		//console.log("service_integer","myValid:"+myValid);
 		if(!myValid){
 			this._component.input.setCustomValidity("Must be an integer");
-			console.log("service_integer","old Value1:"+this.oldValue);
+			//console.log("service_integer","old Value1:"+this.oldValue);
 			if(this.oldValue){
 				this._component.input.value = this.oldValue
 			}else{
@@ -53,14 +53,15 @@ export class ServiceInteger {
 			this._component.input.setCustomValidity("");
 			this._component.errorMessage.textContent = this._component.input.validationMessage;
 			this._component.removeAttribute("invalid");
-			console.log("service_integer","old Value2:"+this.oldValue);
+			//console.log("service_integer","old Value2:"+this.oldValue);
 			this.oldValue = this._component.input.value;
 
 		}
 		this.validateInput();
-
+		//console.log("service_integer","service_integer:"+this._component.input.value);
 		event.dispatchCustomEvent(this._component, "wj-input:input", {
 			value: this._component.input.value
+			,component: this._component.input
 		});
 	}
   
@@ -69,12 +70,12 @@ export class ServiceInteger {
         const validState = this._component.input.validity;
 		const myMessage = this._component.input.validationMessage;
         this._component.invalid = false;
-		console.log("service_integer","my message:"+myMessage);
-			console.log("service_integer","my message state:"+validState.valid);
+			//console.log("service_integer","my message:"+myMessage);
+			//console.log("service_integer","my message state:"+validState.valid);
 		if(!validState.valid) {		
 			if(!validState.valid) {
 				for(let state in validState) {
-						console.log("service_integer","my message state_1");
+			//			console.log("service_integer","my message state_1");
 					const attr = `message-${state.toString()}`;
 					if(validState[state]) {
 						this._component.validationError = state.toString();
@@ -85,14 +86,14 @@ export class ServiceInteger {
 						if(!this.hasAttribute("message"))
 							errorMessage = this.hasAttribute(attr) ? this.getAttribute(attr) : this.input.validationMessage;
 	*/
-						console.log("service_integer","my message state_3");
+				//		console.log("service_integer","my message state_3");
 						this._component.internals.setValidity(
 						  {[this._component.validationError]: true},
 							errorMessage
 						);
-						console.log("service_integer","my message state_4");
-						console.log("service_integer","my message state_4"+ this._component.customErrorDisplay);
-						console.log("service_integer","my message state_4"+ this._component.invalid );
+					//	console.log("service_integer","my message state_4");
+					//	console.log("service_integer","my message state_4"+ this._component.customErrorDisplay);
+					//	console.log("service_integer","my message state_4"+ this._component.invalid );
 						if(this._component.invalid && this._component.customErrorDisplay) {
 							console.log("service_integer","dispatch_event");
 							this._component.dispatchEvent(new Event('invalid'));			

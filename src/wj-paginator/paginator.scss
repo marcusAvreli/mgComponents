@@ -1,9 +1,9 @@
-:host(.container) {
+//:host(.container) {
 	//width:100%;
 	//height:auto;
 	//width:100%;height:auto;
 //display: inline-block;
-}
+//}
 
 ::slotted(.content){
 
@@ -11,4 +11,18 @@
 	display:inline-block;
 	vertical-align:top;
 
+}
+.status {
+	display: inline-block;
+	vertical-align:top;
+	padding: 1px 10px 1px 10px;
+}
+.status .itemsStatusBar{
+display: inline-block;
+	vertical-align:top;
+	
+}
+.status:not(:first-child)  {
+ border-left:1px solid #000;
+padding: 1px 10px 1px 10px;
 }

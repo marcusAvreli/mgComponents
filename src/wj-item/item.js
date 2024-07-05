@@ -107,31 +107,31 @@ export class Item extends WJElement {
 		const target = e.target
 		const targetTagName = target.tagName
 		
+		var parentElement = undefined
 		if(targetTagName === 'wj-label'.toUpperCase()){	
-			const parentElement = target.parentElement;
-			  if (parentElement.classList.contains('selected')) {
-                parentElement.classList.remove('selected');
-				this.selectOption(parentElement,"remove");
-            } else {
-				this.selectOption(parentElement,"add");
-                parentElement.classList.add('selected');
-            }
-			
-			
+			parentElement = target.parentElement;
+		}else{
+			if(targetTagName === 'wj-item'.toUpperCase()){	
+				parentElement = target;
+			}			
 		}
-		
-		//  this.selectOption(option);
-	/*	 if (!this.disabled) {
-      if (this.multiple) {
-        this.toggleOption(option);
-      } else {
-        this.selectOption(option);
-        this.hideOptions();
-      }
-      this.renderOptions();
-    }
-	*/
+		if(parentElement){
+			const nativeItem = parentElement.shadowRoot.querySelector(".item-native");
+			if(nativeItem){
+				if (nativeItem.classList.contains('selected')) {
+					nativeItem.classList.remove('selected');
+					this.selectOption(parentElement,"remove");
+				} else {
+					this.selectOption(parentElement,"add");
+					nativeItem.classList.add('selected');
+				}		
+			}
+		}
+		//end_handleOptionClick
 	}
+		
+	
+	
 	get value(){
 
 		const byValue = this.querySelector("wj-label").value
@@ -139,12 +139,7 @@ export class Item extends WJElement {
 	}
 	selectOption(option,action) {
 		
-		
-		/* this.updateSelectedValuesDisplay();
-		this.updateClearButtonVisibility();
-		this.dispatchChangeEvent();
-		this.renderOptions();
-		*/
+	
 		  this.dispatchEvent(new CustomEvent('wj-selected-values', {
             bubbles: true,
             composed: true,

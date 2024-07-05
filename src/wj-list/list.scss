@@ -40,7 +40,7 @@
 	 justify-content:center;
 }
 
-body {
+:host(body) {
 	//background: var(--color--grey-1);
 	color: var(--color--black);
 	font-family: 'Helvetica Neue', 'Helvetica', sans-serif;
@@ -50,4 +50,9 @@ body {
 	padding: 2em;
 	 align-items:center;
 	 justify-content:center;
+
+}
+:host(.container){
+	  margin-bottom: 20px;
+  height: 700px;
 }
