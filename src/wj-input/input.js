@@ -106,7 +106,9 @@ export class Input extends WJElement {
     get name() {
         return this.getAttribute('name');
     }
-
+get placeholder(){
+	 return this.getAttribute("placeholder") || "default";
+}
     get type() {
         return this.localName;
     }
@@ -177,7 +179,7 @@ export class Input extends WJElement {
         input.classList.add("form-control");
 		input.defaultValue = this.getDefaultValue();
 
-        if(this.hasAttribute("placeholder"))
+      //  if(this.hasAttribute("placeholder"))
             input.setAttribute("placeholder", this.placeholder);
 
         if(this.hasAttribute("disabled"))

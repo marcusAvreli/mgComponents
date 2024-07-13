@@ -4,7 +4,7 @@
 	//width:100%;height:auto;
 //display: inline-block;
 //}
-
+/*
 ::slotted(.content){
 
 	width:20%;
@@ -25,4 +25,37 @@ display: inline-block;
 .status:not(:first-child)  {
  border-left:1px solid #000;
 padding: 1px 10px 1px 10px;
+}
+*/
+.body {
+	
+}
+
+* {
+	box-sizing: border-box;
+	 height: 100%;
+	
+}
+
+.paginator{
+	display: grid;
+	
+	
+	grid-template-areas: "actions" "statusbar" ;
+
+	grid-template-rows: 50% 50%;
+}
+		
+.paginator-actions{
+	grid-area: actions;
+
+	 border: 4px dotted red;
+
+	background-color: #f5ef42;
+}
+.paginator-status{
+	grid-area: statusbar;
+
+	 border: 4px dotted white;
+	background-color: #72f542;
 }

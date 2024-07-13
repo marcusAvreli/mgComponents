@@ -52,27 +52,68 @@ export class Paginator extends WJElement {
 
 		let fragment = document.createDocumentFragment();
 		let native = document.createElement("div");
-		let native2 = document.createElement("div");
+		native.classList.add("body");
+		
+		
+		let paginatorPh = document.createElement("div");
+		paginatorPh.classList.add("paginator");
+		native.appendChild(paginatorPh);
+		
+		let paginatorActions = document.createElement("div");
+		paginatorActions.classList.add("paginator-actions");
+		
+		let paginatorStatus = document.createElement("div");
+		paginatorStatus.classList.add("paginator-status");
+		
+		paginatorPh.appendChild(paginatorActions);
+		paginatorPh.appendChild(paginatorStatus);
+		paginatorStatus.textContent="Test Status";
+		paginatorActions.textContent="Test actions";
+		
+		/*
+		let mainContainer = document.createElement("div");
+		mainContainer.classList.add("main-container");
+	
+		
+		
+		let rightContainer  = document.createElement("div");
+		rightContainer.classList.add("right-container");
+		mainContainer.appendChild(rightContainer);
+		
+		let halfContainer1  = document.createElement("div");
+		halfContainer1.classList.add("half-containers");
+		rightContainer.appendChild(halfContainer1);
+		
+		let halfContainer2  = document.createElement("div");
+		halfContainer2.classList.add("half-containers");
+		rightContainer.appendChild(halfContainer2);
+		*/
+		
+		/*let native2 = document.createElement("div");
 		native.classList.add("container");
 		native2.classList.add("container");
 		let slot = document.createElement("slot");
 		native2.appendChild(slot);
-
+*/
+/*
 		let slotStart = document.createElement("slot");
 		slotStart.setAttribute("name", "start");
-
+		halfContainer1.appendChild(slotStart);
 		let slotEnd = document.createElement("slot");
 		slotEnd.setAttribute("name", "end");
 
 		
-		const mybutton = document.createElement(Button.is);
+		const mybutton = document.createElement("button");
 		mybutton.setAttribute("slot","start");
 		mybutton.classList.add("content");
-		mybutton.setDisplayLabel("<<<");
+		//mybutton.setDisplayLabel("<<<");
 		mybutton.addEventListener('click', (e) => {this.clickGoStart(e);});
+		//this.appendChild(mybutton);
 		this.appendChild(mybutton);
+		
+		*/
 
-
+/*
 		const mybutton2 = document.createElement(Button.is);
 		mybutton2.classList.add("content");
 		mybutton2.setAttribute("slot","start");
@@ -131,7 +172,7 @@ export class Paginator extends WJElement {
 		wjLabelItemsPP.value ="Items Per Page: ";
 		divItemsStatusPP.appendChild(wjLabelItemsPP);
 		
-	const divItemsStatusSub2 = document.createElement("div");
+		const divItemsStatusSub2 = document.createElement("div");
 		divItemsStatusSub2.classList.add("status");
 		const wjLabelItemsPPV = document.createElement(Label.is);
 		wjLabelItemsPPV.value =this._take;
@@ -164,10 +205,16 @@ export class Paginator extends WJElement {
 		this.input = myinput;
 		this.lblItemsT = wjLabelItemsT;
 		this.lblItemsTV =wjLabelItemsTV;
+		
+		*/
+		//	native.appendChild(slotStart);
+		//native.appendChild(mainContainer);
+		fragment.appendChild(native);
 		return fragment;
 	
 	}
-	reload(){		
+	reload(){
+/*		
 		var pageNum = this.currentPage();		
 		
 		var end = this._take*pageNum
@@ -182,6 +229,7 @@ export class Paginator extends WJElement {
 				this.lblItemsT.value =`Showing 1-${this._take} of:`;
 			}
 		}
+		*/
 	}
 	clickGoEnd(e){
 		
