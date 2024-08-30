@@ -4,16 +4,16 @@ import {Button} from '../wj-button/button.js';
 /**
  * @injectHTML
  */
-export class WizardNav extends WJElement {
+export class WizardStep extends WJElement {
 	constructor() {
 		super();
-		console.log("WizardNav","constructor");
+		console.log("WizardStep","constructor");
 	}
 	 static get is() {
-		return `${elementPrefix}-wizard-nav`;
+		return `${elementPrefix}-wizard-step`;
 	}
 	static get className(){
-		return "WizardNav";
+		return "WizardStep";
 	}
    	static set cssStyleSheet(inStyle) {		
 		this.styles = inStyle;
@@ -30,33 +30,33 @@ export class WizardNav extends WJElement {
 	
 
     draw(context, store, params) {
-		console.log("Wizard_nav","draw_start");
+		console.log("WizardStep","draw_start");
 	//	console.log("Wizard_nav","draw_start:"+this.textContent);
 		
 	
         let fragment = document.createDocumentFragment();
 		
 		let container = document.createElement("div");
-		container.classList.add("container2");
+		container.classList.add("wizard-step-container");
+		let formStep = document.createElement("div");
+		formStep.classList.add("form-step");
+		formStep.classList.add("form-step-active");
+		this.classList.add("wizard-step");	
+		let slot = document.createElement("slot");
+		slot.classList.add("form-step-slot");
+		formStep.appendChild(slot);
+		container.appendChild(formStep);
+        fragment.appendChild(container);
 		
-		let circle = document.createElement("div");
-		//circle.classList.add("circle");
-		
-		container.appendChild(circle);
-		circle.textContent=this.textContent;
-		this.container=container;
-		
-		
-		//this.addPage();
-        fragment.appendChild(circle);
+		let formOfStep = document.createElement("div");
 		
 		
 		
-		console.log("Wizard_nav","draw_finish");
+		console.log("WizardStep","draw_finish");
 		return fragment;
 	}
 	afterDraw() {
-		console.log("Wizard_nav","after_draw_start");
+		console.log("WizardStep","after_draw_start");
 		/*  if(this.hasToggle) {
 			 
             if (this.toggle === "off") {
@@ -160,4 +160,4 @@ export class WizardNav extends WJElement {
 	unregister(){}
 	
 }
-customElements.get(WizardNav.is) || window.customElements.define(WizardNav.is, WizardNav);
+customElements.get(WizardStep.is) || window.customElements.define(WizardStep.is, WizardStep);

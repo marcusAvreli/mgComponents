@@ -45,64 +45,56 @@ export class List extends WJElement {
 			
         let fragment = document.createDocumentFragment();
 		
+		let listGridWrapper = document.createElement("div");
+		listGridWrapper.classList.add("list-grid-wrapper");
+		this.appendChild(listGridWrapper);
+		
 		let wrapper = document.createElement("div");
-		wrapper.classList.add("page2");
+		wrapper.classList.add("list-grid-container");
+		listGridWrapper.appendChild(wrapper);
+		let listContainer   = document.createElement("div");
+		let listContainerBox1   = document.createElement("div");
+		listContainerBox1.classList.add("list-container-box1");
+		let listContainerSubBox1   = document.createElement("div");
+		listContainerSubBox1.classList.add("list-container-sub-box1");
+		listContainerBox1.appendChild(listContainerSubBox1);
+		listContainer.appendChild(listContainerBox1);
+		wrapper.appendChild(listContainer);
+		listContainer.classList.add("list-container");
 		
-/*
-		let mainGridWrapper = document.createElement("div");
-		mainGridWrapper.classList.add("main-grid-wrapper");
-		wrapper.appendChild(mainGridWrapper);
-
-
-			let mainGrid = document.createElement("div");
-		mainGrid.classList.add("main-grid");
-		mainGridWrapper.appendChild(mainGrid);
-		*/
+		//this.appendChild(wrapper);
+		//let page = document.createElement("div");
+		//page.classList.add("list-page");
+	//	wrapper.appendChild(page);
 		
-		let leftScroll = document.createElement("div");
-		leftScroll.classList.add("scroll");
-		wrapper.appendChild(leftScroll);
+		let element = document.createElement("slot");
 		
-		
-			let areaWrapper = document.createElement("div");
-		areaWrapper.classList.add("area-wrapper");
-		wrapper.appendChild(areaWrapper);
-		
+		 //element.classList.add("contentsub");
+		 listContainerSubBox1.appendChild(element);
 		/*
-		let listWrapper = document.createElement("div");
-		listWrapper.classList.add("list-wrapper");
-		areaWrapper.appendChild(listWrapper);
-		*/
-		let contentsub = document.createElement("div");
-		contentsub.classList.add("contentsub");
-		areaWrapper.appendChild(contentsub);
+		let box1 = document.createElement("div");
+		box1.classList.add("list-box1");
+		page.appendChild(box1);
+		
+	
+		this.wrapper = wrapper;
+		this.box1 = box1;
+		//this.addSearchBar();
+		this.addHorizontalScroll();
+		this.addScrollableList();
+		//this.addPaginatorPanel();
 		
 		
 		
-		///contentsub
-		
-		//not shadowed
-		//this.shadowRoot.appendChild(searchPH);
-		
-		//let wrapper = document.createElement("div");
-		//wrapper.classList.add("left-page-wrapper");
-		//let wrapper = document.createElement("div");
-		/*
-		wrapper.classList.add("wrapper2");
 		
 	
 		
 	
-		
-		let statusPH = document.createElement("div");
-		statusPH.classList.add("footer2");
-		statusPH.textContent="status";
-		*/
 		
 		let scrollbarPH = document.createElement("div");
-		scrollbarPH.classList.add("scroll-bar");
-		leftScroll.appendChild(scrollbarPH);
-		/*
+		//scrollbarPH.classList.add("scroll-bar");
+		//leftScroll.appendChild(scrollbarPH);
+		
 		let body2PH = document.createElement("div");
 		body2PH.classList.add("body2");
 		
@@ -111,24 +103,24 @@ export class List extends WJElement {
 		
 		body2PH.appendChild(listWrapperPH);
 		
-		*/
+		
 		
 		
 		//this.appendChild(wrapper);
 		
 		
-		this.body2PH=contentsub;
-		this.scrollbarPH = scrollbarPH;
+		//this.body2PH=contentsub;
+		//this.scrollbarPH = scrollbarPH;
 		this.wrapper = wrapper;
 		if(this.isPaginated() && this.isSearchable()){
 			
 
 			this.addSearchBar();
-			this.addPaginator();
+			this.addPaginatorPanel();
 		
 
 			this.style.setProperty("--wrapper-grid-template-areas", "'leftSearch leftSearch leftSearch' 'leftScroll leftScroll leftScroll' 'leftList leftList leftList' 'leftPaginator leftPaginator leftPaginator'");
-			this.style.setProperty("--wrapper-grid-template-rows", "6% 1% 82% 11%");
+			this.style.setProperty("--wrapper-grid-template-rows", "6% 1% 85% 8%");
 			
 			
 		
@@ -136,88 +128,72 @@ export class List extends WJElement {
 		if(!this.isPaginated() && this.isSearchable()){
 				this.addSearchBar();
 				
-				this.style.setProperty("--wrapper-grid-template-areas", "'leftSearch leftSearch leftSearch' 'leftScroll leftScroll leftScroll' 'leftList leftList leftList'");
+			this.style.setProperty("--wrapper-grid-template-areas", "'leftSearch leftSearch leftSearch' 'leftScroll leftScroll leftScroll' 'leftList leftList leftList'");
 			this.style.setProperty("--wrapper-grid-template-rows", "6% 1% 93%");
-		/*
-			let searchPH = document.createElement("div");
-			searchPH.classList.add("left-search");
-			wrapper.appendChild(searchPH);
-			this.style.setProperty("--wrapper-grid-template-areas", "'leftSearch leftSearch leftSearch' 'leftScroll leftScroll leftScroll' 'leftList leftList leftList' ");
-			this.style.setProperty("--wrapper-grid-template-rows", "6% 1% 93%");
-			*/
-			// Wrapper
-			//let searchPH = document.createElement("div");
-			//searchPH.classList.add("footer2");
-			//let native = document.createElement("div");
-		//	native.setAttribute("part", "native");
-		//	native.classList.add("native-input-file", this.variant || "default");
-			
-			//searchPH.appendChild(searchBar);
-			//fragment.appendChild(native);
-			//wrapper.appendChild(searchPH);
-			
-			//this.searchBar = searchBar;
+	
 		}
 		
 		 let element = document.createElement("slot");
 		 //element.classList.add("contentsub");
-		 contentsub.appendChild(element);
-		/*
-		wrapper.appendChild(scrollPH);
+		 this.contentsub.appendChild(element);
 		
-       
-		//element.classList.add("wrapper2");
-		listWrapperPH.appendChild(element);
-		body2PH.appendChild(listWrapperPH);
-		
-		wrapper.appendChild(body2PH);
-		*/
-		//wrapper.appendChild(statusPH);
-		
-		/*
-		//container.appendChild(element);
-		*/
-		//leftList.appendChild(element);
-	//	contentsub.appendChild(element);
-	
-		//fragment.appendChild(container);
-		// fragment.appendChild(slotEnd);
 		if(this.isPaginated() && !this.isSearchable()){
-				this.addPaginator();
+				this.addPaginatorPanel();
 			this.style.setProperty("--wrapper-grid-template-areas", "'leftScroll leftScroll leftScroll' 'leftList leftList leftList' 'leftPaginator leftPaginator leftPaginator'");
 			this.style.setProperty("--wrapper-grid-template-rows", "1% 88% 11%");
-			//this.classList.add("container");
-				//wrapper.appendChild(actionsPH);
-				/*	let actionsPH = document.createElement("div");
-		actionsPH.classList.add("footer3");
-			console.log("list","paginated");
-			const numberofItems = this.itemsPerPage();
-			console.log("list","numberofItems:"+numberofItems);
-			let native = document.createElement("div");
-			native.setAttribute("part", "native");
-			native.classList.add("native-input-file", this.variant || "default");
-			const paginationBar = document.createElement("wj-paginator");
-			*/
-		//	native.appendChild(paginationBar);
-		/*
-		actionsPH.appendChild(paginationBar);
-		wrapper.appendChild(actionsPH);
-		*/
-		//	fragment.appendChild(native);
-			//wjFooter.appendChild(native);
-			//fragment.appendChild(wjFooter);
-		//	this.paginationBar = paginationBar;
 		
 		
 		}
 		
-	
-		fragment.appendChild(wrapper);
+	*/
+		fragment.appendChild(listGridWrapper);
         return fragment;
     }
+	addScrollableList(){
+		let wrapperList = document.createElement("div");
+		wrapperList.classList.add("wrapper-list");
+		let list = document.createElement("div");
+		list.classList.add("list");
+		
+		let contentsub = document.createElement("div");
+		contentsub.classList.add("contentsub");
+		list.appendChild(contentsub);
+		wrapperList.appendChild(list);
+		this.box1.appendChild(wrapperList);
+		
+		contentsub.addEventListener('scroll',  ( e ) => this.progress(e));
+		this.contentsub = contentsub;
+		
+	}
+	addHorizontalScroll(){
+		
+		let wrapperScroll = document.createElement("div");
+		let scroll = document.createElement("div");
+		scroll.classList.add("scroll");
+		let scrollBar = document.createElement("div");
+		scrollBar.classList.add("scroll-bar");
+		scroll.appendChild(scrollBar);
+		wrapperScroll.appendChild(scroll);
+		wrapperScroll.classList.add("wrapper-scroll");
+		this.box1.appendChild(wrapperScroll);
 	
+		this.wrapperScroll=wrapperScroll;
+		this.scrollBar = scrollBar;
+	}
 	addSearchBar(){
-		let searchPH = document.createElement("div");
+		let search = document.createElement("div");
+		search.classList.add("search");
+		this.box1.appendChild(search);
+
+		let searchBar = document.createElement("wj-input");
+		searchBar.setAttribute("variant", "standard");
+		searchBar.setAttribute("type", "text");
+		searchBar.setAttribute("placeholder", "Search");
+		searchBar.value="";
+		this.searchBar = searchBar;
+		search.appendChild(searchBar);
+		//searchBar.textContent="Search Bar";
+		/*let searchPH = document.createElement("div");
 		searchPH.classList.add("left-search");
 		this.wrapper.appendChild(searchPH);
 		
@@ -227,48 +203,55 @@ export class List extends WJElement {
 		searchBar.setAttribute("placeholder", "Search");
 		// searchBar.setAttribute("readonly", "");
 		searchPH.appendChild(searchBar);
-		this.searchBar = searchBar;
+		
+		
+		*/
 	}
-	addPaginator(){
+	addPaginatorPanel(){
 		let paginatorDiv  = document.createElement("div");
-		paginatorDiv.classList.add("paginator-wrapper");
-		this.wrapper.appendChild(paginatorDiv);
+		paginatorDiv.classList.add("wrapper-paginator");
+		this.box1.appendChild(paginatorDiv);
 
 		const paginationBar = document.createElement("wj-paginator");
 		paginatorDiv.appendChild(paginationBar);
+		this.paginationBar = paginationBar;
 		
 	}
     afterDraw() {
 		console.log("list","after_draw_start");
 		if(this.isPaginated()){
-			//event.dispatchCustomEvent(this, "wj-paginator:reload");
-			/*
+			
+			event.dispatchCustomEvent(this, "wj-paginator:reload");
+			
 			this.paginationBar.totalCount(this.children.length);
 			this.paginationBar.take(this.itemsPerPage());
 			this.paginationBar.items = this.children;
 			this.paginationBar.showPage(0,this.itemsPerPage());
-			*/
+			
 		}
 		/*this.shadowRoot.addEventListener(`${elementPrefix}-selected-values`, ( e ) => this.selectedChange(e));
 		*/
-		this.body2PH.addEventListener('scroll', ( e ) => this.progress(e));
 		
+		/*
+		this.body2PH.addEventListener('scroll', ( e ) => this.progress(e));
+		*/
 		if(this.isSearchable()){
 		   this.searchBar.addEventListener('wj-input:input', ( e ) => this.filterOptions(e));
 		}
         this.classList.toggle("wj-lines-" + this.lines, this.hasAttribute("lines"));
         this.classList.toggle("wj-inset", this.hasAttribute("inset"));
-		
+		/*
+		*/
 		console.log("list","after_draw_finish");
     }
 	
 	
 	progress(e){		
 	
-		const scroll = this.body2PH.scrollTop;
-		const height = this.body2PH.scrollHeight - this.body2PH.clientHeight;
+		const scroll = this.contentsub.scrollTop;
+		const height = this.contentsub.scrollHeight - this.contentsub.clientHeight;
 		const percent = (scroll / height) * 100;
-		this.scrollbarPH.style.width = percent + "%";	
+		this.scrollBar.style.width = percent + "%";	
 	}
 	
 	async filterOptions(e) {		

@@ -19,7 +19,9 @@ export class Paginator extends WJElement {
 	grabCoords = {x: 0, y: 0};
 	*/
 	constructor() {
-		super();	
+		super();
+
+	
 	}
 
 	isClickable() {
@@ -44,192 +46,144 @@ export class Paginator extends WJElement {
 		this.isShadowRoot = 'open';
 	}
 
-	beforeDraw( context, store, params ) {}
+	beforeDraw( context, store, params ) {
+		console.log("paginator","before_draw");
+		
+	}
 
 	draw( context, store, params ) {
 		this.selectedValues = [];
 		this._showedCounter =0;
 
 		let fragment = document.createDocumentFragment();
-		let native = document.createElement("div");
-		native.classList.add("body");
+		
+		let container = document.createElement("div");
+		container.classList.add("container");
+		this.container = container;
+		
+		this.addPaginator();
+		this.addButtonBar();
 		
 		
-		let paginatorPh = document.createElement("div");
-		paginatorPh.classList.add("paginator");
-		native.appendChild(paginatorPh);
-		
-		let paginatorActions = document.createElement("div");
-		paginatorActions.classList.add("paginator-actions");
-		
-		let paginatorStatus = document.createElement("div");
-		paginatorStatus.classList.add("paginator-status");
-		
-		paginatorPh.appendChild(paginatorActions);
-		paginatorPh.appendChild(paginatorStatus);
-		paginatorStatus.textContent="Test Status";
-		paginatorActions.textContent="Test actions";
-		
-		/*
-		let mainContainer = document.createElement("div");
-		mainContainer.classList.add("main-container");
 	
 		
 		
-		let rightContainer  = document.createElement("div");
-		rightContainer.classList.add("right-container");
-		mainContainer.appendChild(rightContainer);
+		const wjLabelItemsT = document.createElement(Label.is);
+		///wjLabelItemsT.setAttribute("slot","end");
+		this.paginatorStatus.appendChild(wjLabelItemsT);
 		
-		let halfContainer1  = document.createElement("div");
-		halfContainer1.classList.add("half-containers");
-		rightContainer.appendChild(halfContainer1);
+		const wjLabelItemsTV = document.createElement(Label.is);
+		//wjLabelItemsTV.value =this.itemsLength;
+		//wjLabelItemsTV.setAttribute("slot","end");
+		this.paginatorStatus.appendChild(wjLabelItemsTV);
 		
-		let halfContainer2  = document.createElement("div");
-		halfContainer2.classList.add("half-containers");
-		rightContainer.appendChild(halfContainer2);
-		*/
 		
-		/*let native2 = document.createElement("div");
-		native.classList.add("container");
-		native2.classList.add("container");
-		let slot = document.createElement("slot");
-		native2.appendChild(slot);
-*/
-/*
-		let slotStart = document.createElement("slot");
-		slotStart.setAttribute("name", "start");
-		halfContainer1.appendChild(slotStart);
-		let slotEnd = document.createElement("slot");
-		slotEnd.setAttribute("name", "end");
-
 		
-		const mybutton = document.createElement("button");
-		mybutton.setAttribute("slot","start");
-		mybutton.classList.add("content");
-		//mybutton.setDisplayLabel("<<<");
-		mybutton.addEventListener('click', (e) => {this.clickGoStart(e);});
-		//this.appendChild(mybutton);
-		this.appendChild(mybutton);
+		wjLabelItemsT.classList.add('itemsPerPage');
+		wjLabelItemsTV.classList.add('itemsPerPage');
 		
-		*/
-
-/*
+		this.lblItemsT = wjLabelItemsT;
+		this.lblItemsTV =wjLabelItemsTV;
+		
+		
+		
+		fragment.appendChild(container);
+		return fragment;
+	
+	}
+	addButtonBar(){
+		let button = document.createElement(Button.is);
+		button.setAttribute("slot","start");
+		button.setAttribute("zeropadtop","");
+		button.classList.add("button1");
+	
+		button.setDisplayLabel("<<<");		
+		
+		button.addEventListener('click', (e) => {this.clickGoStart(e);});
+		this.appendChild(button);
+		
 		const mybutton2 = document.createElement(Button.is);
-		mybutton2.classList.add("content");
+		mybutton2.classList.add("button1");
 		mybutton2.setAttribute("slot","start");
+		mybutton2.setAttribute("zeropadtop","");
 		mybutton2.setDisplayLabel("<");
 		mybutton2.addEventListener('click', (e) => {this.clickGoBack(e);});
-
 		this.appendChild(mybutton2);
-
-
-		const myinput = document.createElement(Input.is);
+		
+		const myinput = document.createElement("wj-input");
 		myinput.setAttribute("slot","start");
-		myinput.classList.add("content");
+		myinput.classList.add("button1");
+		myinput.setAttribute("standard","");
+		myinput.value="";
+		/*myinput.classList.add("content");
 		myinput.setAttribute("id","navigatortxt");
 		myinput.setAttribute("type","text");
 		myinput.setAttribute("intTextBox","");
-		myinput.setAttribute("custom-error-display","");
+		//myinput.setAttribute("custom-error-display","");
 		myinput.setAttribute("validate-on-change","");
 		myinput.setAttribute("defaultValue",1);
 		myinput.setAttribute("variant","centered");
+		*/
 		myinput.value=1;
 		myinput.addEventListener(Input.is+":input",  (e) => {this.inputPage(e);});
-		console.log(Paginator.is,"register reload");
 		
+	
+		/*
 		myinput.setAttribute("message","Must be an integer");	
+		*/
 		this.appendChild(myinput);
+		this.input=myinput;
+		
 		
 		const mybutton4 = document.createElement(Button.is);
 		mybutton4.setAttribute("slot","start");
 		mybutton4.setDisplayLabel(">");
-		mybutton4.classList.add("content");
+		mybutton4.classList.add("button1");
 		mybutton4.addEventListener('click', (e) => {this.clickGoNext(e);});
 		this.appendChild(mybutton4);
 		
 		const mybutton3 = document.createElement(Button.is);
 		mybutton3.setAttribute("slot","start");
-		mybutton3.classList.add("content");
+		mybutton3.classList.add("button1");
 		mybutton3.setDisplayLabel(">>>");
 		mybutton3.addEventListener('click', (e) => {this.clickGoEnd(e);});
 		this.appendChild(mybutton3);
-
-		const divItemsStatus = document.createElement("div");
-		
-		const divItemsStatusSub1 = document.createElement("div");
-		divItemsStatusSub1.classList.add("status");
-		
-
-		const divItemsStatusPP = document.createElement("div");
-		const divItemsStatusPPV = document.createElement("div");
-		divItemsStatusPP.classList.add("itemsStatusBar");
-		divItemsStatusPPV.classList.add("itemsStatusBar");
-	
-		divItemsStatusSub1.appendChild(divItemsStatusPP);
-		divItemsStatusSub1.appendChild(divItemsStatusPPV);
-		divItemsStatus.appendChild(divItemsStatusSub1);
-		const wjLabelItemsPP = document.createElement(Label.is);
-		wjLabelItemsPP.value ="Items Per Page: ";
-		divItemsStatusPP.appendChild(wjLabelItemsPP);
-		
-		const divItemsStatusSub2 = document.createElement("div");
-		divItemsStatusSub2.classList.add("status");
-		const wjLabelItemsPPV = document.createElement(Label.is);
-		wjLabelItemsPPV.value =this._take;
-		divItemsStatusPPV.appendChild(wjLabelItemsPPV);
-		
-		const divItemsStatusT = document.createElement("div");
-		const divItemsStatusTV = document.createElement("div");
-		divItemsStatusT.classList.add("itemsStatusBar");
-		divItemsStatusTV.classList.add("itemsStatusBar");
-		
-		divItemsStatusSub2.appendChild(divItemsStatusT);
-		divItemsStatusSub2.appendChild(divItemsStatusTV);
-		divItemsStatus.appendChild(divItemsStatusSub2);
+	}
+	addPaginator(){
+		let paginator = document.createElement("div");
+		paginator.classList.add("paginator");
 		
 		
-		const wjLabelItemsT = document.createElement(Label.is);
-
-		divItemsStatusT.appendChild(wjLabelItemsT);
+		let paginatorActions = document.createElement("div");
+		paginatorActions.classList.add("paginator-actions");
 		
-		const wjLabelItemsTV = document.createElement(Label.is);
-		wjLabelItemsTV.value =this.itemsLength;
-		divItemsStatusTV.appendChild(wjLabelItemsTV);
+		let slotStart = document.createElement("slot");
+		slotStart.setAttribute("name", "start");
+		paginatorActions.appendChild(slotStart);
 		
-		native.appendChild(slotStart);
+		let paginatorStatus = document.createElement("div");
+		
+		paginatorStatus.classList.add("paginator-status");
+		
+		paginator.appendChild(paginatorActions);
+		paginator.appendChild(paginatorStatus);
+		//paginatorStatus.textContent="Test Status";
+		this.container.appendChild(paginator);
+		this.paginatorActions = paginatorActions;
+		this.paginatorStatus = paginatorStatus;
 		
 		
-		fragment.appendChild(native);
-		fragment.appendChild(divItemsStatus);
-		this.slotStart = slotStart;
-		this.input = myinput;
-		this.lblItemsT = wjLabelItemsT;
-		this.lblItemsTV =wjLabelItemsTV;
-		
-		*/
-		//	native.appendChild(slotStart);
-		//native.appendChild(mainContainer);
-		fragment.appendChild(native);
-		return fragment;
-	
 	}
 	reload(){
-/*		
+
 		var pageNum = this.currentPage();		
 		
 		var end = this._take*pageNum
 		var start = end-this._take;
 		this.showPage(start,end);
 		this.lblItemsTV.value = this.itemsLength.toString();
-		if(this.lblItemsT){
-			
-			if(this._take>this.itemsLength){
-				this.lblItemsT.value =`Showing 1-${this.itemsLength} of:`;
-			}else{
-				this.lblItemsT.value =`Showing 1-${this._take} of:`;
-			}
-		}
-		*/
+		
+
 	}
 	clickGoEnd(e){
 		
@@ -239,6 +193,7 @@ export class Paginator extends WJElement {
 		
 	}
 	clickGoNext(e){		
+		console.log("click_go_next")
 		var pageNum = this.currentPage();
 		pageNum = pageNum+1;
 		if(pageNum > this.numOfPages){
@@ -251,6 +206,7 @@ export class Paginator extends WJElement {
 	}
 	
 	clickGoBack(e){		
+		console.log("click_go_back")
 		var pageNum = this.currentPage();
 		pageNum = pageNum-1;
 		if(pageNum==0){
@@ -275,7 +231,12 @@ export class Paginator extends WJElement {
 	get keepItem(){
 		return this.curDraggedEl;
 	}
+
 	afterDraw() {
+		
+	
+		
+		//buttonNative.classList.add('standrad');
 		this.addEventListener("wj-paginator:reload",  (e) => {this.reload();});			
 		this.reload();
 	}
@@ -357,6 +318,7 @@ export class Paginator extends WJElement {
 			
 		
 		}
+		
 		this._showedCounter=0;
 		for(var i=0;i<this._collection.length;i++){
 			const child = this._collection[i];
@@ -375,26 +337,29 @@ export class Paginator extends WJElement {
 			}
 		}
 			if(this.isLastPage){
-				//this.lblItemsT.value =`Showing ${tempStart}-${tempEnd} of:`;
+				
+				
+				this.lblItemsT.value =`Showing ${tempStart}-${tempEnd} `;
 			
 				if(this._showedCounter==1){
 					if(this.lblItemsT){
-						this.lblItemsT.value =`Showing ${tempStart} of:`;
+						this.lblItemsT.value =`Showing ${tempStart} `;
 					}
 				}else{
 					if(this.numOfPages == this.currentPage()){
 						if(this.lblItemsT){
 							if(this._showedCounter>1){
-								console.log("paginator","showed_counter:"+this._showedCounter);
-								this.lblItemsT.value =`Showing ${tempStart}-${tempEnd} of:`;
+							
+								this.lblItemsT.value =`Showing ${tempStart}-${tempEnd} `;
 							}
 						}
 					}
 				}
 			}else{
+				
 				if(this.numOfPages >= this.currentPage()){
-						if(this.lblItemsT){
-					this.lblItemsT.value =`Showing ${tempStart}-${tempEnd} of:`;
+						if(this.lblItemsT){							
+							this.lblItemsT.value =`Showing ${tempStart}-${tempEnd} `;
 						}
 				}
 			}

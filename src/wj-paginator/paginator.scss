@@ -1,61 +1,50 @@
-//:host(.container) {
-	//width:100%;
-	//height:auto;
-	//width:100%;height:auto;
-//display: inline-block;
-//}
-/*
-::slotted(.content){
-
-	width:20%;
-	display:inline-block;
-	vertical-align:top;
-
+ /* FULL_SCREEN_OVERLAY_START */
+.container {
+	position: relative;
+	width: 100%;	
+	left: 0;
+	top: 0;
+	background: rgba(51,51,51,0.7);
+//	border-style: solid;
+//	border-color: red;
+//	border-width: 8px;
+//	box-sizing: border-box;
+//	display:flex;
+	height: 100%;
 }
-.status {
-	display: inline-block;
-	vertical-align:top;
-	padding: 1px 10px 1px 10px;
-}
-.status .itemsStatusBar{
-display: inline-block;
-	vertical-align:top;
-	
-}
-.status:not(:first-child)  {
- border-left:1px solid #000;
-padding: 1px 10px 1px 10px;
-}
-*/
-.body {
-	
-}
-
-* {
-	box-sizing: border-box;
-	 height: 100%;
-	
-}
+/* FULL_SCREEN_OVERLAY_END */
 
 .paginator{
 	display: grid;
-	
-	
+	height:100%;
 	grid-template-areas: "actions" "statusbar" ;
 
-	grid-template-rows: 50% 50%;
+	grid-template-rows: 55% 45%;
 }
 		
 .paginator-actions{
 	grid-area: actions;
-
-	 border: 4px dotted red;
-
+	display:flex;
 	background-color: #f5ef42;
 }
 .paginator-status{
-	grid-area: statusbar;
-
-	 border: 4px dotted white;
+	grid-area: statusbar;	
 	background-color: #72f542;
+	display: inline-flex;
+}
+.itemsPerPage{
+	display: inline-flex;
+	&:not(:first-child)  {
+ border-left:1px solid #000;
+padding: 1px 10px 1px 10px;
+	}
+	&:first-child  {
+ 
+	padding: 1px 10px 1px 10px;
+	}
+	 }
+	
+.button1{
+	width:20%;
+	
 }

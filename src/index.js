@@ -89,6 +89,7 @@ import {VisuallyHidden} from './wj-visually-hidden/visually-hidden.js';
 import {Wizard} from './wj-wizard/wizard.js';
 import {WizardNav} from './wj-wizard-nav/wizard-nav.js';
 import {WizardButton} from './wj-wizard-button/wizard-button.js';
+import {WizardStep} from './wj-wizard-step/wizard-step.js';
 //MG_COMPONENTS
 import {NumberFormatter} from './mg-number-formatter/number-formatter.js';
 
@@ -170,6 +171,7 @@ export { WJElement, defaultStoreActions, store
 	,Wizard
 	,WizardNav
 	,WizardButton
+	,WizardStep
  
  
  //MG_COMPONENTS

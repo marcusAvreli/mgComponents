@@ -133,6 +133,9 @@ export class Button extends WJElement {
 
         let element = document.createElement(this.hasAttribute('href') ? 'a': 'button');
         element.classList.add("button-native");
+		if(this.hasAttribute("zeropadtop")){
+			element.classList.add("standrad");
+		}
         element.setAttribute("part", "native");
 
         let  span = document.createElement("span");

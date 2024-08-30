@@ -36,15 +36,38 @@ export class Wizard extends WJElement {
     draw(context, store, params) {
 		console.log("Wizard","draw_start");
 		 let fragment = document.createDocumentFragment();
-
-        let element = document.createElement("slot");
-
-        fragment.appendChild(element);
+		
+		let wizardContainer = document.createElement("div");
+		wizardContainer.classList.add("wizard-container");
+		
+		let wizardMain = document.createElement("div");
+		let wizardAside = document.createElement("div");
+		let wizardFooter = document.createElement("div");
+		
+		wizardMain.classList.add("wizard-main");
+		wizardAside.classList.add("wizard-aside");
+		wizardFooter.classList.add("wizard-footer");
+		
+		wizardContainer.appendChild(wizardMain);
+		wizardContainer.appendChild(wizardAside);
+		wizardContainer.appendChild(wizardFooter);
+		
+		
+		
+		
+		this.wizardContainer=wizardContainer;
+		this.wizardAside=wizardAside;
+		
+		
+		this.addPage();
+		//this.addWizardNav();
+        fragment.appendChild(wizardContainer);
+		
 		console.log("Wizard","draw_finish");
         return fragment;
 	}
 	afterDraw(){
-		
+		/*
 		this.shadowRoot.addEventListener('wj-wizard-next', ( e ) => this.next(e));
 		this.shadowRoot.addEventListener('wj-wizard-previous', ( e ) => this.previous(e));
 		 const firstPanel = this._firstPanel();
@@ -56,6 +79,111 @@ export class Wizard extends WJElement {
             firstPanel.active = true;
 			this.active = true;
         }
+		*/
+	}
+	addWizardNav(){
+		//let wizardNav = document.createElement("wj-wizard-nav");
+		//this.box1.appendChild(wizardNav);
+		
+	}
+	addPage(){
+		let page = document.createElement("div");
+		page.classList.add("wizard-page");
+		
+		let box1 = document.createElement("div");
+		box1.classList.add("box1");
+		
+		let wrapper = document.createElement("div");
+		wrapper.classList.add("wrapper");
+		
+		let slot = document.createElement("slot");
+		slot.setAttribute("name","navigation");
+		//slot.classList.add("wrapper");
+		wrapper.appendChild(slot);
+		box1.appendChild(wrapper);
+		
+		let box2 = document.createElement("div");
+		box2.classList.add("wizard-box2");
+		
+		let slides = document.createElement("div");
+		slides.classList.add("wizard-slides");
+		
+		let slot2 = document.createElement("slot");
+		slot2.setAttribute("name","steps");
+		slot2.classList.add("wizard-slot-steps");
+		slides.appendChild(slot2);
+		
+		let actions = document.createElement("div");
+		actions.classList.add("actions");
+		
+		let prevButton = document.createElement("wj-button");
+		actions.appendChild(prevButton);
+		prevButton.setDisplayLabel("previous");	
+
+		let nextButton = document.createElement("wj-button");
+		actions.appendChild(nextButton);
+		nextButton.setDisplayLabel("next");	
+   nextButton.addEventListener("wj:button-click", (e) => {
+	   this.nextClick(e);
+   })
+  prevButton.addEventListener("wj:button-click", (e) => {
+	   this.prevClick(e);
+   })	   
+		let formSteps = document.querySelectorAll(".form-step");
+		console.log("formSteps:"+formSteps.length);
+		
+		
+		
+		box2.appendChild(slides);
+		//box2.appendChild(actions);
+		
+		
+		const progressSteps = document.querySelectorAll(".circle");
+		
+		
+		//page.appendChild(box1);
+		page.appendChild(box2);
+		
+		this.wizardAside.appendChild(page);
+		/*this.box1=box1;
+		this.box2=box2;
+		 this.formStepsNum = 0;
+		 this.formSteps=formSteps;
+		
+		 this.progressSteps=progressSteps;
+		*/
+	}
+	prevClick(e){
+		console.log("wizard_previous_button");
+		this.formStepsNum--;
+		this.updateFormSteps();
+		this.updateProgressbar();
+	}
+	nextClick(e){
+		console.log("wizard_next_button");
+		this.formStepsNum++;
+        this.updateFormSteps();
+        this.updateProgressbar();
+	}
+	updateProgressbar(){
+		  this.progressSteps.forEach((progressStep, index) => {
+        if ( index < this.formStepsNum + 1 ) {
+            progressStep.classList.add('progress-step-active')
+            
+            
+        } else {
+            progressStep.classList.remove('progress-step-active')
+        }
+    })
+	}
+	updateFormSteps(){
+	this.formSteps.forEach((formStep) => {
+        formStep.classList.contains("form-step-active") &&
+        formStep.classList.remove("form-step-active")
+    })
+	console.log("formSteps:"+this.formSteps.length);
+	console.log("formStepsNum:"+this.formStepsNum);
+    this.formSteps[this.formStepsNum].classList.add("form-step-active");
 	}
    _panelCount() {
         return this.querySelectorAll('wj-panel').length;

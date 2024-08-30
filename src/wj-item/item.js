@@ -16,7 +16,7 @@ export class Item extends WJElement {
 	*/
 	constructor() {
 		super();
-		console.log("constructor_item");
+		//console.log("constructor_item");
 		this.labelColorStyles = {};
 		this.itemStyles = new Map();
 		this.inheritedAriaAttributes = {};
@@ -81,13 +81,12 @@ export class Item extends WJElement {
 	beforeDraw( context, store, params ) {}
 
 	draw( context, store, params ) {
-		 this.selectedValues = [];
 		const TagType = this.isClickable() ? this.hasAttribute('href') === undefined ? 'button' : 'a' : 'div';
-		
+
 		if(this.hostContext('wj-list', this)) {
 			this.classList.add('wj-item-list');
 		}
-	
+		//  ${WjElementUtils.attributesToString(WjElementUtils.getAttributes(this))}
 		return `<${TagType} class="item-native" part="native">
 			<slot name="start"></slot>
 			<div class="item-inner">
@@ -163,7 +162,7 @@ export class Item extends WJElement {
 		return this.curDraggedEl;
 	}
 	afterDraw() {
-		console.log("finished_draw_item");
+		/*console.log("finished_draw_item");
 		this.addEventListener("dragstart", this.itemDragStart);
 		this.addEventListener('dragend',this.itemDragEnd);
 		this.addEventListener('dragenter', this.itemDragEnter);
@@ -172,12 +171,12 @@ export class Item extends WJElement {
 		this.addEventListener('drop', this.itemDrop);
 		this.addEventListener('focus', this.itemFocus);
 		this.addEventListener('click', (e) => this.handleOptionClick(e));
-		/*
+		
 		let buttonUp =	this.querySelector('#buttonUp');
 		let buttonDown =	this.querySelector('#buttonDown');
 		buttonUp.addEventListener("click", this.buttonUpClicked);		
 		buttonDown.addEventListener("click",this.buttonDownClicked)
-            */
+        
 
 
 		//this.addEventListener("slotchange", (event) => {console.log("slot_change_1")});
@@ -186,7 +185,7 @@ export class Item extends WJElement {
 		  let nodes = slots[1].assignedNodes();
 		
 		});
-		
+		*/
 	}
 	buttonUpClicked(e){		
 		const targetTagName = e.target.tagName		
@@ -260,8 +259,7 @@ export class Item extends WJElement {
 		}
 		*/
 	}
-	itemFocus(e){
-		console.log("update item focus:"+e.target.id);
+	itemFocus(e){		
 		this.updateFocusInfo();
 	}
 	

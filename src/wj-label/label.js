@@ -34,11 +34,10 @@ export class Label extends WJElement {
     beforeDraw(context, store, params) {
     }
 
-    draw(context, store, params) {
+      draw(context, store, params) {
         let fragment = document.createDocumentFragment();
-		const translationText = this.localizer.translate("wj.file.upload.button");
-		
-        if(params.color)
+
+        if(this.color)
             this.classList.add("wj-color-" + params.color, "wj-color");
 
         let element = document.createElement("slot");

@@ -150,19 +150,30 @@ get placeholder(){
         let hasSlotEnd = this.hasSlot(this, "end");
         let fragment = document.createDocumentFragment();
 
-        // Wrapper
-        let native = document.createElement("div");
-        native.setAttribute("part", "native");
-        native.classList.add("native-input", this.variant || "default");
+        // Container
+      	let container = document.createElement("div");
+		container.classList.add("container");
+		
+		if(this.hasAttribute("standard")){
+			this.style.setProperty("--wj-input-margin-bottom", "0");
+			  container.classList.add("paginator");
+		}
+		
+		 container.setAttribute("part", "native");
+        container.classList.add("native-input", this.variant || "default");
+		this.container = container;
+		
+        
 
-        if(this.hasAttribute("invalid"))
-            native.classList.add("has-error");
+     if(this.hasAttribute("invalid"))
+            container.classList.add("has-error");
 
         let wrapper = document.createElement("div");
         wrapper.classList.add("wrapper");
+		
 
         let inputWrapper = document.createElement("div");
-        inputWrapper.classList.add("input-wrapper");
+		inputWrapper.classList.add("input-wrapper");
 
         // Label
         let label = document.createElement("label");
@@ -173,20 +184,31 @@ get placeholder(){
 
         // Input
         let input = document.createElement("input");
-        input.setAttribute("type", "text");
+      input.setAttribute("type", "text");
         input.setAttribute("part", "input");
         input.setAttribute("value", this.value || "");
         input.classList.add("form-control");
-		input.defaultValue = this.getDefaultValue();
 
-      //  if(this.hasAttribute("placeholder"))
+        if(this.hasAttribute("placeholder"))
             input.setAttribute("placeholder", this.placeholder);
+
+        if(this.hasAttribute("multiple"))
+            input.setAttribute("multiple", this.multiple);
 
         if(this.hasAttribute("disabled"))
             input.setAttribute("disabled", "");
 
         if(this.hasAttribute("readonly"))
             input.setAttribute("readonly", "");
+
+        if(this.hasAttribute("maxlength"))
+            input.setAttribute("maxlength", this.maxlength);
+
+        if(this.hasAttribute("max"))
+            input.setAttribute("max", this.max);
+
+        if(this.hasAttribute("min"))
+            input.setAttribute("min", this.min);
 
         // Error
         let error = document.createElement("div");
@@ -206,25 +228,28 @@ get placeholder(){
 
         if(hasSlotStart) {
             wrapper.appendChild(start);
-            native.classList.add("has-start");
+            container.classList.add("has-start");
         }
 
         if(this.variant === "standard") {
-            if(this.label)
-                native.appendChild(label);
+            if(this.label){
+                container.appendChild(label);
+			}
         } else {
             inputWrapper.appendChild(label);
         }
 
         inputWrapper.appendChild(input);
 
+
         wrapper.appendChild(inputWrapper);
 
-        native.appendChild(wrapper);
-
+         container.appendChild(wrapper);
+		 
+		 
         if(this.hasAttribute("clearable")) {
             this.clear = document.createElement("wj-button");
-            this.clear.classList.add("clear");
+          //  this.clear.classList.add("clear");
             this.clear.setAttribute("variant", "link")
             this.clear.setAttribute("part", "clear");
 
@@ -238,19 +263,21 @@ get placeholder(){
 
         if(hasSlotEnd) {
             wrapper.appendChild(end);
-            native.classList.add("has-end");
+            container.classList.add("has-end");
         }
 
 
-        native.appendChild(error);
+        container.appendChild(error);
 
-        fragment.appendChild(native);
+       // fragment.appendChild(native);
 
-        this.native = native;
+        this.container = container;
         this.labelElement = label;
+		
         this.input = input;
+		
         this.errorMessage = error;
-
+		fragment.appendChild(container);
         return fragment;
     }
 	
@@ -275,9 +302,7 @@ get placeholder(){
 
     afterDraw() {
 		this.input.defaultValue=this.getAttribute("defaultvalue");
-		console.log("input","input outer_html:"+this.outerHTML);
-		console.log("input","input default_outer_html:"+this.getAttribute("defaultvalue"));
-		console.log("input","after_draw_1");
+		
         [
             'type',
             'value',
@@ -310,13 +335,14 @@ get placeholder(){
 			
 			this.input.addEventListener("focus", (e) => {
 				this.labelElement.classList.add("fade");
-				this.native.classList.add("focused");
+				//this.native.classList.add("focused");
 			});
 		
 			this.input.addEventListener("blur", (e) => {
-				this.native.classList.remove("focused");
-				if(!e.target.value)
-					this.labelElement.classList.remove("fade")
+				//this.native.classList.remove("focused");
+				if(!e.target.value){
+					//this.labelElement.classList.remove("fade")
+				}
 			});
 
 

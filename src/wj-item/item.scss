@@ -1,9 +1,21 @@
-/*
-[ WJ Item ]
-*/
-@import "../themes/light";
+ /* FULL_SCREEN_OVERLAY_START */
+.container {
+	position: absolute;
+	width: 100%;	
+	left: 0;
+	top: 0;
+	background: rgba(51,51,51,0.7);
+	border-style: solid;
+	border-color: red;
+	//border-width: 8px;
+	box-sizing: border-box;
+	display:flex;
+	height: 100%;
+	overflow:hidden;
+}
+/* FULL_SCREEN_OVERLAY_END */
+
 :host {
-	@extend .show;
     --wj-border-width: 0 0 1px 0;
     --wj-item-background: transparent;
     --wj-item-background-hover: var(--wj-color-contrast-3); //#{$color-contrast-lower};
@@ -19,7 +31,7 @@
     --wj-item-inner-box-shadow: none;
     --wj-item-min-height: 40px;
     --wj-item-transition: opacity 15ms linear, background-color 15ms linear;
- 
+    display: block;
     position: relative;
     align-items: center;
     justify-content: space-between;
@@ -30,7 +42,6 @@
     overflow: hidden;
     box-sizing: border-box;
     width: 100%;
-	 
 }
 
 
@@ -43,7 +54,7 @@
     display: flex;
     position: relative;
     align-items: inherit;
-    justify-content: center;
+    justify-content: inherit;
     width: 100%;
     min-height: var(--wj-item-min-height);
     transition: var(--wj-item-transition);
@@ -51,10 +62,11 @@
     background: var(--wj-item-background);
     overflow: inherit;
     box-sizing: border-box;
-    z-index: 1;
+//z_index_cancelled
+ //   z-index: 1;
     text-decoration: none;
     color: var(--wj-item-color);
-	
+
     .item-inner {
         margin: 0;
         padding: var(--wj-item-inner-padding-top) var(--wj-item-inner-padding-end) var(--wj-item-inner-padding-bottom) var(--wj-item-inner-padding-start);
@@ -76,7 +88,7 @@
         box-shadow: var(--wj-item-inner-box-shadow);
         overflow: inherit;
         box-sizing: border-box;
-justify-content: inherit;
+
         .input-wrapper {
             display: flex;
             flex: 1 1 0;
@@ -86,13 +98,8 @@ justify-content: inherit;
             text-overflow: ellipsis;
             overflow: inherit;
             box-sizing: border-box;
-			justify-content: inherit;
         }
     }
-&.selected{  
-   background-color: red; 
-   pointer-events: none;
-}
 
     .item-bottom {
         padding: 0 var(--wj-item-inner-padding-end) 0 var(--wj-item-padding-start);
@@ -130,9 +137,6 @@ a {
 
 ::slotted(wj-label:not([slot="end"])) {
     flex: 1 1 0;
-}
-:host(.show){
-	display:block;
 }
 :host(.hide){
 	display:none;
