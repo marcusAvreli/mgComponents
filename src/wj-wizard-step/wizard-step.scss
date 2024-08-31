@@ -2,11 +2,15 @@
 /* FULL_SCREEN_OVERLAY_END */
 
 :host(.wizard-step) {
+	 display: none;
+  flex:auto;
+    border:10px double;
+}
+:host(.wizard-step-active) {
 	 display: flex;
   flex:auto;
     border:10px double;
 }
-
 
 /* FORM_STEPS_START */
 
@@ -19,6 +23,7 @@
 	
 	
 }
+/*
 @keyframes animate {
     from {
         transform: scale(1, 0);
@@ -29,8 +34,18 @@
         opacity: 1;
     }
 }
-
-.form-step {
+*/
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.wizard-step-content {
     display: none;
     width: 100%;
     margin: 0 auto;
@@ -39,10 +54,14 @@
   //  padding: 0 2rem 3rem 3rem;
     border-radius: .8rem;
 	overflow:auto;
-    animation: animate 1.5s;
+   // animation: animate 1.5s;
+    animation:    slideIn 1s ease-in-out forwards
+	
+	
+	//display: flex;    flex: auto;    height: 100%;
 }
 
-.form-step-active {
+.wizard-step-content-active {
    display: flex;
 	//display:block;
 	//flex:auto;
@@ -52,5 +71,9 @@
 .form-step-slot{
 display:flex;
 flex:auto;
+}
+
+::slotted(.form-slot-wrapper){
+display: flex;    flex: auto;    height: 100%; /*   overflow:auto;*/
 }
 /* FORM_STEPS_END */

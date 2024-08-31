@@ -367,6 +367,7 @@ get placeholder(){
         return el.querySelectorAll(selector).length > 0 ? true : false;
     }
 	unregister(){}
+	afterDisconnect(){}
 }
 
 customElements.get(Input.is) || window.customElements.define(Input.is, Input);

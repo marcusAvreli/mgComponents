@@ -357,3 +357,6 @@
 ::slotted([slot="toggle"].show) {
   display: block;
 }
+:host(.hide){
+	display:none;
+}

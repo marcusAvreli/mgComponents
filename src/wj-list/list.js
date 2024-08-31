@@ -59,41 +59,43 @@ export class List extends WJElement {
 		listContainerSubBox1.classList.add("list-container-sub-box1");
 		listContainerBox1.appendChild(listContainerSubBox1);
 		listContainer.appendChild(listContainerBox1);
+		
+		
+		let listFilter = document.createElement("div");
+		listFilter.classList.add("list-filter");
+		wrapper.appendChild(listFilter);
+		
+		
+		let searchBar = document.createElement("wj-input");
+		searchBar.setAttribute("variant", "standard");
+		searchBar.setAttribute("type", "text");
+		searchBar.setAttribute("placeholder", "Search");
+		searchBar.value="";
+		this.searchBar = searchBar;
+		listFilter.appendChild(searchBar);
+		
 		wrapper.appendChild(listContainer);
 		listContainer.classList.add("list-container");
-		
-		//this.appendChild(wrapper);
-		//let page = document.createElement("div");
-		//page.classList.add("list-page");
-	//	wrapper.appendChild(page);
-		
-		let element = document.createElement("slot");
-		
-		 //element.classList.add("contentsub");
-		 listContainerSubBox1.appendChild(element);
 		/*
-		let box1 = document.createElement("div");
-		box1.classList.add("list-box1");
-		page.appendChild(box1);
-		
-	
-		this.wrapper = wrapper;
-		this.box1 = box1;
-		//this.addSearchBar();
-		this.addHorizontalScroll();
-		this.addScrollableList();
-		//this.addPaginatorPanel();
+		let listPaginator = document.createElement("div");
+		listPaginator.classList.add("list-paginator");
+		wrapper.appendChild(listPaginator);
+		this.listPaginator = listPaginator;
+		this.addPaginatorPanel();
+		*/
+		let element = document.createElement("slot");
+		listContainerSubBox1.appendChild(element);
 		
 		
 		
 		
+		/*
 	
 		
 	
 		
 		let scrollbarPH = document.createElement("div");
-		//scrollbarPH.classList.add("scroll-bar");
-		//leftScroll.appendChild(scrollbarPH);
+		
 		
 		let body2PH = document.createElement("div");
 		body2PH.classList.add("body2");
@@ -101,24 +103,12 @@ export class List extends WJElement {
 		let listWrapperPH = document.createElement("div");
 		listWrapperPH.classList.add("list-wrapper");
 		
-		body2PH.appendChild(listWrapperPH);
+		body2PH.appendChild(listWrapperPH);	
 		
-		
-		
-		
-		//this.appendChild(wrapper);
-		
-		
-		//this.body2PH=contentsub;
-		//this.scrollbarPH = scrollbarPH;
 		this.wrapper = wrapper;
 		if(this.isPaginated() && this.isSearchable()){
-			
-
 			this.addSearchBar();
 			this.addPaginatorPanel();
-		
-
 			this.style.setProperty("--wrapper-grid-template-areas", "'leftSearch leftSearch leftSearch' 'leftScroll leftScroll leftScroll' 'leftList leftList leftList' 'leftPaginator leftPaginator leftPaginator'");
 			this.style.setProperty("--wrapper-grid-template-rows", "6% 1% 85% 8%");
 			
@@ -210,7 +200,7 @@ export class List extends WJElement {
 	addPaginatorPanel(){
 		let paginatorDiv  = document.createElement("div");
 		paginatorDiv.classList.add("wrapper-paginator");
-		this.box1.appendChild(paginatorDiv);
+		this.listPaginator.appendChild(paginatorDiv);
 
 		const paginationBar = document.createElement("wj-paginator");
 		paginatorDiv.appendChild(paginationBar);

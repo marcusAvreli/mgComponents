@@ -7,7 +7,7 @@ import {Button} from '../wj-button/button.js';
 export class WizardNav extends WJElement {
 	constructor() {
 		super();
-		console.log("WizardNav","constructor");
+		
 	}
 	 static get is() {
 		return `${elementPrefix}-wizard-nav`;
@@ -30,8 +30,7 @@ export class WizardNav extends WJElement {
 	
 
     draw(context, store, params) {
-		console.log("Wizard_nav","draw_start");
-	//	console.log("Wizard_nav","draw_start:"+this.textContent);
+		
 		
 	
         let fragment = document.createDocumentFragment();
@@ -52,50 +51,12 @@ export class WizardNav extends WJElement {
 		
 		
 		
-		console.log("Wizard_nav","draw_finish");
+		
 		return fragment;
 	}
 	afterDraw() {
 		console.log("Wizard_nav","after_draw_start");
-		/*  if(this.hasToggle) {
-			 
-            if (this.toggle === "off") {
-				const state1 = this.slotToggle.assignedNodes()[1].state;
-				const state= this.slotToggle.assignedNodes()[0].state;
-			  if(state1=="off"){
-				this.slotToggle.assignedNodes()[1].classList.add("show");
-			  }
-			  if(state=="off"){
-				this.slotToggle.assignedNodes()[0].classList.add("show");
-			  }
-            } else {
-                this.slotToggle.assignedNodes()[0].classList.add("show");
-            }
-        }
-
-		const previousButton = this.querySelector('wj-wizard-button[part="previous"]')
-		const nextButton = this.querySelector('wj-wizard-button[part="next"]')
-		//const nextButton = new Button(nextButtonObj);
-		//nextButton.toggleStates();
-		//previousButton.setAttribute("slot","toggle");
-	
-		//nextButton.classList.add("toggle");
-		
-		if(nextButton){
-			console.log("Wizard_nav","setting_next_click");
-			nextButton.addEventListener('click', (e) => this._dispatchNext(e));
-		}else{
-			console.log("Wizard_nav","next_button_is_null");
-		}
-		if(previousButton){
-			console.log("setting_previous_to_block");
-		//spreviousButton.style.display="none";
-			previousButton.addEventListener('click', (e) => this._dispatchPrevious(e));
-		}else{
-			console.log("Wizard_nav","previous_button_is_null");
-		}
-		*/
-		 console.log("Wizard_nav","after_draw_finish");
+		console.log("Wizard_nav","after_draw_finish");
 	}
  	_dispatchNext(e){
 		console.log("Wizard_nav","next");

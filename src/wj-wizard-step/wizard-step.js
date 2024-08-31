@@ -7,7 +7,7 @@ import {Button} from '../wj-button/button.js';
 export class WizardStep extends WJElement {
 	constructor() {
 		super();
-		console.log("WizardStep","constructor");
+		
 	}
 	 static get is() {
 		return `${elementPrefix}-wizard-step`;
@@ -39,9 +39,10 @@ export class WizardStep extends WJElement {
 		let container = document.createElement("div");
 		container.classList.add("wizard-step-container");
 		let formStep = document.createElement("div");
-		formStep.classList.add("form-step");
-		formStep.classList.add("form-step-active");
-		this.classList.add("wizard-step");	
+		formStep.classList.add("wizard-step-content");
+		formStep.classList.add("wizard-step-content-active");
+	//	this.classList.add("wizard-step");	
+	//	this.classList.add("wizard-step-active");	
 		let slot = document.createElement("slot");
 		slot.classList.add("form-step-slot");
 		formStep.appendChild(slot);
@@ -56,46 +57,8 @@ export class WizardStep extends WJElement {
 		return fragment;
 	}
 	afterDraw() {
-		console.log("WizardStep","after_draw_start");
-		/*  if(this.hasToggle) {
-			 
-            if (this.toggle === "off") {
-				const state1 = this.slotToggle.assignedNodes()[1].state;
-				const state= this.slotToggle.assignedNodes()[0].state;
-			  if(state1=="off"){
-				this.slotToggle.assignedNodes()[1].classList.add("show");
-			  }
-			  if(state=="off"){
-				this.slotToggle.assignedNodes()[0].classList.add("show");
-			  }
-            } else {
-                this.slotToggle.assignedNodes()[0].classList.add("show");
-            }
-        }
-
-		const previousButton = this.querySelector('wj-wizard-button[part="previous"]')
-		const nextButton = this.querySelector('wj-wizard-button[part="next"]')
-		//const nextButton = new Button(nextButtonObj);
-		//nextButton.toggleStates();
-		//previousButton.setAttribute("slot","toggle");
-	
-		//nextButton.classList.add("toggle");
-		
-		if(nextButton){
-			console.log("Wizard_nav","setting_next_click");
-			nextButton.addEventListener('click', (e) => this._dispatchNext(e));
-		}else{
-			console.log("Wizard_nav","next_button_is_null");
-		}
-		if(previousButton){
-			console.log("setting_previous_to_block");
-		//spreviousButton.style.display="none";
-			previousButton.addEventListener('click', (e) => this._dispatchPrevious(e));
-		}else{
-			console.log("Wizard_nav","previous_button_is_null");
-		}
-		*/
-		 console.log("Wizard_nav","after_draw_finish");
+		//console.log("WizardStep","after_draw_start");		
+		//console.log("Wizard_nav","after_draw_finish");
 	}
  	_dispatchNext(e){
 		console.log("Wizard_nav","next");
