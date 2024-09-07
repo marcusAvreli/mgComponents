@@ -41,11 +41,15 @@ export class WizardStep extends WJElement {
 		let formStep = document.createElement("div");
 		formStep.classList.add("wizard-step-content");
 		formStep.classList.add("wizard-step-content-active");
-	//	this.classList.add("wizard-step");	
-	//	this.classList.add("wizard-step-active");	
-		let slot = document.createElement("slot");
-		slot.classList.add("form-step-slot");
-		formStep.appendChild(slot);
+		
+		this.formStep = formStep;
+		if(this.hasAttribute("transferSplit")){
+			this.buildTreeColumnScreen();
+		}else{
+			this.buildDefaultScreen();
+		}
+		
+		
 		container.appendChild(formStep);
         fragment.appendChild(container);
 		
@@ -56,6 +60,42 @@ export class WizardStep extends WJElement {
 		console.log("WizardStep","draw_finish");
 		return fragment;
 	}
+	buildDefaultScreen(){
+		let slotLeft = document.createElement("slot");
+		this.formStep.appendChild(slotLeft);
+	}
+	buildTreeColumnScreen(){
+		
+		let stepSplitContainer = document.createElement("div");
+		//left transfer right
+		stepSplitContainer.classList.add("wizard-step-split-container");
+		this.formStep.appendChild(stepSplitContainer);
+		
+		//this.classList.add("wizard-step");	
+		//this.classList.add("wizard-step-active");	
+		let slotLeft = document.createElement("slot");
+		slotLeft.setAttribute("name", "left");
+		
+		let transferZone = document.createElement("div");
+		transferZone.classList.add("wizard-transfer-zone");
+			let slotTransfer = document.createElement("slot");
+		slotTransfer.setAttribute("name", "transfer");
+		//transferZone.appendChild(slotTransfer);
+		
+		
+		let wjButton = document.createElement("wj-button");
+		slotTransfer.appendChild(transferZone);
+		
+		let slotRight = document.createElement("slot");
+		slotRight.setAttribute("name", "right");
+		
+		//formStep.appendChild(slotLeft);
+		stepSplitContainer.appendChild(slotLeft);
+		stepSplitContainer.appendChild(slotTransfer);
+		stepSplitContainer.appendChild(slotRight);
+		//formStep.appendChild(slot);
+	}
+	
 	afterDraw() {
 		//console.log("WizardStep","after_draw_start");		
 		//console.log("Wizard_nav","after_draw_finish");

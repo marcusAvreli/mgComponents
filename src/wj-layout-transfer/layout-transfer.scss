@@ -1,0 +1,68 @@
+@import "../scss/themes/net-basic/important.scss";
+
+/*
+[ Form ]
+*/
+
+:host {
+    width: 100%;
+}
+:host(.layout-transfer-container){
+display:flex;
+border: 15px dotted darkgray;
+}
+.transfer-wrapper{
+	display: flex;
+    flex: auto;
+    border: 10px double;
+}
+.transfer-grid {
+	display: grid;
+	grid-template-columns: 45% 10% 45%;
+	grid-template-rows:  100%;
+	grid-template-areas:
+    
+	"left  transfer right";
+	//width:100%;
+	border:10px double;
+	flex:auto;
+}
+.transfer-grid-left {
+grid-area: left;
+
+}
+.transfer-grid-transfer {
+display:flex;
+grid-area: transfer;
+}
+.transfer-grid-right{
+grid-area:right;
+}
+
+.transfer-grid-transfer-wrapper{
+display:flex;
+border:15px solid red;
+flex:auto;
+}
+.transfer-grid-transfer-wrapper-grid{
+	display: grid;
+	grid-template-rows: repeat(5, 1fr);
+	flex:auto;
+}
+.transfer-grid-transfer-wrapper-grid > .mix {
+ display:flex;
+ border:1px double green
+}
+ .transfer-grid-transfer-wrapper-grid .mix:nth-child(2){
+  // border:1px solid green;
+ 
+  }
+  
+  .button-make-flex{
+  //display:flex;
+  flex:auto;
+  }
+  
+  .form-slot-wrapper{
+display: flex;    flex: auto;    height: 100%; /*   overflow:auto;*/
+}

@@ -86,6 +86,9 @@ import {Toolbar} from './wj-toolbar/toolbar.js';
 import {ToolbarAction} from './wj-toolbar-action/toolbar-action.js';
 import {VisuallyHidden} from './wj-visually-hidden/visually-hidden.js';
 
+import {LayoutTransfer} from './wj-layout-transfer/layout-transfer.js';
+
+
 import {Wizard} from './wj-wizard/wizard.js';
 import {WizardNav} from './wj-wizard-nav/wizard-nav.js';
 import {WizardButton} from './wj-wizard-button/wizard-button.js';
@@ -168,6 +171,7 @@ export { WJElement, defaultStoreActions, store
 	,Toolbar
 	,ToolbarAction
 	,VisuallyHidden
+	,LayoutTransfer
 	,Wizard
 	,WizardNav
 	,WizardButton
