@@ -112,6 +112,10 @@ export class LayoutTransfer extends WJElement {
 		wjButton1.classList.add("button-make-flex");
 		wjButton1.setDisplayLabel(">");
 		//mixWrapper.appendChild(mix1);
+		//wjButton1.textContent=">";
+		wjButton1.addEventListener("wj:button-click", (e) => {
+			this.moveToDestination(e);
+		})
 		
 		
 		let mix2  = document.createElement("div");
@@ -122,6 +126,10 @@ export class LayoutTransfer extends WJElement {
 		mix2.appendChild(wjButton2);
 		wjButton2.classList.add("button-make-flex");
 		wjButton2.setDisplayLabel(">>>>");
+		wjButton2.addEventListener("wj:button-click", (e) => {
+			this.moveAllToDestination(e);
+		})
+		//wjButton2.textContent=">>>>";
 		//let multiSourceToDestination = document.createElement("slot");
 		//multiSourceToDestination.setAttribute("name","multiSourceToDestination");
 		//mix2.appendChild(multiSourceToDestination);
@@ -139,7 +147,13 @@ export class LayoutTransfer extends WJElement {
 		mix4.appendChild(wjButton4);
 		wjButton4.classList.add("button-make-flex");
 		wjButton4.setDisplayLabel("<");
+		wjButton4.addEventListener("wj:button-click", (e) => {
+			this.moveToSource(e);
+		})
 		
+		
+		
+		//wjButton4.textContent="<";
 		let mix5  = document.createElement("div");
 		mix5.classList.add("mix");
 		this.transferGridTransferWrapperGrid.appendChild(mix5);
@@ -148,7 +162,44 @@ export class LayoutTransfer extends WJElement {
 		mix5.appendChild(wjButton5);
 		wjButton5.classList.add("button-make-flex");
 		wjButton5.setDisplayLabel("<<<<");
+		wjButton5.addEventListener("wj:button-click", (e) => {
+			this.moveAllToSource(e);
+		})
+		//wjButton5.textContent="<<<<";
 	}
+	
+	moveToDestination(e){
+		console.log("move_to_destination_clicked");
+	
+		var elems = document.querySelectorAll("#sourceList > [checked]");
+		//https://stackoverflow.com/questions/47754415/how-to-get-all-child-elements-with-specific-attribute-in-javascript
+		//theParentSelector theChildsAttribute
+		console.log(elems.length);
+		elems[0].removeAttribute("checked");
+		var destinationList = document.querySelector("#destinationList");
+		Array.from(elems).forEach( function (el) {
+		   //console.log(el.getAttribute("theChildsAttribute"))
+		   el.removeAttribute("checked");
+		   destinationList.appendChild(el);
+		});
+		
+		
+	}
+	moveAllToDestination(e){
+		console.log("move_all_to_destination_clicked");
+	}
+	moveToSource(e){
+		console.log("move_to_source_clicked");
+	}
+	moveAllToSource(e){
+		console.log("move_all_to_source_clicked");
+	}
+	afterDraw(){
+		
+		   
+            
+	}
+	
 }
 
 customElements.get(LayoutTransfer.is) || window.customElements.define(LayoutTransfer.is, LayoutTransfer);

@@ -161,6 +161,20 @@ export class Item extends WJElement {
 	get keepItem(){
 		return this.curDraggedEl;
 	}
+	 static get observedAttributes() {
+        return ["checked"];
+    }
+	  attributeChangedCallback(name, oldValue, newValue) {
+		  console.log
+        if(name == "checked"){
+			
+			var elem = this.shadowRoot.querySelector("slot[name=end]").assignedElements();
+			console.log("elem:"+elem);
+			console.log("elem:"+elem[0].outerHtml);
+		}
+            
+    }
+
 	afterDraw() {
 		/*console.log("finished_draw_item");
 		this.addEventListener("dragstart", this.itemDragStart);
@@ -186,6 +200,24 @@ export class Item extends WJElement {
 		
 		});
 		*/
+		 this.shadowRoot.addEventListener('wj:checkbox:change', ( e ) => {
+				console.log("checked");
+				
+				
+				if(e.target.checked){
+					e.target.checked=false;
+					if(this.hasAttribute("checked")){
+						this.removeAttribute("checked");
+					}
+					
+				}
+				else{
+					e.target.checked=true;
+					this.setAttribute("checked","");
+				}
+				console.log("target:"+e.target.checked);
+				
+				});
 	}
 	buttonUpClicked(e){		
 		const targetTagName = e.target.tagName		

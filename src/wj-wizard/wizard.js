@@ -32,7 +32,7 @@ export class Wizard extends WJElement {
 	
 
     draw(context, store, params) {
-		console.log("Wizard","draw_start");
+		//console.log("Wizard","draw_start");
 		 let fragment = document.createDocumentFragment();
 		
 		let wizardContainer = document.createElement("div");
@@ -65,10 +65,11 @@ export class Wizard extends WJElement {
 		
         fragment.appendChild(wizardContainer);
 		
-		console.log("Wizard","draw_finish");
+		
 		let formSteps = document.querySelectorAll(".wizard-step");
 		this.formSteps=formSteps;
 		console.log("formSteps:"+formSteps.length);
+		//console.log("Wizard","draw_finish");
         return fragment;
 	}
 	afterDraw(){
@@ -95,7 +96,7 @@ export class Wizard extends WJElement {
 			this.prevButton= prevButton
 		let nextButton = document.createElement("wj-button");
 		footerContentContainer.appendChild(nextButton);
-		nextButton.setDisplayLabel("next");
+		//nextButton.setDisplayLabel("next");
 		this.nextButton = nextButton;
 		nextButton.addEventListener("wj:button-click", (e) => {
 			this.nextClick(e);
@@ -112,10 +113,10 @@ export class Wizard extends WJElement {
 			
 	}
 	addPage(){
-		console.log("add_page_start");
+		//console.log("add_page_start");
 		let page = document.createElement("div");
 		page.classList.add("wizard-page");
-		console.log("add_page_1");
+		//console.log("add_page_1");
 		let box1 = document.createElement("div");
 		box1.classList.add("box1");
 		
@@ -125,32 +126,32 @@ export class Wizard extends WJElement {
 		let slot = document.createElement("slot");
 		slot.setAttribute("name","navigation");
 		//slot.classList.add("wrapper");
-		console.log("add_page_2");
+		//console.log("add_page_2");
 		wrapper.appendChild(slot);
 		box1.appendChild(wrapper);
-		console.log("add_page_3");
+		//console.log("add_page_3");
 		let box2 = document.createElement("div");
 		box2.classList.add("wizard-box2");
 		
 		
 		let slides = document.createElement("div");
 		slides.classList.add("wizard-slides");
-		console.log("add_page_4");
+		//console.log("add_page_4");
 		let slot2 = document.createElement("slot");
 		slot2.setAttribute("name","steps");
 		slot2.classList.add("wizard-slot-steps");
 		slides.appendChild(slot2);
-		console.log("add_page_5");
+		//console.log("add_page_5");
 		let actions = document.createElement("div");
 		actions.classList.add("actions");
 
 		
 		
 		
-		console.log("add_page_6");
+		//console.log("add_page_6");
 		box2.appendChild(slides);
 		//box2.appendChild(actions);
-		console.log("add_page_7");
+		//console.log("add_page_7");
 		/*
 		const progressSteps = document.querySelectorAll(".circle");
 		*/
@@ -158,7 +159,7 @@ export class Wizard extends WJElement {
 		//page.appendChild(box1);
 		
 		page.appendChild(box2);
-		console.log("add_page_8");
+		//console.log("add_page_8");
 		
 		this.wizardAside.appendChild(box1);
 		this.wizardMain.appendChild(page);
@@ -170,7 +171,7 @@ export class Wizard extends WJElement {
 		/* this.formSteps=formSteps;
 		*/
 		// this.progressSteps=progressSteps;
-		 console.log("add_page_finish");
+		 //console.log("add_page_finish");
 		
 	}
 	prevClick(e){

@@ -30,7 +30,7 @@ export class WizardStep extends WJElement {
 	
 
     draw(context, store, params) {
-		console.log("WizardStep","draw_start");
+		//console.log("WizardStep","draw_start");
 	//	console.log("Wizard_nav","draw_start:"+this.textContent);
 		
 	
@@ -57,7 +57,7 @@ export class WizardStep extends WJElement {
 		
 		
 		
-		console.log("WizardStep","draw_finish");
+		//console.log("WizardStep","draw_finish");
 		return fragment;
 	}
 	buildDefaultScreen(){
