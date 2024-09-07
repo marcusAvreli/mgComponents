@@ -55,11 +55,11 @@ export class WizardNav extends WJElement {
 		return fragment;
 	}
 	afterDraw() {
-		console.log("Wizard_nav","after_draw_start");
-		console.log("Wizard_nav","after_draw_finish");
+		//console.log("Wizard_nav","after_draw_start");
+		//console.log("Wizard_nav","after_draw_finish");
 	}
  	_dispatchNext(e){
-		console.log("Wizard_nav","next");
+		//console.log("Wizard_nav","next");
 	
 		e.preventDefault();
         e.stopImmediatePropagation();
@@ -79,7 +79,7 @@ export class WizardNav extends WJElement {
 	}
 	_dispatchPrevious(e){
 		
-		console.log("Wizard_nav","previous");
+		//console.log("Wizard_nav","previous");
 		e.preventDefault();
         e.stopImmediatePropagation();
         e.stopPropagation();

@@ -88,6 +88,7 @@ export class Checkbox extends WJElement {
     }
 
     inputEvent = (e) => {
+		console.log("checkBox:"+e.target.checked);
         this.checked = e.target.checked;
     }
 
