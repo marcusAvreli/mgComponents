@@ -72,8 +72,45 @@
 display:flex;
 flex:auto;
 }
-
-::slotted(.form-slot-wrapper){
+.form-slot-wrapper{
 display: flex;    flex: auto;    height: 100%; /*   overflow:auto;*/
 }
 /* FORM_STEPS_END */
+
+/* SPLIT */
+
+.wizard-step-split-container {
+  display: grid;
+  grid-template-columns: 45% 10% 45%;
+  grid-template-rows:  100%;
+  grid-template-areas:
+    
+    "left  transfer right";
+    width:100%;
+	border:10px double;
+}
+.wizard-step-container {
+    display: flex;
+   	background: blue;
+	border: 10px double;
+	grid-area: m;
+	width:100%;
+	
+	
+}
+
+.wizard-transfer-zone {
+  /*display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows:  100%;
+  grid-template-areas:
+    
+    "column";
+	*/
+	display:flex;
+    width:100%;
+	border:10px double;
+	
+}
+::slotted(.test){
+}

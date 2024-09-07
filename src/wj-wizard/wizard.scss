@@ -84,3 +84,16 @@ display:flex;flex:auto;overflow:auto;
 	display:flex;
 	grid-area: footer-sub;
 }
+
+
+
+:host(.wizard-step-split-container){
+
+	display: grid;
+	grid-template-columns: 45fr 10fr 45fr;
+	grid-template-rows:  100vh;
+	grid-template-areas:
+
+	"left center right";
+	
+}
