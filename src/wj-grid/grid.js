@@ -43,6 +43,8 @@ export class Grid extends WJElement {
 
         return fragment;
     }
+	unregister(){}
+	afterDisconnect (){}
 }
 
 customElements.get(Grid.is) || window.customElements.define(Grid.is, Grid);

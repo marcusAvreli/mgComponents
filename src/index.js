@@ -76,6 +76,13 @@ import {Select} from './wj-select/select.js';
 import {Slider} from './wj-slider/slider.js';
 import {SplitView} from './wj-split-view/split-view.js';
 
+import {Table} from './wj-table/table.js';
+import {default as TableSearchElement} from './wj-table/components/wj-search/search.js';
+import {default as FilterSimple} from './wj-table/components/wj-filter-simple/filter-simple.js';
+import {default as TableOptions} from './wj-table/components/wj-options/options.js';
+import {default as FilterSave}  from './wj-table/components/wj-filter-save/filter-save.js';
+import {default as FilterAdvanced} from './wj-table/components/wj-filter-advanced/filter-advanced.js';
+import {default as FilterDropdown} from './wj-table/components/wj-filter-dropdown/filter-dropdown.js';
 import {Tab} from './wj-tab/tab.js';
 import {TabGroup} from './wj-tab-group/tab-group.js';
 import {TabPanel} from './wj-tab-panel/tab-panel.js';
@@ -161,8 +168,15 @@ export { WJElement, defaultStoreActions, store
 	,Row
 	,Select
 	,Slider
-	,SplitView
+	,SplitView	
 	,Tab
+	,Table
+	,FilterSimple
+	,TableOptions
+	,FilterSave
+	,FilterAdvanced
+	,FilterDropdown
+	,TableSearchElement
 	,TabGroup
 	,TabPanel
 	,Textarea

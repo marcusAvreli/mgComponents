@@ -251,6 +251,7 @@ export class MenuItem extends WJElement {
         }
     }
 	unregister(){}
+	afterDisconnect(){}
 }
 
 customElements.get(MenuItem.is) || window.customElements.define(MenuItem.is, MenuItem);

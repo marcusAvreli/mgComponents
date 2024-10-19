@@ -79,7 +79,7 @@ class Store {
 
     mergeReducers(stateValueName, newReducer){
         let reducerCopy = this._reducer;
-		/*
+		
         this._reducer = (state, newState) => {
             let preState = reducerCopy(state, newState);
             let result = {
@@ -88,7 +88,7 @@ class Store {
             };
             return result;
         }
-		*/
+		
     }
 
     makeEveryArrayEntryAsStoreState(storeKey, array = [], identificator = 'id') {
@@ -115,17 +115,19 @@ class Store {
             this.mergeReducers(stateValueName, reducer)
         } else {
             if(defaultValue instanceof Array){
+				console.log("instance_array. key:"+key);
                 this.mergeReducers(stateValueName, this.createArrayReducer(stateValueName, key) )
             } else {
+				console.log("instance_object. key:"+key);
                 this.mergeReducers(stateValueName, this.createObjectReducer(stateValueName, key) )
             }
         }
-/*
+
         this.refreshProxy({
             ...this._state,
             [stateValueName]: defaultValue
         })
-		*/
+
     }
 
     refreshProxy(state){
@@ -164,7 +166,10 @@ class Store {
     }
 
     createObjectReducer(stateValueName){
-        /*return (state = {},action)=>{
+		
+		
+        return (state = {},action)=>{
+		
             switch (action.type) {
                 case `${stateValueName}/ADD`:
                     return {
@@ -176,16 +181,20 @@ class Store {
                         ...action.payload
                     }
                 case `${stateValueName}/DELETE`:
-                    return {}
+				
+                    return {
+                      
+                        ...action.payload
+                    }
                 default:
                     return state
             }
         }
-		*/
+		
     }
 
     createArrayReducer(stateValueName, key){
-		/*
+		
         return (state = [],action)=>{
             switch (action.type) {
                 case `${stateValueName}/ADD`:
@@ -233,7 +242,7 @@ class Store {
                     return state
             }
         }
-		*/
+		
     }
 }
 

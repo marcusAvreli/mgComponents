@@ -57,6 +57,7 @@ export class Col extends WJElement {
         return fragment;
     }
 		unregister(){}
+		afterDisconnect (){}
 }
 
 customElements.get(Col.is) || window.customElements.define(Col.is, Col);

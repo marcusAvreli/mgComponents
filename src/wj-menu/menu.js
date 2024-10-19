@@ -51,6 +51,7 @@ export class Menu extends WJElement {
         return fragment;
     }
 	unregister(){}
+	afterDisconnect(){}
 }
 
 customElements.get(Menu.is) || window.customElements.define(Menu.is, Menu);

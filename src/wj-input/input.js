@@ -69,13 +69,14 @@ export class Input extends WJElement {
 		return this.hasAttribute("hexTextBox");
 	}
 	getDefaultValue(){
-		return this.getAttribute("defaultvalue") ;//|| "115";
+		return this.getAttribute("defaultvalue") ?  this.getAttribute("defaultvalue") : "";
 	}
 	get label (){
 		return this.getAttribute("label") || "";
 	}
     set value(value) {
-
+		console.log("input_set_attribute_called",value);
+		
         this.setAttribute("value", value);
     }
 
@@ -146,45 +147,33 @@ get placeholder(){
 
     draw(context, store, params) {
 	
-        let hasSlotStart = this.hasSlot(this, "start");
+       let hasSlotStart = this.hasSlot(this, "start");
         let hasSlotEnd = this.hasSlot(this, "end");
         let fragment = document.createDocumentFragment();
 
-        // Container
-      	let container = document.createElement("div");
-		container.classList.add("container");
-		
-		if(this.hasAttribute("standard")){
-			this.style.setProperty("--wj-input-margin-bottom", "0");
-			  container.classList.add("paginator");
-		}
-		
-		 container.setAttribute("part", "native");
-        container.classList.add("native-input", this.variant || "default");
-		this.container = container;
-		
-        
+        // Wrapper
+        let native = document.createElement("div");
+        native.setAttribute("part", "native");
+        native.classList.add("native-input", this.variant || "default");
 
-     if(this.hasAttribute("invalid"))
-            container.classList.add("has-error");
+        if(this.hasAttribute("invalid"))
+            native.classList.add("has-error");
 
         let wrapper = document.createElement("div");
         wrapper.classList.add("wrapper");
-		
 
         let inputWrapper = document.createElement("div");
-		inputWrapper.classList.add("input-wrapper");
+        inputWrapper.classList.add("input-wrapper");
 
         // Label
         let label = document.createElement("label");
         label.innerText = this.label;
-		
         if(this.value && !this.hasAttribute("error"))
             label.classList.add("fade");
 
         // Input
         let input = document.createElement("input");
-      input.setAttribute("type", "text");
+        input.setAttribute("type", "text");
         input.setAttribute("part", "input");
         input.setAttribute("value", this.value || "");
         input.classList.add("form-control");
@@ -228,29 +217,26 @@ get placeholder(){
 
         if(hasSlotStart) {
             wrapper.appendChild(start);
-            container.classList.add("has-start");
+            native.classList.add("has-start");
         }
 
         if(this.variant === "standard") {
-            if(this.label){
-                container.appendChild(label);
-			}
+            if(this.label)
+                native.appendChild(label);
         } else {
             inputWrapper.appendChild(label);
         }
 
         inputWrapper.appendChild(input);
 
-
         wrapper.appendChild(inputWrapper);
 
-         container.appendChild(wrapper);
-		 
-		 
+        native.appendChild(wrapper);
+
         if(this.hasAttribute("clearable")) {
             this.clear = document.createElement("wj-button");
-          //  this.clear.classList.add("clear");
-            this.clear.setAttribute("variant", "link")
+            this.clear.classList.add("clear");
+            this.clear.setAttribute("fill", "link")
             this.clear.setAttribute("part", "clear");
 
             let clearIcon = document.createElement("wj-icon");
@@ -263,21 +249,18 @@ get placeholder(){
 
         if(hasSlotEnd) {
             wrapper.appendChild(end);
-            container.classList.add("has-end");
+            native.classList.add("has-end");
         }
 
+        native.appendChild(error);
 
-        container.appendChild(error);
+        fragment.appendChild(native);
 
-       // fragment.appendChild(native);
-
-        this.container = container;
+        this.native = native;
         this.labelElement = label;
-		
         this.input = input;
-		
         this.errorMessage = error;
-		fragment.appendChild(container);
+
         return fragment;
     }
 	
@@ -301,8 +284,8 @@ get placeholder(){
 	}
 
     afterDraw() {
-		this.input.defaultValue=this.getAttribute("defaultvalue");
-		
+		//this.input.defaultValue=this.getDefaultValue();
+			//console.log("input_component init_value_ServiceInteger:"+this.input.defaultValue);
         [
             'type',
             'value',
@@ -320,6 +303,7 @@ get placeholder(){
                 field[attr] = attrValue;
             }
         });
+			console.log("input_component init_value_ServiceInteger:"+this.value);
 			const serviceInteger = this.services.resolve('ServiceInteger');
 			serviceInteger.setCustom();
 			this.addEventListener('invalid', (e) => {			
@@ -331,21 +315,25 @@ get placeholder(){
 					e.preventDefault();
 				}
 			})
-		
+		console.log("input_component init_value_ServiceInteger:"+this.value);
 			
 			this.input.addEventListener("focus", (e) => {
 				this.labelElement.classList.add("fade");
-				//this.native.classList.add("focused");
+				this.native.classList.add("focused");
 			});
-		
+	
+
 			this.input.addEventListener("blur", (e) => {
-				//this.native.classList.remove("focused");
+				console.log("removing_focused");
+				this.native.classList.remove("focused");
 				if(!e.target.value){
-					//this.labelElement.classList.remove("fade")
+					this.labelElement.classList.remove("fade")
 				}
 			});
-
-
+			
+			
+			
+console.log("input_component init_value_ServiceInteger:"+this.value);
 
 			
 

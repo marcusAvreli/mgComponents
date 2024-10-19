@@ -53,8 +53,8 @@
       border-style: var(--wj-input-border-style);
       border-color: var(--wj-input-border-color);
       padding-inline: 0;
-     // padding-top: .25rem;
-     // padding-bottom: .25rem;
+      padding-top: .25rem;
+      padding-bottom: .25rem;
       transition: background-color 0.2s ease;
       cursor: text;
       .input-wrapper {

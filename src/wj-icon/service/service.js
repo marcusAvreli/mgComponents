@@ -120,7 +120,7 @@ export const getName = (iconName) => {
   if (invalidChars !== '') {
     return null;
   }
-console.log("iconName:"+iconName);
+
   return iconName;
 };
 

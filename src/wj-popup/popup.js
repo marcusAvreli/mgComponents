@@ -55,7 +55,7 @@ export class Popup extends WJElement {
     }
 
     draw(context, store, params) {
-		console.log("Popup","draw_start");
+		//console.log("Popup","draw_start");
         let fragment = document.createDocumentFragment();
 
         let slotAnchor = document.createElement("slot");
@@ -79,7 +79,7 @@ export class Popup extends WJElement {
         this.slotAnchor = slotAnchor;
         this.slotArrow = slotArrow;
         this.native = native;
-console.log("Popup","draw_finish");
+//console.log("Popup","draw_finish");
         return fragment;
     }
 
@@ -88,21 +88,21 @@ console.log("Popup","draw_finish");
     }
 
     setAnchor() {
-		console.log("Popup","set_anchor_start");
+		
         if (this.slotAnchor && typeof this.anchor === 'string') {
             const root = this.getRootNode();
             this.anchorEl = root.getElementById(this.anchor);
         } else if (this.slotAnchor instanceof HTMLSlotElement) {
             this.anchorEl = this.slotAnchor.assignedElements({ flatten: true })[0];
         }
-		console.log("Popup","set_anchor_1");
+		
         event.addListener(this.anchorEl, "click", null, (e) => {
-			console.log("Popup","add_listener");
+		
             if(this.hasAttribute("disabled")) return;
             this.showHide();
         }, { stopPropagation: true });
 
-		console.log("Popup","set_anchor_2");
+		
         document.addEventListener("click",(e) => {
             let clickToHost = e.composedPath().some((el) => el === this);
 
@@ -111,7 +111,7 @@ console.log("Popup","draw_finish");
                     this.removeAttribute("active");
             }
         });
-		console.log("Popup","set_anchor_finish");
+		
     }
 
     showHide() {

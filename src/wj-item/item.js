@@ -165,18 +165,23 @@ export class Item extends WJElement {
         return ["checked"];
     }
 	  attributeChangedCallback(name, oldValue, newValue) {
-		  console.log
+		  
         if(name == "checked"){
 			
 			var elem = this.shadowRoot.querySelector("slot[name=end]").assignedElements();
-			console.log("elem:"+elem);
+			console.log("elem:"+elem.length);
+			console.log("oldValue:"+oldValue);
+			console.log("newValue:"+newValue);
+			console.log("checked:"+elem[0].checked);
+			console.log("elem:"+elem[0].tagName);
 			console.log("elem:"+elem[0].outerHtml);
+			console.log("elem:"+elem[0].innerHtml);
 		}
             
     }
 
 	afterDraw() {
-		/*console.log("finished_draw_item");
+		console.log("finished_draw_item");
 		this.addEventListener("dragstart", this.itemDragStart);
 		this.addEventListener('dragend',this.itemDragEnd);
 		this.addEventListener('dragenter', this.itemDragEnter);
@@ -184,7 +189,7 @@ export class Item extends WJElement {
 		this.addEventListener('dragover', this.itemDragOver);
 		this.addEventListener('drop', this.itemDrop);
 		this.addEventListener('focus', this.itemFocus);
-		this.addEventListener('click', (e) => this.handleOptionClick(e));
+		/*this.addEventListener('click', (e) => this.handleOptionClick(e));
 		
 		let buttonUp =	this.querySelector('#buttonUp');
 		let buttonDown =	this.querySelector('#buttonDown');
@@ -305,66 +310,72 @@ export class Item extends WJElement {
 	}
 	itemDragStart(e) {
 	//	e.preventDefault();
-		console.log("item","drag_start_updated");
-		const parentElement = e.target.parentElement.parentElement;
-		parentElement.classList.add('__itemDrag');
+		console.log("item","dragStart_started");
+		const element = e.target;
+		element.classList.add('__itemDrag');
 		//parent.children is not an array. It is HTMLCollection
 		//let items = parentElement.children; 
+		var parentElement = element.parentElement;
 		[...parentElement.children].forEach((item) => {
 			item.classList.remove('__itemDragover');
 		});
-const dataPos = e.target.getAttribute('data-pos');
-console.log("dataPos:"+dataPos);
+		const dataPos = e.target.getAttribute('data-pos');
+		console.log("dataPos:"+dataPos);
+		console.log("itemDragStart:"+e.target.tagName);
+		
 		// set currently dragged item
 		this.keepItem=e.target;
 		this.curDraggedEl = e.target;
 		this.setAttribute("dragging", "");
-		
+		/*
 		this.grabCoords = {x: 0, y: 0};
 		// set mouse coords of grab
 		this.grabCoords.x = e.layerX;
 		this.grabCoords.y = e.layerY;
-
+*/
 		// set drag data
 		e.dataTransfer.effectAllowed = 'move';
 		e.dataTransfer.setData('text/plain', dataPos);
-	
+		
+		
+		console.log("item","dragStart_finished");
         
     }
 	itemDragEnd(e){
-		console.log("item","drag_end");
-		const parentElement = e.target.parentElement.parentElement;
-		parentElement.classList.remove('__itemDrag');
-		parentElement.classList.remove('__itemGrab');
-
+		console.log("item","dragEnd_started");
+		const element = e.target;
+		element.classList.remove('__itemDrag');
+		element.classList.remove('__itemGrab');
+		const parentElement = e.target.parentElement;
 		[...parentElement.children].forEach((item) => {
 			item.classList.remove('__itemDragover');
 		});
+		console.log("item","dragEnd_finished");
 	}
 	 itemDragEnter(e) {
 		console.log("item","dragenter");
 		 // get position of item dragged over
-    let pos = parseInt(e.target.parentElement.dataset.pos)+1;
+		let pos = parseInt(e.target.dataset.pos)+1;
 
-    // check that item isn't being dragged over itself
-    if(pos !== this.curItem+1) {
-        // add drag over styling
-        e.target.parentElement.classList.add('__itemDragover');
+		// check that item isn't being dragged over itself
+		if(pos !== this.curItem+1) {
+			// add drag over styling
+			e.target.classList.add('__itemDragover');
 
-        // set drag data
-        e.dataTransfer.dropEffect = 'move';
+			// set drag data
+			e.dataTransfer.dropEffect = 'move';
 
-        // feedback message
-        //announceStatus(`Entered drag area for #${pos}, ${e.target.dataset.name}. Drop to swap positions.`);
-    } else {
-        // set drag data
-        e.dataTransfer.dropEffect = 'none';
-    }
+			// feedback message
+			//announceStatus(`Entered drag area for #${pos}, ${e.target.dataset.name}. Drop to swap positions.`);
+		} else {
+			// set drag data
+			e.dataTransfer.dropEffect = 'none';
+		}
 
 	}
 	itemDragLeave(e){
 		console.log("item","dragleave");
-		e.target.parentElement.classList.remove('__itemDragover');
+		e.target.classList.remove('__itemDragover');
 		//we leaved source element
 		//e.target.classList.remove('dragging');
 	}
@@ -380,22 +391,33 @@ itemDragOver(e) {
     e.preventDefault();
     e.stopPropagation();
 	const dragging = document.querySelector("[dragging]");
+	var targetElement = e.target;
+	var rootTarget = null;
+	const targetTag = targetElement.tagName;
+	if(targetTag == 'WJ-LABEL'){
+		targetElement = targetElement.parentElement;
+	}
 	// remove drag styling
 	console.log("item","drop:"+this.curDraggedEl);
 	console.log("item","drop_2:"+this.keepIem);
-	
+	console.log("item","dragging:"+dragging);
 	dragging.parentElement.classList.remove('__itemDrag');
 	dragging.parentElement.classList.remove('__itemGrab');
 	dragging.removeAttribute('dragging');
 	//curDraggedEl.parentElement.classList = 'rankingsItem';
 //https://stackoverflow.com/questions/22754315/for-loop-for-htmlcollection-elements
 //var list = document.getElementsByClassName("events");
+	console.log("dargging_children dragging tagName:"+dragging.tagName);
+	console.log("dargging_children e.target:"+e.target.tagName);
+	console.log("dargging_children e.target2:"+e.target.parentElement.tagName);
+//element.getRootNode().host
+
 
     // check that item was dropped on a different one
-    if(dragging !== e.target) {
+    if(dragging !== targetElement) {
         // get #'s of items we're swapping
         let pos1 = parseInt(e.dataTransfer.getData('text/plain'));
-        let pos2 = parseInt(e.target.getAttribute('data-pos'));
+        let pos2 = parseInt(targetElement.getAttribute('data-pos'));
 		console.log("item","checkPost_1");
         // update grab coordinates
         this.grabCoords.x = this.grabCoords.x - e.layerX;
@@ -403,7 +425,9 @@ itemDragOver(e) {
 		console.log("item","checkPost_2");
         // swap items
 		const childen =  dragging.parentElement.children;
-		console.log("dargging children:"+childen.length);
+		console.log("dargging_children:"+childen.length);
+		console.log("dargging_children pos1:"+pos1);
+		console.log("dargging_children pos2:"+pos2);
         this.swapItems(childen,pos1,pos2);
 
         // move focus to item
@@ -425,17 +449,38 @@ itemDragOver(e) {
 }
  swapItems(children,pos1,pos2) {	
     // get items in question
+
     let item1 = children[pos1];
     let item2 = children[pos2];
-	    
-	let slot1=item1.querySelector('[slot="test"]')
-	let slot2=item2.querySelector('[slot="test"]')
-	item1.appendChild(slot2);
-	item2.appendChild(slot1);
-	
+	item2.setAttribute("data-pos",pos1);
+	item1.setAttribute("data-pos",pos2);
+	this.SortData();
 	
 	
 }
+
+	comparator(a, b) {	  
+		if (a.dataset.pos < b.dataset.pos)
+			return -1;
+		if (a.dataset.pos > b.dataset.pos)
+			return 1;
+		return 0;
+	}
+        
+	// Function to sort Data
+	SortData() {
+		var subjects = 	this.parentElement.querySelectorAll("[data-pos]");
+		var subjectsArray = Array.from(subjects);
+		let sorted = subjectsArray.sort(this.comparator);
+		sorted.forEach(e =>
+			this.parentElement.appendChild(e)
+			);
+	}
+
+
+
+
+
  transitionSlideItem(pos,dis,front=true,decay) {
     // vars
     let cls;
@@ -512,9 +557,8 @@ itemDragOver(e) {
         item.classList.remove('__drop');
     }, 300);
 }
- afterDisconnect() {
-      //  document.removeEventListener("photo-crop-after", this.photoCropAfter);
-	  
+	afterDisconnect() {
+		//  document.removeEventListener("photo-crop-after", this.photoCropAfter);
 		this.removeEventListener("dragstart", this.itemDragStart);
 		this.removeEventListener('dragend',this.itemDragEnd);
 		this.removeEventListener('dragenter', this.itemDragEnter);
@@ -523,7 +567,7 @@ itemDragOver(e) {
 		this.removeEventListener('drop', this.itemDrop);
 		this.removeEventListener("slotchange", (event) => {console.log("slot_change")});
 		
-    }
+	}
 	unregister(){}
 
 }

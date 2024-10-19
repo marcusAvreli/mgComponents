@@ -43,6 +43,7 @@ export class Row extends WJElement {
         return fragment;
     }
 	unregister(){}
+	afterDisconnect (){}
 }
 
 customElements.get(Row.is) || window.customElements.define(Row.is, Row);

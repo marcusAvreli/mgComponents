@@ -61,6 +61,7 @@ export class Dropdown extends WJElement {
         return fragment;
     }
 	unregister(){}
+	afterDisconnect(){}
 }
 
 customElements.get(Dropdown.is) || window.customElements.define(Dropdown.is, Dropdown);

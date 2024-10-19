@@ -28,6 +28,9 @@ export class List extends WJElement {
     setupAttributes() {
         this.isShadowRoot = "open";
     }
+	get draggable (){
+		return this.hasAttribute("customDraggable")
+	}
 	isSearchable (){
 		return this.hasAttribute("searchable")
 	}
@@ -38,7 +41,7 @@ export class List extends WJElement {
 		return  this.getAttribute("itemsPerPage") || 5;
 	}
 	static get observedAttributes() {
-		return [ 'searchable', 'disabled','refresh'];
+		return [ 'searchable', 'disabled','refresh','customDraggable'];
 	}
     draw(context, store, params) {
 		this.selectedValues=[];
@@ -87,8 +90,11 @@ export class List extends WJElement {
 		listContainerSubBox1.appendChild(element);
 		
 		
-		
-		
+		if(this.draggable){
+			console.log("list_is_draggable");
+			this.makeChildrenDraggable();
+		}
+		//this.addEventListener('wj-list:input', (e  ) => {this.listChanged(e)});
 		/*
 	
 		
@@ -139,6 +145,22 @@ export class List extends WJElement {
 		fragment.appendChild(listGridWrapper);
         return fragment;
     }
+	input(e){
+		console.log("move_to_destination_clicked after_dispatch");
+		console.log("list_component_changed");
+		if(this.draggable){
+			this.makeChildrenDraggable();
+		}
+	}
+	makeChildrenDraggable(){
+		var counter = 0;
+		[...this.children].forEach((item) => {
+			console.log("setting_draggable");
+			item.setAttribute("draggable","true");
+			item.setAttribute("data-pos",counter);
+			counter=counter+1;
+		});
+	}
 	addScrollableList(){
 		let wrapperList = document.createElement("div");
 		wrapperList.classList.add("wrapper-list");
@@ -209,6 +231,8 @@ export class List extends WJElement {
 	}
     afterDraw() {
 		console.log("list","after_draw_start");
+		this.addEventListener('wj-layout-transfer:test', (e) => {this.input(e);});
+		//this.addEventListener("wj-paginator:reload",  (e) => {this.reload();});		
 		if(this.isPaginated()){
 			
 			event.dispatchCustomEvent(this, "wj-paginator:reload");
@@ -226,7 +250,11 @@ export class List extends WJElement {
 		this.body2PH.addEventListener('scroll', ( e ) => this.progress(e));
 		*/
 		if(this.isSearchable()){
-		   this.searchBar.addEventListener('wj-input:input', ( e ) => this.filterOptions(e));
+			console.log("search_yes");
+		   this.searchBar.addEventListener('wj-input:input', ( e ) => {
+		   this.filterOptions(e);
+		   console.log("search_yes_1");
+		   });
 		}
         this.classList.toggle("wj-lines-" + this.lines, this.hasAttribute("lines"));
         this.classList.toggle("wj-inset", this.hasAttribute("inset"));
@@ -246,7 +274,7 @@ export class List extends WJElement {
 	
 	async filterOptions(e) {		
 		const typedValue = e.detail.value;		
-			
+			console.log("!!!!! filter options");
 		for (var i = 0; i < this.children.length; i++) {
 			const child = this.children[i];
 				console.log("child:"+child);
@@ -288,7 +316,15 @@ export class List extends WJElement {
 				if(this.isPaginated()){
 					this.showhingUpdated(newValue);
 				}
-				break;    				
+				break;
+			case 'customDraggable':
+				console.log("customDraggable_oldValue:"+oldValue);
+				console.log("customDraggable_newValue:"+newValue);
+				if(this.draggable){
+					console.log("list_is_draggable");
+					this.makeChildrenDraggable();
+				}
+				break;
 		}
 	}
 	updateSearchable(newValue) {

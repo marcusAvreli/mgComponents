@@ -40,10 +40,13 @@ export class ServiceInteger {
 		if(this._component.isIntTextBox()){
 			myValid = this.isCustomValid(this.validationMap.get("intTextBox"),this._component.input);	
 		}
-		//console.log("service_integer","myValid:"+myValid);
+		console.log("service_integer","myValid:"+myValid);
+		
+		console.log("service_integer","old Value1:"+this.oldValue);
+		console.log("service_integer","new_value:"+this._component.input.value);
 		if(!myValid){
 			this._component.input.setCustomValidity("Must be an integer");
-			//console.log("service_integer","old Value1:"+this.oldValue);
+			console.log("service_integer","old Value1:"+this.oldValue);
 			if(this.oldValue){
 				this._component.input.value = this.oldValue
 			}else{
@@ -53,15 +56,26 @@ export class ServiceInteger {
 			this._component.input.setCustomValidity("");
 			this._component.errorMessage.textContent = this._component.input.validationMessage;
 			this._component.removeAttribute("invalid");
-			//console.log("service_integer","old Value2:"+this.oldValue);
+			console.log("service_integer","old Value2:"+this.oldValue);
 			this.oldValue = this._component.input.value;
+			console.log("service_integer","old Value3:"+this.oldValue);
+			//this._component.value = this._component.input.value;
 
 		}
+		console.log("service_integer","new_value:"+this._component.input.value);
 		this.validateInput();
+		console.log("service_integer","new_value_after_validate_input:"+this._component.input.value);
 		//console.log("service_integer","service_integer:"+this._component.input.value);
 		event.dispatchCustomEvent(this._component, "wj-input:input", {
-			value: this._component.input.value
+			//bubbles: false,
+			//stopPropagation : true,
+			//preventDefault:true,
+			detail:{
+				preventDefault:true
+				,stopPropagation : true
+			,value: this._component.input.value
 			,component: this._component.input
+			}
 		});
 	}
   

@@ -217,7 +217,8 @@ export class Button extends WJElement {
             }
         });
     }
-	unregister(){}
+		unregister(){}
+	afterDisconnect (){}
 }
 
 

@@ -47,7 +47,7 @@ export class Icon extends WJElement {
         this.classList.add("wj-size");
         if(this.color)
             this.classList.add("wj-color-" + this.color, "wj-color");
-		console.log("size:"+this.size);
+		
         if(this.size)
             this.classList.add("wj-size-" + this.size);
 
@@ -57,13 +57,14 @@ export class Icon extends WJElement {
     }
 
     afterDraw() {
+		
         let lazyImageObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     getSvgContent(this.url).then((svgContent) => {
-						console.log("after_draw");
-                        this.element.innerHTML = iconContent.get(this.url);
-                        this.element.querySelector("svg").setAttribute("part", "svg");
+						
+                        //this.element.innerHTML = iconContent.get(this.url);
+                       // this.element.querySelector("svg").setAttribute("part", "svg");
                     });
 
                     this.classList.remove("lazy");
@@ -73,10 +74,10 @@ export class Icon extends WJElement {
         });
 
         lazyImageObserver.observe(this.element);
+		
     }
-	unregister(){
-	
-	}
+	unregister(){}
+	afterDisconnect(){}
 }
 
 customElements.get(Icon.is) || window.customElements.define(Icon.is, Icon);
