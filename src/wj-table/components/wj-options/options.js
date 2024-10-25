@@ -101,7 +101,7 @@ export default class Options extends WJElement {
         let fragment = new DocumentFragment();
 
         // Ulozennie filtra do existujucej navigacie
-        let saveBtn = document.createElement("button");
+        let saveBtn = document.createElement("wj-button");
         saveBtn.classList.add("btn", "btn-success", "btn-sm", "mr-2");
         saveBtn.innerHTML = "Uložiť";
         saveBtn.addEventListener("click", () => {
@@ -142,10 +142,15 @@ export default class Options extends WJElement {
 
         return fragment;
     }
-
+stringToFragment(string) {
+	  const temp = document.createElement('template');
+	  temp.innerHTML = string;
+	  return temp.content;
+	}
     btnVisibility() {
 			console.log("wj_table_options","btnVisibility","start");
-        let slot = document.createElement("span");
+        /*
+		let slot = document.createElement("span");
         slot.setAttribute("slot", "button");
         slot.innerHTML = '<i class="fa-light fa-gear"></i>';
 
@@ -154,17 +159,19 @@ export default class Options extends WJElement {
         visibility.setAttribute("position", "bottom-left");
         visibility.appendChild(slot);
         visibility.classList.add("mr-3", 'd-inline-block');
+		*/
         // visibility.style.display = 'inline-block';
-        visibility.appendChild(this.visibility(this.table.getColumns()));
+        //visibility.appendChild(this.visibility(this.table.getColumns()));
+		const frag = this.stringToFragment('<div>Visibility</div>');
 console.log("wj_table_options","btnVisibility","finish");
-        return visibility;
+        return frag;
     }
 
     visibility(columns) {
 		console.log("wj_table_options","visibility","start");
         let visibility = document.createElement('div');
         visibility.classList.add('wrapper-visibility');
-
+/*
         for (let column of columns) {
 			console.log("wj_table_options","visibility","1");
             if (column.getDefinition().title != undefined) {
@@ -172,13 +179,11 @@ console.log("wj_table_options","btnVisibility","finish");
                 let input = document.createElement('input');
                 input.setAttribute('type', 'checkbox');
                 input.id = 'checkbox-' + column.getDefinition().field;
-					console.log("wj_table_options","visibility", "input id", input.id);
-					console.log("wj_table_options","input checked before", input.checked);
+					
                 input.checked = column.isVisible();
 				console.log("wj_table_options","input checked after", input.checked);
                 input.addEventListener('click', (e) => {
                     column.toggle();
-console.log("wj_table_options","visibility", "toogle");
                     if (column.isVisible()) {
                         this.checked = true;
                     } else {
@@ -199,12 +204,17 @@ console.log("wj_table_options","visibility", "toogle");
                 visibility.appendChild(wrapper);
             }
         }
+		*/
+		const frag = this.stringToFragment('<div><h1>VISIBILITY</h1></div>');
 console.log("wj_table_options","visibility","finish");
-        return visibility;
+        return frag;
     }
+	
+	
 
     btnExport() {
 		console.log("wj_table_options","btn_export","start");
+		/*
         let slot = document.createElement("span");
         slot.setAttribute("slot", "button");
         slot.innerHTML = '<i class="fa-light fa-arrow-down-to-line"></i>';
@@ -223,14 +233,30 @@ console.log("wj_table_options","visibility","finish");
 			
             visibility.appendChild(this.export(button));
         });
+		*/
+		const frag = this.stringToFragment(` <wj-dropdown label="Start" slot-button= "true" placement="bottom-left" offset="5">
+    <wj-button size="large" slot="trigger" stop-propagation="true" caret>Large</wj-button>
+    <wj-menu variant="context">
+    
+    
+    </wj-menu>
+
+  </wj-dropdown>
+`);
+
+ this.data.forEach(button => {
+			
+            frag.appendChild(this.export(button));
+        });
+
 		console.log("wj_table_options","btn_export","finish");
-        return visibility;
+        return frag;
     }
 
     export(button) {
 		console.log("wj_table_options","export","start");
-        let item = document.createElement("div");
-        item.classList.add("wj-dropdown-item");
+        let item = document.createElement("wj-menu-item");
+        //item.classList.add("wj-menu-item");
         item.innerHTML = button.icon + button.title;
 		//item.innerHTML = "TEST";
         item.addEventListener("click", (e) => {

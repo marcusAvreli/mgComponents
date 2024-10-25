@@ -79,17 +79,19 @@ export class Checkbox extends WJElement {
     }
 
     afterDraw() {
-        event.addListener(this, "click", "wj:checkbox:change");
-        event.addListener(this, "click", "wj:checkbox:input");
-
+     //   event.addListener(this, "click", "wj:checkbox:change");
+    //    event.addListener(this, "click", "wj:checkbox:input");
+		  //event.addListener(this, "inputEvent", "wj:checkbox:input");
+		   this.addEventListener("click", this.inputEvent);
+//document.addEventListener('click', inputEvent, true);
         // event.addListener(this, "click", null, () => {
         //     alert(0)
         // }, true);
     }
 
     inputEvent = (e) => {
-		console.log("checkBox:"+e.target.checked);
-        this.checked = e.target.checked;
+		
+        this.checked = !e.target.checked;
     }
 
     disconnectedCallback() {

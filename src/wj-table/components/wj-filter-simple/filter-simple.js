@@ -5,8 +5,8 @@ const template = document.createElement("template");
 template.innerHTML = `<style>
     @import "assets/css/pages.css";
    // @import "/templates/net/pages/css/themes/net-basic.css";
-    //@import "assets/css/font-awesome.css";
-   // @import "assets/css/font-awesome.min.css";
+    @import "assets/css/font-awesome.css";
+    @import "assets/css/font-awesome.min.css";
     
     :host {
         display: flex;
