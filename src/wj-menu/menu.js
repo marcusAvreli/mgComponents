@@ -44,7 +44,7 @@ export class Menu extends WJElement {
         native.classList.add("native-menu");
 
         let slot = document.createElement("slot");
-
+		
         native.appendChild(slot);
         fragment.appendChild(native);
 

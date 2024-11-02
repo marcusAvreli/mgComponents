@@ -138,7 +138,7 @@ export class Service extends WJElement {
     }
 
     set tableId(value) {
-        this.setAttribute("table-id", value);
+        this.setAttribute("id", value);
     }
    static get observedAttributes() {
         return ["tabledata","data"];
@@ -149,7 +149,7 @@ export class Service extends WJElement {
 	}
 
     get tableId() {
-        return this.getAttribute("table-id");
+        return this.getAttribute("id");
     }
 
     extendFormatters(formatter) {
@@ -167,7 +167,7 @@ export class Service extends WJElement {
                 let customAttributes = attributes.interpolate(rowData);
                 switch (action) {
                     case "wj-modal-delete":
-                        return `<hub-modal-open ${customAttributes} display="${display}" url="${interpolateUrl}" size="${size}" title="${title}" alert="${callback}" text="${text}" class="btn btn-link">
+                        return `<hub-modal-open ${customAttributes} testParam display="${display}" url="${interpolateUrl}" size="${size}" title="${title}" alert="${callback}" text="${text}" class="btn btn-link">
                             <i class="${icon}"></i>
                         </hub-modal-open>`;
                     default:
@@ -703,7 +703,15 @@ export class Service extends WJElement {
             }
         });
     }
-	afterDisconnect(){}
+	unregister(){
+		
+		console.log("unregister","service");
+		
+	}
+	afterDisconnect(){
+		console.log("unregister","after","service");
+		
+	}
 }
 
 

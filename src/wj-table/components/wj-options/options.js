@@ -234,19 +234,17 @@ console.log("wj_table_options","visibility","finish");
             visibility.appendChild(this.export(button));
         });
 		*/
-		const frag = this.stringToFragment(` <wj-dropdown label="Start" slot-button= "true" placement="bottom-left" offset="5">
-    <wj-button size="large" slot="trigger" stop-propagation="true" caret>Large</wj-button>
-    <wj-menu variant="context">
-    
-    
-    </wj-menu>
-
-  </wj-dropdown>
-`);
+	const frag = this.stringToFragment(` 
+		<wj-dropdown label="Start" slot-button= "true" id="this_is" placement="bottom-left" offset="5">
+		<wj-button size="large" slot="trigger" stop-propagation="true" caret>Export...</wj-button>
+		<wj-menu id="menu-child" variant="context">
+		</wj-menu>
+		</wj-dropdown>
+	`);
 
  this.data.forEach(button => {
 			
-            frag.appendChild(this.export(button));
+            frag.getElementById("menu-child").appendChild(this.export(button));
         });
 
 		console.log("wj_table_options","btn_export","finish");
@@ -255,9 +253,11 @@ console.log("wj_table_options","visibility","finish");
 
     export(button) {
 		console.log("wj_table_options","export","start");
-        let item = document.createElement("wj-menu-item");
+        //let item = document.createElement("wj-menu-item");
+		let item = document.createElement("wj-menu-item");
         //item.classList.add("wj-menu-item");
         item.innerHTML = button.icon + button.title;
+		//item.setAttribute("slot","menuChild");
 		//item.innerHTML = "TEST";
         item.addEventListener("click", (e) => {
            // this.table.download("xlsx", "data.xlsx", {sheetName:"MyData"});
@@ -266,8 +266,15 @@ console.log("wj_table_options","visibility","finish");
 		console.log("wj_table_options","export","finish");
         return item;
     }
-	unregister(){}
-	afterDisconnect(){}
+	unregister(){
+		
+		console.log("unregister","options");
+		
+	}
+	afterDisconnect(){
+		console.log("unregister","after","optionss");
+		
+	}
 }
 
 let __esModule = "true";

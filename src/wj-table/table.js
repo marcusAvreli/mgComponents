@@ -60,7 +60,7 @@ export class Table extends Service {
 		console.log("test_delete","rowTobeDeleted:"+rowTobeDeleted);
 		console.log("test_delete","rowTobeDeleted:"+JSON.stringify(rowTobeDeleted));
 		  this.dispatchEvent(
-            new CustomEvent("wj:slider-move", {
+            new CustomEvent("wj:delete-row", {
                 bubbles: true,
                 detail: {
                     value: rowTobeDeleted,
@@ -260,9 +260,7 @@ export class Table extends Service {
 		this.store.dispatch(
 		this.defaultStoreActions.addAction('dataContent-' + this.tableId)(tableData.data)
 		);
-		  if(this.filterable == "SIMPLE" || this.filterable == "ADVANCED") {
-                this.append(this.getOptionsElement());
-            }
+		 
 		console.log("set_data","finish");
 	}
 	onDelete(e,cell){
@@ -337,6 +335,8 @@ export class Table extends Service {
 			reactiveData: true, //enable reactive data
 			//data: this.tableData.data,
 			//columns: columns,
+			//selectableRows:1, 
+			selectable:1,
             layout: this.layout || "fitDataFill",
             tooltips: true,
             history: true,
@@ -376,8 +376,16 @@ this.table.on("cellClick", function(e, cell){
 		
 		
 });
+ if(this.filterable == "SIMPLE" || this.filterable == "ADVANCED") {
+			 //console.log("wj_table_options_data_length:"+this.shadowRoot.getElementById("this_is"));
+			 // console.log("wj_table_options_data_length:"+document.getElementById("this_is"));
+			    //console.log("wj_table_options_data_length:"+this.table.getElementById("this_is"));
+				//console.log("wj_table_options_data_length:"+this.table.shadowRoot.getElementById("this_is"));
+                this.append(this.getOptionsElement());
+            }
 this.table.on('tableBuilt', () => {
-this.dispatchEvent(
+	
+		this.dispatchEvent(
             new CustomEvent("wj:table-built", {
                 bubbles: true,
             })
@@ -388,6 +396,17 @@ this.table.on("dataSorted", function(sorters, rows){
     //sorters - array of the sorters currently applied
     //rows - array of row components in their new order
 	
+});
+this.table.on("rowSelectionChanged", (data, rows) => {
+	this.dispatchEvent(
+            new CustomEvent("wj:rowSelectionChanged", {
+                bubbles: true
+				,detail: {
+                    data: data,
+                    rows: rows
+                }
+            })
+        );
 });
         this.table.filterable = this.filterable;
 		console.log("table","after_draw","finish");
@@ -435,9 +454,10 @@ this.table.on("dataSorted", function(sorters, rows){
 	   const field = cell.getColumn().getField();	   
 	   switch (field) {
 			case 'delete':
+			console.log("cell clicked _delete");
 				return this.onDelete(event, cell);
 			default:
-				console.log("cell clicked 2");
+				console.log("cell clicked default");
 			return;
 	   } 
 	}
@@ -700,6 +720,15 @@ this.table.on("dataSorted", function(sorters, rows){
             "icon": "<i class=\"fa-light fa-file-csv\"></i>"
         }]
     }
+	unregister(){
+		
+		console.log("unregister","table");
+		
+	}
+	afterDisconnect(){
+		console.log("unregister","after","table");
+		
+	}
 }
 
 // let __esModule = 'true';

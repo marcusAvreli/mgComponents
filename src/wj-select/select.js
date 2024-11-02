@@ -75,13 +75,15 @@ export class Select extends WJElement {
         let inputWrapper = document.createElement("div");
         inputWrapper.classList.add("input-wrapper");
 
-        let input = document.createElement("input");
+        let input = document.createElement("wj-input");
         input.setAttribute("type", "text");
-        input.setAttribute("part", "input");
-        input.setAttribute("autocomplete", "off");
-        input.setAttribute("readonly", "");
+		input.setAttribute("variant", "standard");
+        //input.setAttribute("part", "input");
+        //input.setAttribute("autocomplete", "off");
+        //input.setAttribute("readonly", "");
         input.setAttribute("placeholder", this.placeholder || "");
-
+		//this.input = input;
+ 
         let arrow = document.createElement("wj-icon");
         arrow.setAttribute("name", "chevron-down");
         arrow.setAttribute("slot", "arrow");
@@ -110,8 +112,8 @@ export class Select extends WJElement {
         let popup = document.createElement("wj-popup");
         popup.setAttribute("placement", "bottom-start");
         popup.setAttribute("manual", "");
-        popup.setAttribute("size", "");
-
+        popup.setAttribute("size", "10");
+		popup.setAttribute("offset", "5");
         if(this.hasAttribute("disabled"))
             popup.setAttribute("disabled", "");
 
@@ -157,7 +159,16 @@ export class Select extends WJElement {
     }
 
     afterDraw(context, store, params) {
-        this.input.addEventListener("focus", (e) => {
+		 this.input.addEventListener('wj-input:input', ( e ) => {
+			 console.log("search_yes_1:"+e.detail);
+			 console.log("search_yes_1:"+e.detail.toString());
+			 console.log("search_yes_1:"+JSON.stringify(e.detail));
+			 console.log("search_yes_1:"+JSON.stringify(e.detail.value));
+			 			 console.log("search_yes_1:"+e.detail.value);
+		   this.filterOptions(e);
+		   
+		   });
+	this.input.addEventListener("focus", (e) => {
             this.labelElement.classList.add("fade");
             this.native.classList.add("focused");
         });
@@ -183,9 +194,91 @@ export class Select extends WJElement {
         this.optionsWrapper.addEventListener("wj:options-load", (e) => {
             this.optionsWrapper.scrollTo(0, 0);
         });
+		
 
     }
+ filterOptions(e) {		
+		//const typedValue = e.detail.textContent;		
+		const typedValue = e.detail.value;	
+		const typedValue3 = e.value;
+		const tag = e.detail.tag;
+		const tag2 = e.tag;
+		const target = e.target.tag;
+		console.log("typedValue:"+typedValue);
+		
+	
+			 let allOptions = this.getAllOptions();
+			 allOptions.forEach((option) => {
+              // console.log("option label:"+option.label);
+			 //  console.log("option text:"+option.text);
+			//	console.log("option value:"+option.value);
+				console.log("option textContent:"+option.textContent);
+				
+				if (!option.textContent.toUpperCase().includes(typedValue.toUpperCase())) {
+					console.log("hide");
+				//if (option.classList.contains('wj-item-list')) {
+					//option.classList.remove('wj-item-list');
+					option.classList.add('hide');
+				
+				//}
+			}else{
+				console.log("show");
+				if (option.classList.contains('hide')) {
+					option.classList.remove('hide');
+					//child.classList.add('wj-item-list');
+				
+				} 
 
+			}
+            });
+			var options = this.shadowRoot.querySelectorAll("wj-option");
+			var options2 = this.children 			// returns NodeList
+			var options_array2 = [...options2];
+			var options_array = [...options]; // converts NodeList to Array
+		//	console.log("fffff:"+options2[0].tag);
+			//console.log("fffff2:"+options_array2[0].tag);
+			options_array2.forEach(child => {
+				/*console.log("child label:"+child.label);
+				console.log("child text:"+child.text);
+				console.log("child value:"+child.value);
+				console.log("child json:"+JSON.stringify(child));
+				*/
+			})
+			options_array.forEach(child => {
+				/*
+				console.log("child label:"+child.label);
+				console.log("child text:"+child.text);
+				console.log("child value:"+child.value);
+				console.log("child label:"+child.shadowRoot.label);
+				console.log("child text:"+child.shadowRoot.text);
+				console.log("child value:"+child.shadowRoot.value);
+				console.log("child value:"+JSON.stringify(child));
+				*/
+			})
+			/*
+		for (var i = 0; i < children.length; i++) {
+			const child = children[i];
+				console.log("child label:"+child.label);
+				console.log("child text:"+child.text);
+				console.log("child value:"+child.value);
+			if (!child.innerHtml.toUpperCase().includes(typedValue.toUpperCase())) {
+				if (child.classList.contains('wj-item-list')) {
+					child.classList.remove('wj-item-list');
+					child.classList.add('hide');
+				
+				} 
+			}else{
+				if (child.classList.contains('hide')) {
+					child.classList.remove('hide');
+					child.classList.add('wj-item-list');
+				
+				} 
+			}
+		}
+		*/
+		
+		
+	}
     optionChange = (e) => {
         let allOptions = this.getAllOptions();
 
@@ -245,6 +338,7 @@ export class Select extends WJElement {
             this.value = value;
             this.input.value = value;
         }
+		event.dispatchCustomEvent(this, "wj:selection-changed", {}); // nepomohlo to, v ff stale je scroll hore
     }
 
     selections(option) {

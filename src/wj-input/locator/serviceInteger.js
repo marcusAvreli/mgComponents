@@ -70,13 +70,13 @@ export class ServiceInteger {
 			//bubbles: false,
 			//stopPropagation : true,
 			//preventDefault:true,
-			detail:{
+			
 				preventDefault:true
 				,stopPropagation : true
 			,value: this._component.input.value
 			,component: this._component.input
 			}
-		});
+		);
 	}
   
   
