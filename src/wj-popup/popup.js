@@ -115,10 +115,12 @@ export class Popup extends WJElement {
     }
 
     showHide() {
-		console.log("Popup","show_hide");
+		
         if(this.hasAttribute("active")) {
+			console.log(Popup.is,"deactive");
             this.removeAttribute("active");
         } else {
+			console.log(Popup.is,"active");
             this.setAttribute("active", "");
         }
     }

@@ -31,9 +31,10 @@
   --wj-input-margin-bottom: .5rem;
   --wj-input-line-height: 20px;
   --wj-input-slot-padding-inline: .5rem;
-  width: 100%;
-  margin-bottom: var(--wj-input-margin-bottom);
-  display: block;
+  //width: 100%;
+  //margin-bottom: var(--wj-input-margin-bottom);
+  display: flex;
+  flex:auto;
 
   .wrapper {
     display: flex;
@@ -41,8 +42,10 @@
   }
   .native-input {
     .input-wrapper {
-      width: 100%;
-      position: relative;
+      //width: 100%;
+      //position: relative;
+	  display:flex;
+	  flex:auto;
     }
     &.default {
       background-color: var(--wj-input-background-color);
@@ -52,9 +55,9 @@
       border-width: var(--wj-input-border-width);
       border-style: var(--wj-input-border-style);
       border-color: var(--wj-input-border-color);
-      padding-inline: 0;
-      padding-top: .25rem;
-      padding-bottom: .25rem;
+    //  padding-inline: 0;
+     // padding-top: .25rem;
+     // padding-bottom: .25rem;
       transition: background-color 0.2s ease;
       cursor: text;
       .input-wrapper {
@@ -120,7 +123,7 @@
       }
       input {
         display: block;
-        min-height: 32px;
+        //min-height: 32px;
         padding-inline: .5rem;
         padding-top: 0;
         padding-bottom: 0;
@@ -169,7 +172,7 @@
         position: static;
 
         background: transparent;
-        padding: 0.25rem 0;
+       /* padding: 0.25rem 0;*/
         left: auto;
         transform: none;
         color: var(--wj-input-color-invalid);
@@ -177,6 +180,22 @@
         line-height: normal;
       }
     }
+	&.custom{
+	 /*padding-inline: unset;
+      padding-top: unset;
+      padding-bottom: unset;
+	  */
+	 display:flex;
+	 flex:auto;
+	 .input-wrapper{
+		 display:flex;
+		 flex:auto;	 
+	 }
+	 .form-control{
+		display:flex;
+		flex:auto;
+		}
+	}
   }
 }
 
@@ -243,12 +262,12 @@ input {
   color: var(--wj-input-color);
   appearance: none;
   outline: 0;
-  padding: .25rem .5rem;
+ /* padding: .25rem .5rem;*/
   line-height: var(--wj-input-line-height);
   font-size: 14px;
   font-weight: normal;
   vertical-align: middle;
-  min-height: 32px;
+  //min-height: 32px;
 }
 
 .error-message {
@@ -259,7 +278,7 @@ input {
   min-width: auto;
   border-radius: 50px;
   background: black;
-  padding: .25rem .5rem;
+  /* padding: .25rem .5rem; */
   top: 0;
   left: 50%;
   transform: translate(-50%, -50%);

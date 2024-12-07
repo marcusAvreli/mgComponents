@@ -177,27 +177,37 @@ export class LayoutTransfer extends WJElement {
 	}
 	
 	moveToDestination(e){
-		console.log("move_to_destination_clicked");
+		console.log(LayoutTransfer.is,"move_to_destination_clicked_start");
 	
-		var elems = this.checkedSourceList;
-		//https://stackoverflow.com/questions/47754415/how-to-get-all-child-elements-with-specific-attribute-in-javascript
-		//theParentSelector theChildsAttribute
-		console.log(elems.length);
-	
-		var destinationList =  document.querySelector('[name="destinationList"]');
+		const checkedElems = this.checkedSourceList;
+		//https://stackoverflow.com/questions/47754415/how-to-get-all-child-elements-with-specific-attribute-in-javascript		
+		console.log(LayoutTransfer.is,"number_of_source_selected:"+checkedElems.length);	
+		var destinationList =  null;		
+		this.shadowRoot.querySelector('slot[name="right"]')?.assignedElements?.().forEach((el) => {	
+			destinationList  = el.children[0];		 
+		})
+		 
+		console.log(LayoutTransfer.is,"checkedElems");
+		if(checkedElems){			 
+			checkedElems.forEach((checkedElem) => {			
+				var endElement = checkedElem.querySelectorAll('[slot="end"]')[0];
+				endElement.checked=false;
+				const clonedChecked = checkedElem.cloneNode(true);
+				destinationList.appendChild(clonedChecked);
+				checkedElem.parentElement.removeChild(checkedElem);
+			})
+		}
+		console.log(LayoutTransfer.is,"checkedElems3");
 		
-		var el = elems[0];
-		console.log("moveToDestination",el);
-		var assigned = el.shadowRoot.querySelector("slot[name=end]").assignedElements();
-	//	assigned[0].checked = false;
-	   destinationList.appendChild(el);
-	   console.log("move_to_destination_clicked before_dispatch");
+		console.log(LayoutTransfer.is,"move_to_destination_clicked before_dispatch");
 	   //event.dispatchCustomEvent(this, "wj-list:input");
-		 event.dispatchCustomEvent(destinationList, "wj-layout-transfer:test", {
+		
+		event.dispatchCustomEvent(destinationList, "wj-layout-transfer:test", {
             data: { top: 'bottom', right: 'left', bottom: 'top', left: 'right' },
             context: this,
             event: this
         });
+		
 		
 		if(this.checkedSourceListCount == 0){
 			this.wjButton1.disabled="";
@@ -214,19 +224,29 @@ export class LayoutTransfer extends WJElement {
 			this.wjButton2.classList.add("wj-disabled");
 		}
 		
+	
 	}
 	moveAllToDestination(e){
 		console.log("move_all_to_destination_clicked");
-		var elems = this.checkedSourceList;
-		var destinationList =  document.querySelector('[name="destinationList"]');
-		Array.from(elems).forEach( function (el) {
-		   //console.log(el.getAttribute("theChildsAttribute"))
-		   var assigned = el.shadowRoot.querySelector("slot[name=end]").assignedElements();
-		   assigned[0].checked = false;
-			//assigned.tagName
-		   el.removeAttribute("checked");
-		   destinationList.appendChild(el);
-		});
+		var checkedElems = this.checkedSourceList;	
+		
+		var destinationList =  null;		
+		this.shadowRoot.querySelector('slot[name="right"]')?.assignedElements?.().forEach((el) => {	
+			destinationList  = el.children[0];		 
+		})
+		
+		if(checkedElems){			 
+			checkedElems.forEach((checkedElem) => {			
+				var endElement = checkedElem.querySelectorAll('[slot="end"]')[0];
+				endElement.checked=false;
+				const clonedChecked = checkedElem.cloneNode(true);
+				
+				destinationList.appendChild(clonedChecked);
+				checkedElem.parentElement.removeChild(checkedElem);
+			})
+		}
+		
+		console.log(LayoutTransfer.is,"checkedSourceListCount:"+this.checkedSourceListCount);
 		if(this.checkedSourceListCount == 0){
 			this.wjButton1.disabled="";
 			this.wjButton1.classList.add("wj-button-disabled");
@@ -247,8 +267,9 @@ export class LayoutTransfer extends WJElement {
 		console.log("move_to_source_clicked:"+el);
 		var assigned = el.shadowRoot.querySelector("slot[name=end]").assignedElements();
 		assigned[0].checked = false;
-		destinationList.appendChild(el);
-		
+		const clonedChecked = el.cloneNode(true);
+		destinationList.appendChild(clonedChecked);
+		el.parentElement.removeChild(el);
 		
 		if(this.checkedDestinationListCount == 0){
 			this.wjButton4.disabled="";
@@ -264,6 +285,7 @@ export class LayoutTransfer extends WJElement {
 			this.wjButton5.classList.add("wj-button-disabled");
 			this.wjButton5.classList.add("wj-disabled");
 		}
+		
 	}
 	moveAllToSource(e){
 		console.log("move_all_to_source_clicked");
@@ -278,6 +300,10 @@ export class LayoutTransfer extends WJElement {
 			//assigned.tagName
 		   el.removeAttribute("checked");
 		   destinationList.appendChild(el);
+		  const clonedChecked = el.cloneNode(true);
+		destinationList.appendChild(clonedChecked);
+		
+		el.parentElement.removeChild(el);
 		});
 		if(this.checkedDestinationListCount == 0){
 			this.wjButton4.disabled="";
@@ -291,14 +317,29 @@ export class LayoutTransfer extends WJElement {
 	}
 	afterDraw(){
 		// event.dispatchCustomEvent(this, "wj-list:input");
-		this.shadowRoot.addEventListener('wj:checkbox:change', ( e ) => {		 
+		//	this.style.setProperty("--grid-template-rows", "0.06fr 1.0fr");
+		//this.shadowquerySelector('.foo')
+		//list-container-box1
+		var rightList = this.getItemList('right');
+		var leftList = this.getItemList('left');
+	
+	
+		rightList.setHeight();
+		leftList.setHeight();
+		
+		
+	
+		
+		
+		this.addEventListener('wj:checkbox:change', ( e ) => {		 
 			
 			console.log("shadowRoot_checked:",e.target.checked);
 			console.log("shadowRoot_checked:",e.target.parentElement.parentElement.tagName);
+			
 			if(e.target.parentElement.parentElement.tagName == 'WJ-LIST'){
-				console.log("yes");
+				console.log(LayoutTransfer.is,"yes");
 				if(e.target.parentElement.parentElement.name == 'sourceList'){
-						console.log("yes");
+						console.log(LayoutTransfer.is,"yes_1");
 				}
 				console.log("coun_selected:"+this.checkedSourceListCount);
 				if(this.checkedSourceListCount >= 1){
@@ -384,24 +425,72 @@ export class LayoutTransfer extends WJElement {
 	}
 	
 	get checkedSourceList(){
-		var elems = document.querySelectorAll('[name="sourceList"] > [checked]');
+		console.log(LayoutTransfer.is,"checked_source_list_start");
+		let elems = null;
+		 this.shadowRoot.querySelector('slot[name="left"]')?.assignedElements?.().forEach((el) => {
+			 console.log(LayoutTransfer.is,"tttt1");
+			 console.log(LayoutTransfer.is,"el:"+el.tagName);
+			 console.log(LayoutTransfer.is,"el:"+el.getAttribute("id"));
+			 console.log(LayoutTransfer.is,"el:"+el.getAttribute("name"));
+			 console.log(LayoutTransfer.is,"number of elements:"+el.children.length);
+			 var elems2 = el.children[0].children;
+			// elems = elems2.querySelectorAll('[checked]');
+			 elems = Array.from(elems2).filter(this.someFn3);
+			 console.log(LayoutTransfer.is,"resultTest2:"+elems);
+		 })
+		//console.log(LayoutTransfer.is,elems1);
+		//var elems2 = this.shadowRoot.getElementById("sourceList").children.length;
+		//console.log(LayoutTransfer.is,elems2);
+		//var elems = this.shadowRoot.querySelectorAll('[name="sourceList"] > [checked]');
 		return elems;
+	}
+	someFn3(element){
+		console.log(LayoutTransfer.is,"some_fn3_start:"+element.tagName);		
+		var endElement = element.querySelectorAll('[slot="end"]')[0];		
+		if(endElement.hasAttribute("checked")){
+			console.log(LayoutTransfer.is,"some_fn3_finish1");
+			return element;
+		}
+		console.log(LayoutTransfer.is,"some_fn3_finish2");
+		
 	}
 	get checkedSourceListCount(){
 		var elems = this.checkedSourceList;
 		var count = elems.length;
+		console.log("checkedSourceListCount:"+count);
 		return count;
 	}
+	
+	getItemList(inListName){
+		var childList = null;
+		this.shadowRoot.querySelector(`slot[name="${inListName}"]`)?.assignedElements?.().forEach((el) => {
+			childList = el.children[0];
+		})
+		return childList;
+	}
 	get checkedDestinationList(){
-		var elems = document.querySelectorAll('[name="destinationList"] > [checked]');
-		return elems;
+		console.log(LayoutTransfer.is,"checked_destination_list_start");		
+		let childList = null;
+		this.shadowRoot.querySelector('slot[name="right"]')?.assignedElements?.().forEach((el) => {
+			var elems2 = el.children[0].children;			
+			childList = Array.from(elems2).filter(this.someFn3);
+		})
+		
+		
+		return childList;
 	}
 	get checkedDestinationListCount(){
 		var elems = this.checkedDestinationList;
 		var count = elems.length;
 		return count;
 	}
+	unregister(){
+		console.log(LayoutTransfer.is,"unregister");		
+	}
 	
+	afterDisconnect(){
+		console.log(LayoutTransfer.is,"afterDisconnect");		
+	}
 	
 }
 

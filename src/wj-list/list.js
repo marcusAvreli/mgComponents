@@ -60,6 +60,8 @@ export class List extends WJElement {
 		listContainerBox1.classList.add("list-container-box1");
 		let listContainerSubBox1   = document.createElement("div");
 		listContainerSubBox1.classList.add("list-container-sub-box1");
+		listContainerSubBox1.setAttribute("id","singleListContainer");
+		this.listContainerSubBox1 = listContainerSubBox1;
 		listContainerBox1.appendChild(listContainerSubBox1);
 		listContainer.appendChild(listContainerBox1);
 		
@@ -68,14 +70,22 @@ export class List extends WJElement {
 		listFilter.classList.add("list-filter");
 		wrapper.appendChild(listFilter);
 		
-		
+		/*
 		let searchBar = document.createElement("wj-input");
-		searchBar.setAttribute("variant", "standard");
+		searchBar.setAttribute("variant", "custom");
 		searchBar.setAttribute("type", "text");
 		searchBar.setAttribute("placeholder", "Search");
 		searchBar.value="";
 		this.searchBar = searchBar;
-		listFilter.appendChild(searchBar);
+		*/
+		//listFilter.appendChild(searchBar);
+		this.listFilter = listFilter;
+		if(!this.isPaginated() && this.isSearchable()){
+			this.addSearchBar();
+			
+			this.style.setProperty("--grid-template-rows", "0.06fr 1.0fr");
+			this.style.setProperty("--grid-template-areas", '"list-filter"   "list-container"');
+		}
 		
 		wrapper.appendChild(listContainer);
 		listContainer.classList.add("list-container");
@@ -195,15 +205,16 @@ export class List extends WJElement {
 	addSearchBar(){
 		let search = document.createElement("div");
 		search.classList.add("search");
-		this.box1.appendChild(search);
+		this.listFilter.appendChild(search);
 
 		let searchBar = document.createElement("wj-input");
-		searchBar.setAttribute("variant", "standard");
+		searchBar.setAttribute("variant", "custom");
 		searchBar.setAttribute("type", "text");
 		searchBar.setAttribute("placeholder", "Search");
 		searchBar.value="";
 		this.searchBar = searchBar;
 		search.appendChild(searchBar);
+		//this.style.setProperty("--wrapper-grid-template-rows", "1% 88% 11%");
 		//searchBar.textContent="Search Bar";
 		/*let searchPH = document.createElement("div");
 		searchPH.classList.add("left-search");
@@ -262,7 +273,16 @@ export class List extends WJElement {
 		*/
 		console.log("list","after_draw_finish");
     }
-	
+	setHeight(){
+		//var test = leftList.querySelectorAll('.list-container-sub-box1')
+		//var test2 = leftList.querySelectorAll('[id="singleListContainer"]');
+		var test3 = this.querySelectorAll('[id="singleListContainer"]');
+		var test4 = this.shadowRoot.querySelectorAll('[id="singleListContainer"]');
+		var test5 = document.getElementById("singleListContainer");
+		//var test6 = document.shadowRoot.getElementById("singleListContainer");
+		this.style.setProperty("--list-container-sub-box1-max-height","none");
+		
+	}
 	
 	progress(e){		
 	

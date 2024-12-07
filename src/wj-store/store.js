@@ -36,20 +36,16 @@ class Store {
      */
     dispatch(action) {
         // Create a console group which will contain the logs from our Proxy etc
-        // console.groupCollapsed(`ACTION: ${action.type}`);
-        
+        // console.groupCollapsed(`ACTION: ${action.type}`);        
         // Let anything that's watching the status know that we're dispatching an action
         this.status = 'action';
-
-        let newState =  this._reducer(this._state, action);
-
+        let newState =  this._reducer(this._state, action);		
         this.status = 'mutation';
         // Merge the old and new together to create a new state and set it
-        this._state = Object.assign(this._state, newState);
-
+        this._state = Object.assign(this._state, newState);		
         // Close our console group to keep things nice and neat
         // console.groupEnd();
-
+		
         return true;
     }
 
@@ -78,6 +74,7 @@ class Store {
     }
 
     mergeReducers(stateValueName, newReducer){
+		
         let reducerCopy = this._reducer;
 		
         this._reducer = (state, newState) => {
@@ -92,6 +89,7 @@ class Store {
     }
 
     makeEveryArrayEntryAsStoreState(storeKey, array = [], identificator = 'id') {
+		
         array.forEach((entry) => {
             if(this.getState().hasOwnProperty(`${storeKey}-${entry[identificator]}`)){
                 this.dispatch(defaultStoreActions.updateAction(`${storeKey}-${entry[identificator]}`)(entry))
@@ -115,10 +113,10 @@ class Store {
             this.mergeReducers(stateValueName, reducer)
         } else {
             if(defaultValue instanceof Array){
-				console.log("instance_array. key:"+key);
+				
                 this.mergeReducers(stateValueName, this.createArrayReducer(stateValueName, key) )
             } else {
-				console.log("instance_object. key:"+key);
+				
                 this.mergeReducers(stateValueName, this.createObjectReducer(stateValueName, key) )
             }
         }
@@ -145,7 +143,7 @@ class Store {
                 state[key] = value;
 
                 // Trace out to the console. This will be grouped by the related action
-                // console.log(`stateChange: ${key}: `, value);
+                
 
                 // TODO vieme to rozšíríť a subscripe sa len na zmenu určitej časti statu
                 // Publish the change event for the components that are listening
@@ -169,7 +167,7 @@ class Store {
 		
 		
         return (state = {},action)=>{
-		
+			
             switch (action.type) {
                 case `${stateValueName}/ADD`:
                     return {

@@ -39,7 +39,16 @@
 	 align-items:center;
 	 justify-content:center;
 	 --wrapper-grid-template-areas: 'leftScroll' 'leftList' ;
---wrapper-grid-template-rows:1% 99%;
+	--wrapper-grid-template-rows:1% 99%;
+	
+	--grid-template-rows: 15% 80% 5%;
+	--grid-template-areas:    
+	"list-filter"   
+	"list-container" 	
+	"list-paginator";
+	
+	--list-container-sub-box1-max-height:100px;
+	
 /*display: flex;
     flex: auto;
     overflow: auto;
@@ -69,12 +78,8 @@
 	
 		display: grid;
   grid-template-columns: 1fr ;
-  grid-template-rows:   15% 80% 5%;
-  grid-template-areas:
-    
-    "list-filter"
-    "list-container"
-	"list-paginator"
+  grid-template-rows:   var(--grid-template-rows);
+  grid-template-areas:  var(--grid-template-areas);
 	
 }
  .list-filter {
@@ -133,6 +138,15 @@
     /* overflow: scroll; */
     /* height: 45%; */
     border: 10px solid;
+	/*max-height:100px;*/
+	max-height:var(--list-container-sub-box1-max-height);
+	
+}
+.search{
+
+
+	display:flex;
+	flex:auto;
 }
 /* FULL_SCREEN_OVERLAY_END */
 /*
@@ -162,6 +176,8 @@ SUB_GRID
 .search{
 	grid-area: leftSearch;
 	background-color: green;
+	display:flex;
+	flex:auto;
 }
 
 .wrapper-scroll{

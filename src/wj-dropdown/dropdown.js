@@ -1,5 +1,9 @@
 import { default as WJElement, event } from "../wj-element/wj-element.js";
 import { elementPrefix } from '../shared/index.js';
+
+/**
+ * @injectHTML
+ */
 export class Dropdown extends WJElement {
     constructor() {
         super();

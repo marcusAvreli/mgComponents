@@ -94,6 +94,7 @@ export class Item extends WJElement {
 							<slot></slot>
 					</div>
 					<slot name="end"></slot>
+					<slot name="itemId" style="display:none"></slot>
 			</div>
 			<div class="item-highlight"></div>
     </${TagType}>
@@ -129,7 +130,9 @@ export class Item extends WJElement {
 		//end_handleOptionClick
 	}
 		
-	
+	get dataPos(){
+		return this.getAttribute("data-pos");
+	}
 	
 	get value(){
 
@@ -182,15 +185,24 @@ export class Item extends WJElement {
 
 	afterDraw() {
 		console.log("finished_draw_item");
-		this.addEventListener("dragstart", this.itemDragStart);
-		this.addEventListener('dragend',this.itemDragEnd);
-		this.addEventListener('dragenter', this.itemDragEnter);
-		this.addEventListener('dragleave', this.itemDragLeave);
-		this.addEventListener('dragover', this.itemDragOver);
-		this.addEventListener('drop', this.itemDrop);
-		this.addEventListener('focus', this.itemFocus);
-		/*this.addEventListener('click', (e) => this.handleOptionClick(e));
+		const itemParent		= this.shadowRoot.host.parentNode;
 		
+		
+		if(itemParent){
+			const itemParentName = itemParent.tagName;
+		if(itemParentName.toUpperCase() === "wj-list".toUpperCase()  && itemParent.hasAttribute("customDraggable")){
+			this.addEventListener("dragstart", this.itemDragStart);
+			this.addEventListener('dragend',this.itemDragEnd);
+			this.addEventListener('dragenter', this.itemDragEnter);
+			this.addEventListener('dragleave', this.itemDragLeave);
+			this.addEventListener('dragover', this.itemDragOver);
+			this.addEventListener('drop', this.itemDrop);
+		}else{
+			//this.addEventListener('focus', this.itemFocus);
+			this.addEventListener('click', (e) => this.handleOptionClick(e));
+		}
+		}
+		/*
 		let buttonUp =	this.querySelector('#buttonUp');
 		let buttonDown =	this.querySelector('#buttonDown');
 		buttonUp.addEventListener("click", this.buttonUpClicked);		
@@ -205,24 +217,28 @@ export class Item extends WJElement {
 		
 		});
 		*/
+		
 		 this.shadowRoot.addEventListener('wj:checkbox:change', ( e ) => {
-				console.log("checked");
+				console.log(Item.is,"checked");
 				
 				
 				if(e.target.checked){
 					e.target.checked=false;
+					/*
 					if(this.hasAttribute("checked")){
 						this.removeAttribute("checked");
 					}
+					*/
 					
 				}
 				else{
 					e.target.checked=true;
-					this.setAttribute("checked","");
+					//this.setAttribute("checked","");
 				}
-				console.log("target:"+e.target.checked);
+				console.log(Item.is,"target:"+e.target.checked);
 				
 				});
+				
 	}
 	buttonUpClicked(e){		
 		const targetTagName = e.target.tagName		

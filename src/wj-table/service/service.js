@@ -1,9 +1,12 @@
 import { default as WJElement, WjElementUtils } from "../../wj-element/wj-element.js";
 import { TabulatorFull, RowComponent} from 'tabulator-tables';
-//import { TabulatorFull, RowComponent} from "../plugins/tabulator/js/tabulator_esm.js?v=@@version@@";
-
+////import { TabulatorFull, RowComponent} from "../plugins/tabulator/js/tabulator_esm.js?v=@@version@@";
+//function getTypeVal(ship) {
+//https://github.com/jvde-github/AIS-catcher/blob/00f343ce443a10b64763efdcaf8a9d5837f5b2fe/HTML/script.js#L3715
 // import "../components/wj-action-dropdown/action-dropdown.js?v=@@version@@";
 
+//const headerMenu = function(){
+//https://github.com/ashish-peerbits/tabulator-demo/blob/f7ccf3b46eec6db49a0784a48c97ef1ef68add9e/script.js#L313
 // import "/templates/net/assets/js/hub-profile-photo.js?v=@@version@@";
 
 export class Service extends WJElement {
@@ -112,6 +115,7 @@ export class Service extends WJElement {
         TabulatorFull.extendModule("format", "formatters", {
             "wj-actions": this.wjActions,
             "wj-actions-modal": this.wjActionsModal,
+			"wj-cell-checkbox": this.wjCheckBox,
             "wj-badge": this.wjBadge,
             "wj-colored-circle": this.wjColoredCircle,
             "wj-colored-dot": this.wjColoredDot,
@@ -144,7 +148,7 @@ export class Service extends WJElement {
         return ["tabledata","data"];
     }
 	 attributeChangedCallback(name, oldValue, newValue) {
-    console.log("!!!!!!!!!!!!!!!!!!!!!!");
+    //console.log("!!!!!!!!!!!!!!!!!!!!!!");
 	
 	}
 
@@ -181,36 +185,92 @@ export class Service extends WJElement {
             return formatterParams.invalidPlaceholder;
         }
     }
-
+	wjCheckBox = (cell, formatterParams, onRendered) => {
+		
+		var input = document.createElement('wj-checkbox');
+		let rowData = cell.getRow().getData();
+		console.log("Table_Service","checkbox_table:"+rowData);
+		console.log("Table_Service","checkbox_table:"+JSON.stringify(rowData));
+		console.log("Table_Service","checkbox_table_cell_value:"+cell.getValue());
+		input.checked = cell.getValue() ? true : false;
+		 // https://github.com/Opencast-Moodle/moodle-tool_opencast/blob/420c1dd6d78963cdf2cb56c58c25128d47f83649/amd/src/tool_settings.js#L69
+			/*
+			  var input = document.createElement('input');
+                        input.type = 'checkbox';
+                        input.checked = cell.getValue();
+                        input.addEventListener('click', function() {
+                            cell.getRow().update({'isvisible': $(this).prop('checked') ? 1 : 0});
+                        });
+                        return input;
+			*/
+			
+			return input;
+	}
     wjActionsModal = (cell, formatterParams, onRendered) => {
+		console.log("wj_actions_modal","start");
         try {
+			console.log("wj_actions_modal","1");
             let rowData = cell.getRow().getData();
             let el = formatterParams.map(wjmo => {
+				console.log("wj_actions_modal","2");
                 let { action, display, title, callback, text, size, url, type, footerHide, attributes } = wjmo;
 
                 let interpolateUrl = url.interpolate(rowData);
                 let icon = this.icons[type.toLowerCase()].icon;
                 let customAttributes = attributes.interpolate(rowData);
+				console.log("wj_actions_modal","3");
                 switch (action) {
                     case "wj-modal-delete":
+					console.log("wj_actions_modal","5");
                         return `<wj-menu-item ${customAttributes} display="${display}" url="${interpolateUrl}" size="${size}" title="${title}" alert="${callback}" text="${text}" class="wj-dropdown-item">
                             <i class="${icon}"></i>&nbsp;${title}
                         </wj-menu-item>`;
                     default:
-                        return `<wj-menu-item ${customAttributes} url="${interpolateUrl}" size="${size}" ${footerHide ? "footer-hide=\"true\"" : ""} title="${title}" class="wj-dropdown-item">
-                            <i class="${icon}"></i>&nbsp;${title}
+					console.log("wj_actions_modal","6");
+                        return `<wj-menu-item  class="wj-dropdown-item">
+                           <wj-label>Menu item</wj-label>
                         </wj-menu-item>`;
                 }
             });
-
-            let dropdown = document.createElement("wj-dropdown");
-            dropdown.setAttribute("placement", "bottom-start");
+			console.log("wj_actions_modal","7");
+            let dropdown = document.createElement("wj-button");
+			dropdown.setDisplayLabel("Edit");
+			//dropdown.setAttribute("caret","");
+			//dropdown.setAttribute("dialog", "open-modal");
+			dropdown.setAttribute("testpopup","");
+			//dropdown.innerHTML=`   <div slot="anchor">    <wj-button dialog="open-modal">Open</wj-button>			`
+			//dropdown.classList.add("content");
+			//dropdown.innerHTML=`<wj-popup></wj-popup>`;
+			
+			
+            /*dropdown.setAttribute("placement", "bottom-start");
+			dropdown.setAttribute("label", "start");
+			dropdown.setAttribute("offset", "5");
             dropdown.setAttribute("collapse", "");
             dropdown.setAttribute("hide-icon", "");
-            dropdown.innerHTML = `<wj-button slot="trigger" variant="link" size="small">
-                <wj-icon name="ellipsis-vertical"></wj-icon>
-            </wj-button>
-            <wj-menu>${el.join("")}</wj-menu>`;
+			*/
+            dropdown.innerHTML = ` 
+			 <wj-menu variant="context">
+              <wj-menu-item>
+                <wj-icon name="plane" slot="start"></wj-icon>
+                <wj-label>Menu item</wj-label>
+              </wj-menu-item>
+              <wj-menu-item>
+                <wj-icon name="book" slot="start"></wj-icon>
+                <wj-label>Menu item</wj-label>
+              </wj-menu-item>
+              <wj-menu-item>
+                <wj-icon name="music" slot="start"></wj-icon>
+                <wj-label>Menu item</wj-label>
+              </wj-menu-item>
+              <wj-menu-item>
+                <wj-icon name="video" slot="start"></wj-icon>
+                <wj-label>Menu item</wj-label>
+              </wj-menu-item>
+            </wj-menu>
+
+            `;
+			
 
             // RHR: HACK ked bude čas treba fixnut
             // const oldFn = dropdown.getDropdown
@@ -225,17 +285,25 @@ export class Service extends WJElement {
             //     return oldEl;
             // }
             // dropdown.innerHTML = el.join("");
+			console.log("wj_actions_modal","8");
             return dropdown;
         } catch (error) {
+			console.log("wj_actions_modal","9",error);
             return formatterParams.invalidPlaceholder;
         }
+		console.log("wj_actions_modal","finish");
     }
 
     wjBadge = (cell, formatterParams) => {
+		console.log("wjBadge");
         try {
             let value = cell.getValue();
-            return `<span class="label ${formatterParams?.colorPrefix + value.color + "-lighter"}">${value.name}</span>`;
+			//console.log("wjBadge_1:"+value.color);
+			//console.log("wjBadge_2:"+value.name);
+			console.log("wjBadge_3:"+value);
+            return `<span testSpan class="label ${formatterParams?.colorPrefix + value.color + "-lighter"}">${value.name}</span>`;
         } catch (error) {
+						console.log("wjBadge_4:"+error);
             return formatterParams.invalidPlaceholder;
         }
     }
@@ -589,7 +657,7 @@ export class Service extends WJElement {
             button.setAttribute("size", "small");
             button.setAttribute("slot", "trigger");
             button.setAttribute("variant", "link");
-            button.innerHTML = `<wj-icon name="ellipsis-vertical"></wj-icon>`;
+            button.innerHTML = `<wj-icon name="chevron-left"></wj-icon>`;
 
             let menu = document.createElement("wj-menu");
             menu.innerHTML = `<wj-menu-item>Nieco</wj-menu-item>`;
@@ -705,11 +773,11 @@ export class Service extends WJElement {
     }
 	unregister(){
 		
-		console.log("unregister","service");
+		//console.log("unregister","table_service");
 		
 	}
 	afterDisconnect(){
-		console.log("unregister","after","service");
+		//console.log("unregister","after","table_service");
 		
 	}
 }

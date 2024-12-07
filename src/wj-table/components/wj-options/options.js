@@ -49,7 +49,7 @@ export default class Options extends WJElement {
     }
 
     draw(context, store, params) {
-		console.log("wj_table_options","draw","start");
+		//console.log("wj_table_options","draw","start");
         let fragment = new DocumentFragment();
 
         let slot = document.createElement("slot");
@@ -62,7 +62,7 @@ export default class Options extends WJElement {
         }else{
 			console.log("wj_table_options","draw","data_empty");
 		}
-		console.log("wj_table_options","draw","finish");
+		//console.log("wj_table_options","draw","finish");
         return fragment;
     }
 
@@ -163,7 +163,7 @@ stringToFragment(string) {
         // visibility.style.display = 'inline-block';
         //visibility.appendChild(this.visibility(this.table.getColumns()));
 		const frag = this.stringToFragment('<div>Visibility</div>');
-console.log("wj_table_options","btnVisibility","finish");
+///console.log("wj_table_options","btnVisibility","finish");
         return frag;
     }
 
@@ -206,14 +206,14 @@ console.log("wj_table_options","btnVisibility","finish");
         }
 		*/
 		const frag = this.stringToFragment('<div><h1>VISIBILITY</h1></div>');
-console.log("wj_table_options","visibility","finish");
+//console.log("wj_table_options","visibility","finish");
         return frag;
     }
 	
 	
 
     btnExport() {
-		console.log("wj_table_options","btn_export","start");
+		//console.log("wj_table_options","btn_export","start");
 		/*
         let slot = document.createElement("span");
         slot.setAttribute("slot", "button");
@@ -247,12 +247,12 @@ console.log("wj_table_options","visibility","finish");
             frag.getElementById("menu-child").appendChild(this.export(button));
         });
 
-		console.log("wj_table_options","btn_export","finish");
+		//console.log("wj_table_options","btn_export","finish");
         return frag;
     }
 
     export(button) {
-		console.log("wj_table_options","export","start");
+		//console.log("wj_table_options","export","start");
         //let item = document.createElement("wj-menu-item");
 		let item = document.createElement("wj-menu-item");
         //item.classList.add("wj-menu-item");
@@ -263,16 +263,16 @@ console.log("wj_table_options","visibility","finish");
            // this.table.download("xlsx", "data.xlsx", {sheetName:"MyData"});
 		     this.table.download(button.type, button.filename,{sheetName:"MyData"})
         });
-		console.log("wj_table_options","export","finish");
+		//console.log("wj_table_options","export","finish");
         return item;
     }
 	unregister(){
 		
-		console.log("unregister","options");
+		//console.log("unregister","options");
 		
 	}
 	afterDisconnect(){
-		console.log("unregister","after","optionss");
+		//console.log("unregister","after","optionss");
 		
 	}
 }

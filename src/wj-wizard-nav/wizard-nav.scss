@@ -37,8 +37,17 @@
 }
 
 /* FULL_SCREEN_OVERLAY_END */
+/*
+.circle {
 
 
+    width: 10px;
+    height: 10px;
+	
+
+    border-radius: 50%;
+}
+*/
 :host(.circle) {
 	position: relative; 
 	border: 2px solid #999; 
@@ -69,6 +78,6 @@
 :host(.circle:first-child)::before {display: none;}
 
 :host(.progress-step-active) {
-    background-color: var(--primary-color);
+    background-color: aqua;
     color: #f3f3f3;
 }

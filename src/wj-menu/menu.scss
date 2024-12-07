@@ -65,3 +65,60 @@
 :host([active]) {
   display: flex  !important;
 }
+
+.fa-pencil:before {
+  content: "\f040";
+}
+.fa-pencil{
+  font-size: 18px;
+}
+
+:host(.fa-pencil):before {
+  content: "\f040";
+}
+:host(.fa-pencil){
+  font-size: 18px;
+}
+
+::slotted(.fa-pencil):before {
+  content: "\f040";
+}
+::slotted(.fa-pencil){
+  font-size: 18px;
+}
+
+.fal{
+background-color:black;
+}
+
+:host(.fal){
+
+background-color:black;
+
+}
+
+::slotted(.fal){
+
+background-color:black;
+
+}
+/*
+.fal {
+      flex: 1 1 auto;
+      display: inline-block;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+	*/
+	:host(.fal) {
+	
+      flex: 1 1 auto;
+      display: inline-block;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+	::slotted(.fal){
+
+background-color:black;
+
+}

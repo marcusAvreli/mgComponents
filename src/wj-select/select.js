@@ -307,7 +307,7 @@ export class Select extends WJElement {
         let selectedOptions = this.getSelectedOptions();
 
         selectedOptions = Array.isArray(selectedOptions) ? selectedOptions : Array.from(selectedOptions);
-
+	console.log("select_sending_input","3");
         selectedOptions = selectedOptions.map((option) => {
             return {
                 value: option.value,
@@ -319,9 +319,11 @@ export class Select extends WJElement {
     }
 
     selectionChanged(option = null, length = 0) {
+		console.log("select_sending_input","1");
+		var test = null;
         if (this.hasAttribute("multiple")) {
             this.value = this.selectedOptions.map(el => el).reverse();
-
+console.log("select_sending_input","1_1",this.value);
             if (this.placeholder && length === 0) {
                 this.chips.innerHTML = this.placeholder;
                 this.input.value = '';
@@ -334,14 +336,31 @@ export class Select extends WJElement {
                 }
             }
         } else {
-            let value = option?.textContent.trim() || "";
+			console.log("select_sending_input","1_2_1",option);
+			if(option){
+			console.log("select_sending_input","1_2_1",option.text);
+			// Returns the text content as a string
+				test= [].reduce.call(option.childNodes, function(a, b) { return a + (b.nodeType === 3 ? b.textContent : ''); }, '');
+			}
+			let value = null;
+			console.log("select_sending_input","1_2_1",test);
+			if(test){
+				value = test;
+			}else{
+				value = option?.textContent.trim() || "";
+			}
+			console.log("select_sending_input","1_2",value);
+			console.log("select_sending_input","1_3",this.value);
             this.value = value;
+			console.log("select_sending_input","1_4",this.value);
+			console.log("select_sending_input","1_5",value);
             this.input.value = value;
         }
 		event.dispatchCustomEvent(this, "wj:selection-changed", {}); // nepomohlo to, v ff stale je scroll hore
     }
 
     selections(option) {
+		console.log("select_sending_input","2");
         let options = this.getSelectedOptions();
 
         this.selectedOptions = Array.isArray(options) ? options : Array.from(options);
@@ -402,7 +421,13 @@ export class Select extends WJElement {
 
         this.selections(null, 0);
     }
-	unregister(){}
+	unregister(){
+		console.log(Select.is,"unregister");		
+	}
+	
+	afterDisconnect(){
+		console.log(Select.is,"afterDisconnect");		
+	}
 }
 
 customElements.get(Select.is) || window.customElements.define(Select.is, Select);

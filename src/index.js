@@ -39,7 +39,7 @@ import {Divider} from './wj-divider/divider.js';
 import {Popup} from './wj-popup/popup.js';
  //31-05-2024
 import {Dropdown} from './wj-dropdown/dropdown.js';
-
+import {Myflatpickr} from './wj-myflatpickr/myflatpickr.js';
 import {Footer} from './wj-footer/footer.js';
 import {FormatDigital} from './wj-format-digital/format-digital.js';
 import {Grid} from './wj-grid/grid.js';
@@ -94,6 +94,7 @@ import {ToolbarAction} from './wj-toolbar-action/toolbar-action.js';
 import {VisuallyHidden} from './wj-visually-hidden/visually-hidden.js';
 
 import {LayoutTransfer} from './wj-layout-transfer/layout-transfer.js';
+import {LayoutTwoColumns} from './wj-layout-two-columns/layout-two-columns.js';
 
 
 import {Wizard} from './wj-wizard/wizard.js';
@@ -136,6 +137,7 @@ export { WJElement, defaultStoreActions, store
 	,Header
 	,Label
 	,Input
+	//,Myflatpickr
 	,Form
 	,Item
 	,List
@@ -186,6 +188,7 @@ export { WJElement, defaultStoreActions, store
 	,ToolbarAction
 	,VisuallyHidden
 	,LayoutTransfer
+	,LayoutTwoColumns
 	,Wizard
 	,WizardNav
 	,WizardButton

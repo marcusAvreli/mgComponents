@@ -60,9 +60,14 @@ export class Option extends WJElement {
 
         let end = document.createElement("slot");
         end.setAttribute("name", "end");
-
+		
+		let itemId = document.createElement("slot");
+        itemId.setAttribute("name", "itemId");
+		itemId.classList.add("hide");
+		//itemId.style.visibility = "hidden";
         element.appendChild(icon);
         element.appendChild(start);
+		 element.appendChild(itemId);
         element.appendChild(slot);
         element.appendChild(end);
 
@@ -75,6 +80,7 @@ export class Option extends WJElement {
         event.addListener(this, "click", "wj:option-change");
     }
 	unregister(){}
+	afterDisconnect(){}
 }
 
 customElements.get(Option.is) || window.customElements.define(Option.is, Option);

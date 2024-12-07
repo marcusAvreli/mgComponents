@@ -1,6 +1,9 @@
 import { TabulatorFull } from 'tabulator-tables';
 import { Service } from './service/service.js';
 import { default as Popup} from "./components/wj-table-modules/wj-table-modules.js";
+import { elementPrefix } from '../shared/index.js';
+import {Checkbox}  from '../wj-checkbox/checkbox.js';
+import {Input}  from '../wj-input/input.js';
 //import * as luxon from 'https://moment.github.io/luxon/es6/luxon.min.js?v=@@version@@';
  //import './components/wj-options/options.js';
  //import './components/wj-search/search.js';
@@ -37,28 +40,39 @@ export class Table extends Service {
         this.addEventListener('wj-nav-change',this.eventClickTab)
 		this.counter = 0;
         // RHR - zaregistrovanie nášho popup modulu
-        // TabulatorFull.registerModule(Popup);
-		//this.store.subscribe("dataContent-" + this.tableId, ( state ) => {console.log("dddddddddddddddd")});
+         TabulatorFull.registerModule(Popup);
+		
 
 		 
 		//this.store.subscribe("deleteRow", this.testDelete.bind(this));
-		
-		this.store.subscribe("deleteRow", (key, state, oldState) => {
-		
+		//crud_actions
+		this.store.subscribe("deleteRow", (key, state, oldState) => {		
             this.testDelete(key, state, oldState);
 			//this.refresh();
         });
 		
+		//this.store.subscribe("dataContent-" + "testTable2/UPDATE", (key, state, oldState) => {	this.refresh(); this.edit(key, state, oldState);})
+		console.log("tableId_constructor",this.tableId);
+		
+		
+		
 		
     }
+	static get is() {
+		
+		return `${elementPrefix}-table`;
+	}
+	
 	testDelete(key, state, oldState){
+		
 		console.log("test_delete","start");
 		console.log("test_delete","key",JSON.stringify(key));
 		console.log("test_delete","state",JSON.stringify(state));
 		console.log("test_delete","oldState",JSON.stringify(oldState));
+		
 		var rowTobeDeleted = key.deleteRow;
-		console.log("test_delete","rowTobeDeleted:"+rowTobeDeleted);
-		console.log("test_delete","rowTobeDeleted:"+JSON.stringify(rowTobeDeleted));
+		//console.log("test_delete","rowTobeDeleted:"+rowTobeDeleted);
+		//console.log("test_delete","rowTobeDeleted:"+JSON.stringify(rowTobeDeleted));
 		  this.dispatchEvent(
             new CustomEvent("wj:delete-row", {
                 bubbles: true,
@@ -69,7 +83,7 @@ export class Table extends Service {
             })
         );
 		
-		console.log("test_delete","finish");
+		//console.log("test_delete","finish");
 	}
  static get className() {
         return "Table";
@@ -149,7 +163,10 @@ export class Table extends Service {
 
     attributeChangedCallback(name, oldValue, newValue) {
         this.table.replaceData();
+	
     }
+
+
 
     disconnectedCallback() {
         Table.deleteInstance(this.tableId);
@@ -206,10 +223,15 @@ export class Table extends Service {
 
         this.store.define("columnOptions-" + this.tableId, {}, null);
         this.store.define("filterObj-" + this.tableId, {}, null);
+		console.log("before_draw",this.tableId);
 		this.store.define("dataContent-" + this.tableId, [], null,"name");
+		this.store.define("edited_dataContent-" + this.tableId, {}, null);
 		
-		this.store.define("deleteRow", {}, null);
-		 
+		
+		this.store.define("deleteRow-" + this.tableId, {}, null);
+		//this.store.define("editRow", {}, null);
+		
+	
 		
 		 //
         // this.context.appendChild(template.content.cloneNode(true));
@@ -222,7 +244,7 @@ export class Table extends Service {
 
     draw() {
         let fragment = new DocumentFragment();
-//this.store.subscribe("dataContent-" + this.tableId, ( state ) => {console.log("dddddddddddddddd")});
+
         let controls = document.createElement("div");
         controls.innerHTML = `<slot class="d-flex align-items-center" name="filter"></slot>
             <slot class="d-flex align-items-center ml-3"></slot>`;
@@ -244,27 +266,29 @@ export class Table extends Service {
         return fragment;
     }
 	setData(tableData){
-		console.log("set_data","start");
-		let columns = tableData.columns;
-		columns = columns.map((c) => {
+		//console.log("set_data","start");
+		this.columns = tableData.columns;
+		
+		this.columns = this.columns.map((c) => {
 		c = { ...c, accessorDownload: this.myPrintFormatter };
 			// if (c.filterable && this.filterable.toUpperCase() == 'ADVANCED')
 			//     return { ...c, headerPopup: this.headerPopupFormatter };
 
 			return c;
 		});
-		this.table.setColumns(columns);
+		this.table.setColumns(this.columns);
 		this.table.setData(tableData.data);
-		console.log("This_is_array:"+Array.isArray(tableData.data));
+		//console.log("This_is_array:"+Array.isArray(tableData.data));
 		this.table.redraw();
+		//this.table.hideColumn("id");
 		this.store.dispatch(
 		this.defaultStoreActions.addAction('dataContent-' + this.tableId)(tableData.data)
 		);
 		 
-		console.log("set_data","finish");
+		//console.log("set_data","finish");
 	}
 	onDelete(e,cell){
-		console.log("wj_table","delete_start");
+		console.log(Table.is,"delete_start");
 		if (e.stopPropagation) {
 			e.stopPropagation()		
 		}
@@ -278,23 +302,301 @@ export class Table extends Service {
 		let pos = row.getPosition();
 		
 		this.table.deleteRow(row);
-		/*	const updatedObj = Object.fromEntries(
-		  Object.entries(testVar).filter(([key]) => key !== this.counter.toString())
-		);
-		*/
+		console.log(Table.is,"delete_start_1:"+"deleteRow-" + this.tableId);
 
-		this.store.dispatch(this.defaultStoreActions.deleteAction("deleteRow")(row.getData()));
-		console.log("wj_table","delete_finish");
+		
+		this.store.subscribe("deleteRow-" + this.tableId, (key,state, oldState) => {	console.log("table_subscription");this.myDeleteRow(key,state, oldState);});
+		
+		this.store.dispatch(this.defaultStoreActions.deleteAction("deleteRow-" + this.tableId)({dateTime:Date.now(),editedRowData: row.getData()}));
+		
+	}
+	onEdit(e,cell){		
+		if (e.stopPropagation) {
+			
+			e.stopPropagation();
+			
+			//e.preventDefault();
+			
+		}
+		else {
+			e.cancelBubble = true
+		}
+
+		this.counter = this.counter+1;
+
+		var testVar =  this.store.getState()["dataContent-" + this.tableId]
+
+		let row = cell.getRow();
+		let pos = row.getPosition();
+		//editRow
+		console.log("row.getData():"+JSON.stringify(row.getData()));
+		this.store.subscribe("edited_dataContent-" + this.tableId, (key,state, oldState) => {	console.log("table_subscription");this.edit(key, state, oldState);});
+		// this.store.subscribe("edited_dataContent-" + this.tableId,this.edit);
+		this.store.dispatch(this.defaultStoreActions.updateAction("edited_dataContent-" + this.tableId)({dateTime:Date.now(),editedRowData: row.getData()}));
+		
+	}
+
+	myDeleteRow(key,state, oldState){
+		console.log(Table.is,"delete_start_4_4");
+		var rowTobeDeleted = key["deleteRow-" + this.tableId].editedRowData;
+		console.log("rowTobeDeleted:"+JSON.stringify(rowTobeDeleted));
+		this.dispatchEvent(
+            new CustomEvent("wj:tableDeleteRow", {
+                bubbles: true
+				 ,                 detail: { data : rowTobeDeleted}
+                
+            })
+        );
+	}
+	stringToFragment(string) {
+	  const temp = document.createElement('template');
+	  temp.innerHTML = string;
+	  return temp.content;
+	}
+	edit(key, state, oldState){
+		console.log("edit:"+JSON.stringify(key));
+		var rowTobeEdited = key["edited_dataContent-" + this.tableId].editedRowData;
+		console.log("rowTobeEdited:"+JSON.stringify(rowTobeEdited));
+		console.log("rowTobeEdited:"+JSON.stringify(this.columns));
+		var modal = document.getElementById("editRow");
+		modal.close();
+		var vis = document.getElementById("rprtDetails");
+		if(vis){
+			vis.parentElement.removeChild(vis);
+		}
+		var saveButton = document.getElementById("saveButton");
+		if(saveButton){
+			saveButton.parentElement.removeChild(saveButton);
+		}
+		const content = document.createElement("wj-button");
+		content.setAttribute("slot","footer");
+		content.textContent="Test1";
+		const frag = `<div id="vis" class="content"><wj-grid>${content}</wj-grid></div>`;
+		let isHtml = frag instanceof HTMLElement || frag instanceof DocumentFragment;
+		console.log("isHtml:"+isHtml);
+		let template = document.createElement('template');
+		template.innerHTML = frag;
+		let element = template.content.cloneNode(true);
+		//modal.insertAdjacentHTML('beforebegin', `<div class='front-element'>Front of Element</div>`)
+ const button = document.createElement('wj-button');
+  button.setAttribute("id","saveButton");
+  button.setAttribute("testButton","");
+  button.setAttribute("slot","footer");
+  //button.setAttribute("click","testSave($event)");
+  button.addEventListener("wj:button-click", this.onSaveDialog);
+  button.textContent="Save";
+  console.log("dialog","before_set_title");
+  modal.setTitle(rowTobeEdited.rprt_name);
+  console.log("rowTobeEdited","rowTobeEdited:"+rowTobeEdited.id);
+  console.log("dialog","after_set_title");
+  //modal.setAttribute(rowTobeEdited.rprt_name);
+  const div = document.createElement('div');
+  div.setAttribute("id","rprtDetails");
+    div.setAttribute("slot","");
+	div.classList.add("content");
+  var strTemplate= ` <wj-grid id="rprtDetailsGrid">`
+  
+  this.columns.forEach(column => {
+  
+  if(column.title != "Edit" && column.title != "rprt_name"){
+	  if(column.title != "name"){
+	strTemplate = strTemplate.concat(
+			`
+			<wj-row class="gx-1">
+				<wj-col size="6">
+					<wj-label class="fieldName" id="${column.field}">${column.title}</wj-label>
+				</wj-col>
+				
+			`
+			)
+			
+			if(!column.formatter){
+			//no formatter
+			strTemplate = strTemplate.concat(
+			`
+			<wj-col size="6">
+				
+					<wj-input class="fieldValue" value="${rowTobeEdited[column.field]|| ''} "></wj-input>
+				
+				</wj-col>
+			</wj-row>
+			`);
+			}else{
+				if(column.formatter == "wj-cell-checkbox"){
+					if(rowTobeEdited[column.field] == 1){
+					strTemplate = strTemplate.concat(
+					`
+					<wj-col size="6">
+						
+							<wj-checkbox id="${column.field}" emptyCheck1 class="fieldValue" checked ></wj-checkbox>
+						
+						</wj-col>
+					</wj-row>
+					`)
+					}else{
+							strTemplate = strTemplate.concat(
+					`
+					<wj-col size="6">
+						
+							<wj-checkbox id="${column.field}" emptyCheck class="fieldValue"  ></wj-checkbox>
+						
+						</wj-col>
+					</wj-row>
+					`)
+					}
+				}			
+			}
+	  }
+			
+			else{
+				strTemplate = strTemplate.concat(
+           ` 
+		   <wj-row class="gx-1">
+				<wj-col size="6">
+					<wj-label class="fieldName" id="${column.field}" >${column.title}</wj-label>
+				</wj-col>
+				
+		   
+		   <wj-col size="6">
+			
+             <wj-input readonly class="fieldValue" value="${rowTobeEdited[column.field] || '' }  "></wj-input>
+            </wj-col>
+          </wj-row>
+		  `
+		   )
+  }
+  }
+  })
+		   
+		strTemplate =   strTemplate.concat(`</wj-grid>`)
+   div.innerHTML = strTemplate;
+		modal.appendChild(button);
+		modal.appendChild(div);
+		
+		 document.dispatchEvent(
+            new CustomEvent("open-modal", {
+                bubbles: true
+            }
+        ));
+		
+		//this.store.unsubscribe("edited_dataContent-" + "testTable2");
+		
+	}
+	
+	onSaveDialog(e){
+		console.log("table_on_save_start");
+		console.log("table_on_save_target:"+e.target);
+		//console.log("on_save_detail:"+e.target.detail);
+		
+		var modal = document.getElementById("editRow");
+		console.log("table_on_save_report_name:"+modal.title);
+		var rprtDetailsGridItems = document.getElementById("rprtDetailsGrid").children;
+		
+const listArray = Array.from(rprtDetailsGridItems);
+ var data = [];
+ var obj = {};
+listArray.forEach((item) => {
+	
+	console.log(item.tagName);
+	const listColumns = Array.from(item.children);
+	var fieldNameF = item.querySelectorAll(".fieldName");
+	var fieldValueF = item.querySelectorAll(".fieldValue");
+	console.log("table_on_save","FieldName_value:"+fieldNameF[0].value);
+	console.log("table_on_save","FieldName_id:"+fieldNameF[0].id);
+	console.log("table_on_save","FieldName_Tag:"+fieldNameF[0].tagName);
+	console.log("table_on_save","Field Value:"+fieldValueF[0].shadowRoot.querySelector("input").value);
+	console.log("table_on_save","Field Value:"+fieldValueF[0].tagName);
+	
+	var fieldName = fieldNameF[0].id;
+	var tagName = fieldValueF[0].tagName
+	var isCheckBox = fieldValueF[0] instanceof Checkbox;
+	var isInput = fieldValueF[0] instanceof Input;
+	console.log("table_on_save","FieldName_var:"+fieldName);
+	
+	if(isCheckBox){
+		console.log("table_on_save","isCheckBox:"+isCheckBox + " fieldValueF[0].checked:"+fieldValueF[0].checked);
+		console.log("table_on_save","isCheckBox:"+isCheckBox + " fieldValueF[0].checked:"+fieldValueF[0].hasAttribute("checked"));
+		var fieldValue = -1;
+		if(fieldValueF[0].hasAttribute("checked")){
+			fieldValue = 1;
+		}else{
+			fieldValue =0;
+		}
+		
+		
+			obj[fieldName] = fieldValue;
+		console.log("table_on_save","isCheckBox_fieldValue:"+fieldValue);
+		console.log("table_on_save","FieldName_var_3:"+fieldName);
+		//data.push(obj);
+		
+	}
+	if(isInput){
+		var fieldValue = fieldValueF[0].shadowRoot.querySelector("input").value;
+		const isEmpty = (str) => (!str?.length);
+		console.log("FieldName_var_1:"+fieldName);
+		if(!isEmpty(fieldValue)){
+			console.log("FieldName_var_1_1:"+fieldName);
+			const myVar = {fieldName : fieldValue.trim()}
+			
+			obj[fieldName] = fieldValue.trim();
+			console.log("table_on_save","FieldName_var_1_1_myVar:"+myVar);
+			console.log("table_on_save","FieldName_var_1_1_myVar:"+JSON.stringify(myVar));
+			console.log("table_on_save","FieldName_var_1_1_obj:"+JSON.stringify(obj));
+			//data.push(obj);
+		}
+	
+		else{
+			
+			obj[fieldName] = null;
+			console.log("table_on_save","FieldName_var_2:"+fieldName);
+			//data.push(obj);
+		}
+	}
+	/*switch(expression) {
+	  case Checkbox.is:
+		// code block
+		break;
+	  case y:
+		// code block
+		break;
+	  default:
+		// code block
+	}
+	*/
+	
+	
+	
+
+	
+});
+console.log("table_on_save","result_data2:"+JSON.stringify(data));
+		this.dispatchEvent(
+            new CustomEvent("wj:modalSave", {
+                bubbles: true
+				 ,                 detail: { data : obj, reportName:modal.title}
+                
+            })
+        );
+		
+		console.log("table_on_save","after_dispatch");
+		modal.close();
+		console.log("table_on_save_finish");
+		
+	}
+	 isBlank(str) {
+    return (!str || /^\s*$/.test(str));
 	}
     afterDraw() {
-		console.log("table","after_draw","start");
+		//console.log("table","after_draw","start");
 		 /*
 		 this.store.subscribe("deleteRow", (key, state, oldState) => {
 		
             this.testDelete();
         });
 		*/
-		//this.store.subscribe("dataContent-" + this.tableId, ( state ) => {console.log("dddddddddddddddd")});
+			
+			
+		
 		// this.store.subscribe("deleteRow", this.testDelete.bind(this));
         this.bulk = this.hasAttribute("bulk");
         this.initialized = false;
@@ -302,17 +604,17 @@ export class Table extends Service {
         this.sortable = this.filterable == 'ADVANCED' || this.hasAttribute("sortable");
 
         // ADVANCED filter
-		console.log("table","after_draw","advanced","before");
+		//console.log("table","after_draw","advanced","before");
         this.filterAdvanced();
-		console.log("table","after_draw","advanced","after");
+		//console.log("table","after_draw","advanced","after");
         // SIMPLE filter
-		console.log("table","after_draw","simple","before");
+		//console.log("table","after_draw","simple","before");
         this.filterSimple();
-		console.log("table","after_draw","simple","after");
+		//console.log("table","after_draw","simple","after");
         // CUSTOM filter
-		console.log("table","after_draw","custom","before");
+		//console.log("table","after_draw","custom","before");
         this.customFilter();
-		console.log("table","after_draw","custom","after");
+		//console.log("table","after_draw","custom","after");
         if(this.sortable && this.filterable != "ADVANCED")
             this.tableElement.setAttribute("sortable", "");
 
@@ -361,21 +663,26 @@ export class Table extends Service {
             maxHeight: this.getAttribute("max-height") || false,
 			 cellClick: (e, cell) => {
                       //  cell.getRow().toggleSelect();
-					  console.log("hello");
+					//  console.log("hello");
                     },
 				dataChanged:  (data) => {
-					console.log("ngOnChanges","data changed");
+					//console.log("ngOnChanges","data changed");
 				},
 				dataLoaded: (data) =>{
-					console.log("ngOnChanges","data loaded");	
+					//console.log("ngOnChanges","data loaded");	
+				},
+				hideColumn : (data) =>{
+					console.log("hide column","data loaded");	
 				}
         });
+		/*
 this.table.on("cellClick", function(e, cell){
         //e - the click event object
         //cell - cell component
 		
 		
 });
+*/
  if(this.filterable == "SIMPLE" || this.filterable == "ADVANCED") {
 			 //console.log("wj_table_options_data_length:"+this.shadowRoot.getElementById("this_is"));
 			 // console.log("wj_table_options_data_length:"+document.getElementById("this_is"));
@@ -384,14 +691,19 @@ this.table.on("cellClick", function(e, cell){
                 this.append(this.getOptionsElement());
             }
 this.table.on('tableBuilt', () => {
+	console.log("table_built");
 	
+           // this.table.setLocale("zh-cn");
+	/*
 		this.dispatchEvent(
             new CustomEvent("wj:table-built", {
                 bubbles: true,
             })
         );
+		*/
 })
 this.table.on("cellClick",this.cellClicked.bind(this))
+//this.table.on("hideColumn", this.hideColumn.bind(this));
 this.table.on("dataSorted", function(sorters, rows){
     //sorters - array of the sorters currently applied
     //rows - array of row components in their new order
@@ -408,8 +720,14 @@ this.table.on("rowSelectionChanged", (data, rows) => {
             })
         );
 });
+//this.store.subscribe("editRow", (key, state, oldState) => {	this.edit(key, state, oldState);});
+          	  //this.edit(key, state, oldState);
+			//this.refresh();
+			//this.store.dispatch(this.defaultStoreActions.updateAction("editRow")(row.getData()));
+        //});
+		//this.store.dispatch(this.defaultStoreActions.updateAction("editRow")(""));
         this.table.filterable = this.filterable;
-		console.log("table","after_draw","finish");
+		//console.log("table","after_draw","finish");
     }
 
     eventClickTab = (e) => {
@@ -454,10 +772,13 @@ this.table.on("rowSelectionChanged", (data, rows) => {
 	   const field = cell.getColumn().getField();	   
 	   switch (field) {
 			case 'delete':
-			console.log("cell clicked _delete");
+				console.log(Table.is,"cell_clicked_delete");
 				return this.onDelete(event, cell);
+			case 'edit':
+				console.log(Table.is,"cell_clicked","edit");
+				return this.onEdit(event, cell);
 			default:
-				console.log("cell clicked default");
+				console.log(Table.is,"cell_clicked_default");
 			return;
 	   } 
 	}
@@ -479,7 +800,9 @@ this.table.on("rowSelectionChanged", (data, rows) => {
         });
     }
 	*/
-	
+	 hideColumn (e, column) {
+		 console.log("hide_column");
+	 }
 
     ajaxURLGenerator = (url, config, params) => {
         let filter = '';
@@ -566,20 +889,20 @@ this.table.on("rowSelectionChanged", (data, rows) => {
     }
 
     getOptionsElement() {
-		console.log("table","getOptionsElement","start");
+		//console.log("table","getOptionsElement","start");
         let options = document.createElement("wj-table-options");
         options.setAttribute("shadow", "open");
         options.table = this.table;
         options.data = this.export.map(e => this.exportType().filter(ex => {
-		console.log("table",e);	
+		//console.log("table",e);	
 		if(ex.type == e){
-			console.log("table","return true");	
+			//console.log("table","return true");	
 			return true;
 		}
-		console.log("table","return false");	
+		//console.log("table","return false");	
 		return false;
 		})[0]);
-		console.log("table","getOptionsElement","finish");
+		//console.log("table","getOptionsElement","finish");
         return options;
     }
 
@@ -596,12 +919,12 @@ this.table.on("rowSelectionChanged", (data, rows) => {
         let wrapperSearch = document.createElement('div');
         wrapperSearch.classList.add('wrapper-filter');
         wrapperSearch.appendChild(search);
-		console.log("table","filter","finish");
+		//console.log("table","filter","finish");
         return wrapperSearch;
     }
 
     sort(column) {
-		console.log("table","sort","start");
+		//console.log("table","sort","start");
         let fragment = new DocumentFragment();
         let params = this.columns.filter((f) => f.field == column.getField())[0];
 
@@ -629,13 +952,13 @@ this.table.on("rowSelectionChanged", (data, rows) => {
         fragment.appendChild(title);
         fragment.appendChild(asc);
         fragment.appendChild(desc);
-		console.log("table","sort","finish");
+		//console.log("table","sort","finish");
         return fragment;
     }
 
     // ADVANCED filter
     filterAdvanced() {
-		console.log("table","filter_advanced","start");
+		//console.log("table","filter_advanced","start");
         if (this.filterable.toUpperCase() == 'ADVANCED') {
             let filter = document.createElement('wj-table-filter-advanced');
             filter.setAttribute("slot", "filter");
@@ -644,13 +967,13 @@ this.table.on("rowSelectionChanged", (data, rows) => {
             filter.id = this.tableId;
             this.appendChild(filter);
         }
-		console.log("table","filter_advanced","finish");
+		//console.log("table","filter_advanced","finish");
     }
 
     // Simple filter
     filterSimple() {
-		console.log("table","filter_simple","start");
-		console.log("table","filter_simple","start",this.filterable);
+		//console.log("table","filter_simple","start");
+		//console.log("table","filter_simple","start",this.filterable);
         if (this.filterable.toUpperCase() == 'SIMPLE') {
             let filter = document.createElement("wj-table-filter-simple");
             filter.setAttribute("slot", "filter");
@@ -660,11 +983,11 @@ this.table.on("rowSelectionChanged", (data, rows) => {
 
             this.append(filter);
         }
-		console.log("table","filter_simple","finish");
+		//console.log("table","filter_simple","finish");
     }
 
     customFilter() {
-		console.log("table","getOptionsElement","finish");
+		//console.log("table","getOptionsElement","finish");
         if (this.filterable.toUpperCase() == 'CUSTOM') {
             this.shadowRoot.querySelector('slot[name="filter"]')?.assignedElements?.().forEach((el) => {
                 el.id = this.tableId;
@@ -673,17 +996,17 @@ this.table.on("rowSelectionChanged", (data, rows) => {
     }
 
     getInstanceTabulator = () => {
-		console.log("table","getOptionsElement","finish");
+		//console.log("table","getOptionsElement","finish");
         return this.table;
     }
 
     cellClick = (e, cell) => {
-		console.log("table","getOptionsElement","finish");
+		//console.log("table","getOptionsElement","finish");
         cell.getRow().toggleSelect();
     }
 
     myPrintFormatter = (value, data, type, params, column) => {
-		console.log("table","myPrintFormatter","start");
+		//console.log("table","myPrintFormatter","start");
         let definition = column.getDefinition();
         let printField = definition.formatterParams?.printField;
 
@@ -698,7 +1021,7 @@ this.table.on("rowSelectionChanged", (data, rows) => {
 
         if(printField)
             return value[printField];
-		console.log("table","myPrintFormatter","start");
+		//console.log("table","myPrintFormatter","start");
         return value;
     }
 
@@ -722,11 +1045,11 @@ this.table.on("rowSelectionChanged", (data, rows) => {
     }
 	unregister(){
 		
-		console.log("unregister","table");
+		//console.log("unregister","table");
 		
 	}
 	afterDisconnect(){
-		console.log("unregister","after","table");
+		//console.log("unregister","after","table");
 		
 	}
 }
@@ -734,4 +1057,4 @@ this.table.on("rowSelectionChanged", (data, rows) => {
 // let __esModule = 'true';
 // export {__esModule};
 
-customElements.get("wj-table") || customElements.define("wj-table", Table);
+customElements.get(Table.is) || customElements.define(Table.is, Table);

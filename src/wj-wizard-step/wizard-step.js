@@ -161,6 +161,7 @@ export class WizardStep extends WJElement {
         });
     }
 	unregister(){}
+	afterDisconnect(){}
 	
 }
 customElements.get(WizardStep.is) || window.customElements.define(WizardStep.is, WizardStep);

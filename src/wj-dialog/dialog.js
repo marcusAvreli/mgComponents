@@ -30,10 +30,27 @@ export class Dialog extends WJElement {
     static get cssStyleSheet() {
         return this.styles;
     }
-
-    static get observedAttributes() {
-        return [];
+	setTitle(inTitle){
+		console.log(Dialog.is,"inTitle:"+inTitle);
+		// this.onTitleChanged()
+		if(this.header){
+			this.title=inTitle;
+			console.log(Dialog.is,"inTitle_1");
+			 this.header.innerHTML = `<span>${inTitle}</span>`;
+			 console.log(Dialog.is,"inTitle_2");
+		}
+		
+	}
+	/*
+     static get observedAttributes() {
+        return ["title"];
     }
+	async attributeChangedCallback(name, oldValue, newValue) {
+        if(name == "title"){
+            this.title=newValue;
+		}
+    }
+	*/
 
     setupAttributes() {
         this.isShadowRoot = "open";
@@ -98,19 +115,28 @@ export class Dialog extends WJElement {
         dialog.appendChild(footer);
 
         fragment.appendChild(dialog);
-
+		this.header = header;
         this.dialog = dialog;
         return fragment;
     }
-
+	 isBlank(str) {
+    return (!str || /^\s*$/.test(str));
+	}
+close(){
+	this.dialog.close();
+}
     afterDraw(context, store, params) {
         if(params.trigger) {
             document.addEventListener(params.trigger, () => {
+				this.dialog.close();
                 this.dialog.showModal();
             });
         }
     }
 	unregister(){}
+	disconnectedCallback() {}
+	unregister(){}
+	afterDisconnect(){}
 }
 
 customElements.get(Dialog.is) || window.customElements.define(Dialog.is, Dialog);

@@ -360,3 +360,38 @@
 :host(.hide){
 	display:none;
 }
+.fal{
+background-color:black;
+}
+
+:host(.fal){
+
+background-color:black;
+
+}
+
+::slotted(.fal){
+
+background-color:black;
+
+}
+.fa-pencil:before {
+  content: "\f040";
+}
+.fa-pencil{
+  font-size: 18px;
+}
+
+:host(.fa-pencil):before {
+  content: "\f040";
+}
+:host(.fa-pencil){
+  font-size: 18px;
+}
+
+::slotted(.fa-pencil):before {
+  content: "\f040";
+}
+::slotted(.fa-pencil){
+  font-size: 18px;
+}

@@ -79,25 +79,40 @@ export class Checkbox extends WJElement {
     }
 
     afterDraw() {
-     //   event.addListener(this, "click", "wj:checkbox:change");
-    //    event.addListener(this, "click", "wj:checkbox:input");
-		  //event.addListener(this, "inputEvent", "wj:checkbox:input");
-		   this.addEventListener("click", this.inputEvent);
-//document.addEventListener('click', inputEvent, true);
-        // event.addListener(this, "click", null, () => {
-        //     alert(0)
-        // }, true);
+		//   event.addListener(this, "click", "wj:checkbox:change");
+		//    event.addListener(this, "click", "wj:checkbox:input");
+		//event.addListener(this, "inputEvent", "wj:checkbox:input");
+		//event.addListener(this, "click", "wj:checkbox:change");
+	//event.addListener(this, "click", "wj:checkbox:input");
+		 this.addEventListener("click", this.inputEvent);
+		//document.addEventListener('click', inputEvent, true);
+		// event.addListener(this, "click", null, () => {
+		//     alert(0)
+		// }, true);
     }
 
     inputEvent = (e) => {
+		console.log(Checkbox.is,"INPUT_EVENT");
+        this.checked = e.target.checked;
 		
-        this.checked = !e.target.checked;
+		  this.dispatchEvent(new CustomEvent('wj:checkbox:change', {
+            bubbles: true,
+            composed: true,
+            detail: {
+                
+                checked: this.checked
+				
+               
+            },
+        }));
+		
     }
 
     disconnectedCallback() {
         event.removeElement(this);
     }
 	unregister(){}
+	afterDisconnect(){}
 }
 
 customElements.get(Checkbox.is) || window.customElements.define(Checkbox.is, Checkbox);
