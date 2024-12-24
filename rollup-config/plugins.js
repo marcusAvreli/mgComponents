@@ -30,13 +30,17 @@ const copyConfig = {
     dest: 'dist/assets/webfonts/' 
   }],
 };
-
+const extensions = ['.ts', '.js', '.vue', '.json'];
 
 export const plugins = [
 copy(copyConfig)
 	,resolve({
 		jsnext: true,
-		browser: true
+		browser: true,
+		alias: { './locale': 'moment/min/locale',},
+		extensions,
+		
+		
 	})
 	
 	//,commonjs()

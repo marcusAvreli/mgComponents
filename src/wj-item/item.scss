@@ -4,7 +4,7 @@
 	width: 100%;	
 	left: 0;
 	top: 0;
-	background: rgba(51,51,51,0.7);
+	/* background: rgba(51,51,51,0.7); */
 	border-style: solid;
 	border-color: red;
 	//border-width: 8px;
@@ -59,7 +59,7 @@
     min-height: var(--wj-item-min-height);
     transition: var(--wj-item-transition);
     outline: none;
-    background: var(--wj-item-background);
+  /*  background: var(--wj-item-background); */
     overflow: inherit;
     box-sizing: border-box;
 //z_index_cancelled
@@ -118,7 +118,7 @@
             inset: 0;
             position: absolute;
             content: "";
-            background: var(--wj-item-background-hover);
+           /* background: var(--wj-item-background-hover); */
             opacity: 0.7;
         }
     }

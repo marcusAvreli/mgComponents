@@ -1,20 +1,26 @@
 import { default as WJElement } from "../../../wj-element/wj-element.js";
 import { Service } from '../../service/service.js';
 import "../wj-filter-save/filter-save.js";
-
+//<wj-myflatpickr></wj-myflatpickr>
+/**
+ * @injectHTML
+ */
 const template = document.createElement("template");
 template.innerHTML = `<style>
-     @import "assets/css/pages.css";
+    // @import "assets/css/pages.css";
    // @import "/templates/net/pages/css/themes/net-basic/form_elements.css";
     //@import "/templates/net/pages/css/themes/net-basic/checkbox.css";
-    @import "assets/css/font-awesome.css";
-    @import "assets/css/font-awesome.min.css";
-    
+   // @import "assets/css/font-awesome.css";
+   // @import "assets/css/font-awesome.min.css";
+    @import "../../../scss/all.css";
+	@import "assets/all.css";
+	 
     :host {
         margin: 1rem 0 1rem auto;
         min-height: 28px;
         display: flex;
         align-items: center;
+		border:10px dotted coral;
     }
     
     :host wj-dropdown {
@@ -233,14 +239,15 @@ stringToFragment(string) {
 			
             visibility.appendChild(this.export(button));
         });
-		*/
+		
 	const frag = this.stringToFragment(` 
 		<wj-dropdown label="Start" slot-button= "true" id="this_is" placement="bottom-left" offset="5">
 		<wj-button size="large" slot="trigger" stop-propagation="true" caret>Export...</wj-button>
 		<wj-menu id="menu-child" variant="context">
 		</wj-menu>
 		</wj-dropdown>
-	`);
+	`)
+	;
 
  this.data.forEach(button => {
 			
@@ -249,13 +256,36 @@ stringToFragment(string) {
 
 		//console.log("wj_table_options","btn_export","finish");
         return frag;
+		*/
+		 let slot = document.createElement("span");
+        //slot.setAttribute("slot", "button");
+        slot.innerHTML = '<style> @import "assets/all.css" </style><i class="fa-light fa-file-excel"></i>';
+
+        let visibility = document.createElement("wj-dropdown");
+        visibility.setAttribute("slot-button", "true");
+        visibility.setAttribute("position", "bottom-start");
+		visibility.setAttribute("placement", "bottom-start");
+		visibility.setAttribute("offset", "5");
+        visibility.classList.add('d-inline-block');
+		let wjButton = document.createElement("wj-button");
+		wjButton.setAttribute("slot","trigger");
+		wjButton.textContent="ffff";
+        visibility.appendChild(wjButton);
+
+        this.data.forEach(button => {
+			console.log("yesyesyes");
+            visibility.appendChild(this.export(button));
+        });
+
+        return visibility;
     }
 
     export(button) {
 		//console.log("wj_table_options","export","start");
         //let item = document.createElement("wj-menu-item");
-		let item = document.createElement("wj-menu-item");
-        //item.classList.add("wj-menu-item");
+		/*let item = document.createElement("wj-button");
+        item.classList.add("wj-menu-item");
+		
         item.innerHTML = button.icon + button.title;
 		//item.setAttribute("slot","menuChild");
 		//item.innerHTML = "TEST";
@@ -264,6 +294,15 @@ stringToFragment(string) {
 		     this.table.download(button.type, button.filename,{sheetName:"MyData"})
         });
 		//console.log("wj_table_options","export","finish");
+        return item;
+		*/
+		 let item = document.createElement("wj-menu-item");
+       // item.classList.add("wj-item");
+        item.innerHTML = button.icon + button.title;
+        item.addEventListener("click", (e) => {
+            this.table.download(button.type, button.filename)
+        });
+
         return item;
     }
 	unregister(){

@@ -4,6 +4,11 @@ import { default as Popup} from "./components/wj-table-modules/wj-table-modules.
 import { elementPrefix } from '../shared/index.js';
 import {Checkbox}  from '../wj-checkbox/checkbox.js';
 import {Input}  from '../wj-input/input.js';
+//import { DateTime } from 'luxon';
+import {myEditor,dateRangeFilter} from "../utils/wj-utils.js";
+//import { luxon} from 'luxon';
+//window.DateTime = DateTime;
+//window.DateTime = DateTime;
 //import * as luxon from 'https://moment.github.io/luxon/es6/luxon.min.js?v=@@version@@';
  //import './components/wj-options/options.js';
  //import './components/wj-search/search.js';
@@ -35,7 +40,7 @@ export class Table extends Service {
 	constructor() {
 		super();
 
-   //    window.luxon = luxon;
+       //window.luxon = luxon;
 
         this.addEventListener('wj-nav-change',this.eventClickTab)
 		this.counter = 0;
@@ -71,8 +76,7 @@ export class Table extends Service {
 		console.log("test_delete","oldState",JSON.stringify(oldState));
 		
 		var rowTobeDeleted = key.deleteRow;
-		//console.log("test_delete","rowTobeDeleted:"+rowTobeDeleted);
-		//console.log("test_delete","rowTobeDeleted:"+JSON.stringify(rowTobeDeleted));
+		
 		  this.dispatchEvent(
             new CustomEvent("wj:delete-row", {
                 bubbles: true,
@@ -267,8 +271,16 @@ export class Table extends Service {
     }
 	setData(tableData){
 		//console.log("set_data","start");
-		this.columns = tableData.columns;
-		
+		this.columns = tableData.columns;		
+		this.columns.forEach(column => {
+			const field = column.field;
+			if(field.endsWith("_date")){	
+				console.log("setting_editor");			
+				column['headerFilter']= myEditor;	
+				column['headerFilterFunc']= dateRangeFilter;				
+			}
+		});	
+console.log("table_columns:"+JSON.stringify(this.columns));
 		this.columns = this.columns.map((c) => {
 		c = { ...c, accessorDownload: this.myPrintFormatter };
 			// if (c.filterable && this.filterable.toUpperCase() == 'ADVANCED')
@@ -709,6 +721,8 @@ this.table.on("dataSorted", function(sorters, rows){
     //rows - array of row components in their new order
 	
 });
+if(this.hasAttribute("rowSelectable")){
+
 this.table.on("rowSelectionChanged", (data, rows) => {
 	this.dispatchEvent(
             new CustomEvent("wj:rowSelectionChanged", {
@@ -720,6 +734,8 @@ this.table.on("rowSelectionChanged", (data, rows) => {
             })
         );
 });
+
+}
 //this.store.subscribe("editRow", (key, state, oldState) => {	this.edit(key, state, oldState);});
           	  //this.edit(key, state, oldState);
 			//this.refresh();
@@ -854,7 +870,7 @@ this.table.on("rowSelectionChanged", (data, rows) => {
             );
 
             columns = columns.map((c) => {
-                c = { ...c, accessorDownload: this.myPrintFormatter };
+               // c = { ...c, accessorDownload: this.myPrintFormatter };
                 // if (c.filterable && this.filterable.toUpperCase() == 'ADVANCED')
                 //     return { ...c, headerPopup: this.headerPopupFormatter };
 
@@ -872,25 +888,25 @@ this.table.on("rowSelectionChanged", (data, rows) => {
 
         return response;
     }
-
-    headerPopupFormatter = (e, column, onRendered, a) => {
-        e.stopPropagation();
+ headerPopupFormatter = (cell, onRendered, success, cancel, editorParams)=>{
+   // headerPopupFormatter = (e, column, onRendered, a) => {
+        //e.stopPropagation();
 		console.log("table","headerPopupFormatter","finish");
 
         let container = document.createElement('div');
 
         // SEARCH
-        container.appendChild(this.filter(column));
+        container.appendChild(this.filter(cell));
 
         // SORT
-        container.appendChild(this.sort(column));
+        //container.appendChild(this.sort(column));
 
         return container;
     }
 
     getOptionsElement() {
 		//console.log("table","getOptionsElement","start");
-        let options = document.createElement("wj-table-options");
+        /*let options = document.createElement("wj-table-options");
         options.setAttribute("shadow", "open");
         options.table = this.table;
         options.data = this.export.map(e => this.exportType().filter(ex => {
@@ -904,11 +920,19 @@ this.table.on("rowSelectionChanged", (data, rows) => {
 		})[0]);
 		//console.log("table","getOptionsElement","finish");
         return options;
+		*/
+		let options = document.createElement("wj-table-options");
+        options.setAttribute("shadow", "open");
+        options.table = this.table;
+        options.data = this.export.map(e => this.exportType().filter(ex => ex.type == e)[0]);
+ return options;
+		
     }
 
     filter(column) {
 		console.log("table","filter","start");
-        let params = this.columns.filter((f) => f.field == column.getField())[0];
+        //let params = this.columns.filter((f) => f.field == column.getField())[0];
+		let params = column.getField()
 
         let search = document.createElement('wj-table-search-element');
         search.setAttribute('type', params?.headerFilterFuncParams?.type);
@@ -958,16 +982,19 @@ this.table.on("rowSelectionChanged", (data, rows) => {
 
     // ADVANCED filter
     filterAdvanced() {
-		//console.log("table","filter_advanced","start");
+		console.log("table","filter_advanced","start");
         if (this.filterable.toUpperCase() == 'ADVANCED') {
+			console.log("table","filter_advanced","1");
             let filter = document.createElement('wj-table-filter-advanced');
             filter.setAttribute("slot", "filter");
             filter.setAttribute('hidden', '');
+			console.log("table","filter_advanced","2");
             // filter.classList.add("mb-3");
             filter.id = this.tableId;
+			console.log("table","filter_advanced","3");
             this.appendChild(filter);
         }
-		//console.log("table","filter_advanced","finish");
+		console.log("table","filter_advanced","finish");
     }
 
     // Simple filter
@@ -1006,22 +1033,35 @@ this.table.on("rowSelectionChanged", (data, rows) => {
     }
 
     myPrintFormatter = (value, data, type, params, column) => {
-		//console.log("table","myPrintFormatter","start");
+		console.log("table","myPrintFormatter","start");
+		console.log("table","myPrintFormatter",value);
         let definition = column.getDefinition();
         let printField = definition.formatterParams?.printField;
-
-        if(definition.field == "_actions_" || definition.field == "bulk" || !value)
+		console.log("table","myPrintFormatter",printField);
+        if(definition.field == "_actions_" || definition.field == "bulk" || !value){
+			console.log("table","myPrintFormatter","1");
             return "";
+		}
 
-        if(definition.formatter == "wj-date")
-            return this.date(value);
-
-        if(definition.formatter == "wj-datetime")
+        if(definition.formatter == "wj-date"){
+			console.log("table","myPrintFormatter","2");
+			console.log("table","myPrintFormatter","definition:"+definition);
+			console.log("table","myPrintFormatter","definition:"+JSON.stringify(definition));
             return this.datetime(value);
+		}
 
-        if(printField)
+        if(definition.formatter == "wj-datetime"){
+			console.log("table","myPrintFormatter","3");
+            return this.datetime(value);
+		}
+
+        if(printField){
+			console.log("table","myPrintFormatter","4");
             return value[printField];
-		//console.log("table","myPrintFormatter","start");
+		}
+		console.log("table","myPrintFormatter","value:"+value);
+		console.log("table","myPrintFormatter","5");
+		
         return value;
     }
 
@@ -1030,7 +1070,7 @@ this.table.on("rowSelectionChanged", (data, rows) => {
             "title": "Stiahnuť Excel",
             "type": "xlsx",
             "filename": "data.xlsx",
-            "icon": "<i class=\"fa-light fa-file-excel\"></i>"
+            "icon": "<style> @import \"assets/all.css\" </style><i slot=\"end\" class=\"fa fa-file-excel\"></i>"
         }, {
             "title": "Stiahnuť PDF",
             "type": "pdf",

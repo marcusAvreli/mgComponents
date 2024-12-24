@@ -1,6 +1,7 @@
 import { UniversalService } from "../../../wj-element/service/universal-service.js";
 import { defaultStoreActions, store } from "../../../wj-store/store.js";
 import { default as WJElement } from "../../../wj-element/wj-element.js";
+import flatpickr from "flatpickr";
 //import * as _flatpickr from 'flatpickr';
 //import * as _monthSelectPlugin from 'flatpickr/dist/plugins/monthSelect';
 //import * as Slovak   from 'flatpickr/dist/l10n/sk.js'
@@ -111,18 +112,18 @@ export default class TableSearchElement extends WJElement {
 
     draw() {
         let tablePopup;
-console.log("search","draw","start");
+		console.log("search","draw","start11111111111");
         this.column.getTable().on("popupOpened", function([component, popup]){
             tablePopup = popup;
         });
-
+		console.log("search","start");
         this.divToggle = document.createElement("div");
-console.log("search","draw","1");
+		console.log("search","draw","1");
         if(this.filter.length > 0) {
 			console.log("search","draw","2");
             this.divToggle.classList.add("btn-group", "btn-group-toggle");
             this.divToggle.setAttribute("data-toggle", "buttons");
-
+console.log("search","draw","2");
             this.labelAnd = document.createElement("label");
             this.labelAnd.classList.add("btn", "btn-default", "btn-xs", "active");
             this.labelAnd.innerText = "AND";
@@ -173,7 +174,7 @@ console.log("search","draw","1");
         this.search.classList.add("btn", "btn-primary", "btn-xs");
         this.search.setAttribute("id", "search");
         this.search.innerText = "Použiť filter";
-
+console.log("search","draw","3");
         // OPERATOR - select nebude zobrazeny len pri tychto typoch
         if (this.type != "DATE-RANGE" && this.type != "NUMBER-RANGE") {
             this.operator = document.createElement("select");
@@ -274,20 +275,20 @@ console.log("search","draw","1");
         if(!!this.search) {
             this.search.addEventListener("click", this.executionFilter);
         }
-
-        this.addEventListener("keyup", (e) => {
-            if(e.key.toUpperCase() == "ENTER"){
-                tablePopup.hideable = true;
-                this.executionFilter();
-            }
-        });
+		console.log("search","draw","4");
+		this.addEventListener("keyup", (e) => {
+			if(e.key.toUpperCase() == "ENTER"){
+				tablePopup.hideable = true;
+				this.executionFilter();
+			}
+		});
 		console.log("search","draw","finish");
     }
 
     executionFilter = () => {
         // nastavime this.filter
         this.addFilter();
-
+		console.log("i_here_22222222222222");
         store.dispatch(defaultStoreActions.addAction("filterObj-" + this.tableId)({
             "filter": this.filter,
             "table": this.column.getTable().element.id

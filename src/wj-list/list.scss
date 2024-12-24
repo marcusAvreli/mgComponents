@@ -87,9 +87,9 @@
 	width: 100%;	
 	left: 0;
 	top: 0;
-	background: rgba(51,51,51,0.7);
+	/* background: rgba(51,51,51,0.7); */
 	border-style: solid;
-	border-color: green;
+	/*border-color: green; */
 	border-width: 2px;
 	box-sizing: border-box;
 	display:flex;
@@ -101,9 +101,9 @@
 	width: 100%;	
 	left: 0;
 	top: 0;
-	background: rgba(51,51,51,0.7);
+/*	background: rgba(51,51,51,0.7); */
 	border-style: solid;
-	border-color: green;
+	/* border-color: green; */
 	border-width: 2px;
 	box-sizing: border-box;
 	display:flex;
@@ -116,9 +116,9 @@
 	width: 100%;	
 	left: 0;
 	top: 0;
-	background: rgba(51,51,51,0.7);
+	/* background: rgba(51,51,51,0.7); */
 	border-style: solid;
-	border-color: green;
+	/* border-color: green; */
 	border-width: 2px;
 	box-sizing: border-box;
 	display:flex;
@@ -129,7 +129,9 @@
 
 
 .list-container-box1{
-	flex: auto;/* height: 15%; */border: 10px double;display: flex;overflow: hidden;
+	flex: auto;/* height: 15%; */
+	/*border: 10px double;*/
+	display: flex;overflow: hidden;
 }
 .list-container-sub-box1{
 	    overflow: auto;
@@ -137,7 +139,7 @@
     flex: auto;
     /* overflow: scroll; */
     /* height: 45%; */
-    border: 10px solid;
+ /*   border: 10px solid; */
 	/*max-height:100px;*/
 	max-height:var(--list-container-sub-box1-max-height);
 	
@@ -149,79 +151,3 @@
 	flex:auto;
 }
 /* FULL_SCREEN_OVERLAY_END */
-/*
-.list-page{
-	display: grid;
-	grid-template-areas: "left";
-	grid-template-columns: 100%;
-	border-style: solid;
-	border-color: red;
-	border-width: 2px;
-	box-sizing: border-box;
-	flex:auto;
-}
-
-.list-box1 {
-	grid-area: left;
-	border: 2px solid #ffa94d;
-  height:100vh;
- SUB_GRID 
-	overflow: auto;
-	display: grid;   
-	grid-template-areas: var(--wrapper-grid-template-areas) ;   
-	grid-template-rows:  var(--wrapper-grid-template-rows);
-}
-
-SUB_GRID
-.search{
-	grid-area: leftSearch;
-	background-color: green;
-	display:flex;
-	flex:auto;
-}
-
-.wrapper-scroll{
-	grid-area: leftScroll;
-	background-color: black;	
-}
-
-.scroll {	
-	display: flex;	
-	background-color: lightgray;
-}
-
-.scroll-bar {
-    height: 4px;
-    background-color: black;
-}
-
-.wrapper-list{
-	//height: 100%;
-	grid-area: leftList;
-	//display: flex;
-	background-color: red;
-}
-
-.list{
-//	display: flex;
-	flex:auto;
-	background-color: lightblue;
-}
- 
-.contentsub {	
-	flex:auto;
-	overflow-y: scroll;
-	background-color: orange;
-} 
-
-
-.wrapper-paginator{
-	grid-area: leftPaginator;	
-	background-color: blue;
-}
-
-
-.button1{
-	width:20%;
-}	
-*/

@@ -1,5 +1,7 @@
 import { default as WJElement, WjElementUtils } from "../../wj-element/wj-element.js";
 import { TabulatorFull, RowComponent} from 'tabulator-tables';
+import { formatDateTime} from '../../utils/wj-utils.js';
+
 ////import { TabulatorFull, RowComponent} from "../plugins/tabulator/js/tabulator_esm.js?v=@@version@@";
 //function getTypeVal(ship) {
 //https://github.com/jvde-github/AIS-catcher/blob/00f343ce443a10b64763efdcaf8a9d5837f5b2fe/HTML/script.js#L3715
@@ -340,18 +342,29 @@ export class Service extends WJElement {
         }
     }
 
-    wjDate = (cell, formatterParams, onRendered) => {
+    wjDate = (cell, formatterParams, onRendered) => {		
         try {
-            return `<span class="${formatterParams.class}">${this.date(cell.getValue())}</span>`;
-        } catch (error) {
+			
+			const cellValue = cell.getValue();
+			if(cellValue){			
+				const mask = formatterParams.template;			
+				var fromUtils = formatDateTime(cellValue,mask);			
+				
+				return `<span">${fromUtils}</span>`;
+			}
+        } catch (error) {			
             return formatterParams.invalidPlaceholder;
         }
     }
 
     wjDatetime = (cell, formatterParams) => {
+		console.log("table_date_time");
+		console.log("table_date_time:"+formatterParams.template);
         try {
+			console.log("table_date_time_1");
             return `<span class="${formatterParams.class}">${this.datetime(cell.getValue())}</span>`;
         } catch (error) {
+			console.log("table_date_time_2");
             return formatterParams.invalidPlaceholder;
         }
     }

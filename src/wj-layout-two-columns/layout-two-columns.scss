@@ -3,7 +3,7 @@
 /*
 [ Form ]
 */
-
+/*
 :host {
     display: flex
 ;
@@ -115,3 +115,35 @@ display: flex;    flex: auto;    height: 100%;
 }
 
 
+*/
+.wrapper {
+  display: grid;
+  grid-template-rows: 1fr 1fr 0.5fr;  /*you can use px, %, auto etc. here*/
+  grid-template-columns: 0.25fr 1fr;
+  grid-template-areas: "left-item right-top" "left-item right-middle" "left-item right-bottom";
+  
+	/* width: 500px;	*/
+	/* height: 200px;	*/
+}
+
+.item2 {
+  grid-area: left-item;
+  
+  /* background-color: blue; */
+}
+
+.item1 {
+  grid-area: right-top;
+  
+ /* background-color: red; */
+}
+.item3 {
+  grid-area: right-middle;
+  
+  /* background-color: black; */
+}
+.item4 {
+  grid-area: right-bottom;
+  
+  /* background-color: green; */
+}

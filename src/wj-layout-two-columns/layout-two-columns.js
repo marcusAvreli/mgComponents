@@ -37,37 +37,18 @@ export class LayoutTwoColumns  extends WJElement {
     draw(context, store, params) {
 	
        return `
-	    <div class="two-column-main">
-	  <div class="two-column-main-wrapper" part="native">
-			<div class="transfer-wrapper">
-			<div class="container1">
-			<div class="transfer-grid">
-			<div class="transfer-grid-left">
-		<slot name="left" style="display:flex;flex:auto;"></slot>
-			</div>
-			<div class="transfer-grid-right">
-			
-			<div class="horizontal-wrapper">
-			<div class="grid-horizontal">
-				<div class="grid-horizontal-upper">
-					<slot name="rightUp"></slot>
-				</div>
-				<div class="grid-horizontal-down">
-					<slot name="rightDown"></slot>
-				</div>
-				<div class="grid-horizontal-buttons">
-					<slot name="rightButtons"></slot>
-				</div>
-			</div>
-			</div>
-			
-			</div>
-		
-		</div>
-		</div>
-		</div>
-		</div>
-		</div>
+	    <div class="wrapper">
+  <div class="item1"><slot name="rightUp"></slot></div>
+  <div class="item2">
+  <slot name="left" style="display:flex;flex:auto;"></slot>
+  </div>
+  <div class="item3">
+  <slot name="rightDown"></slot>
+  </div>
+  <div class="item4">
+  <slot name="rightButtons"></slot>
+  </div>
+</div>
 		`;
 
        

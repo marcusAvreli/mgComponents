@@ -16,15 +16,26 @@ const config = [
 			//sourcemap: true,
 			//inlineDynamicImports: true,
 		}]
+		
 		,plugins 
 	}
 	,{
 		input: './src/index.js'
 		,output: {
-			format: 'umd',
-			file: packageJson.main,
-			name : 'mgComponents'
+			globals: {
+				'moment': 'moment'
+				
+			}
+			,format: 'umd'
+			,file: packageJson.main
+			
+			,name : 'mgComponents'
 		}
+		 ,external: [
+           
+           
+            'moment'
+        ]
 		,plugins
 	}
 ]
