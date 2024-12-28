@@ -1,5 +1,5 @@
 import { default as WJElement, event } from "../wj-element/wj-element.js";
-
+import { Localizer } from "../utils/localize.js";
 import { elementPrefix } from '../shared/index.js';
 /**
  * @injectHTML
@@ -7,7 +7,7 @@ import { elementPrefix } from '../shared/index.js';
 export class Textarea extends WJElement {
     constructor() {
         super();
-
+this.localizer = new Localizer(this);
         this._checked = false;
     }
 
@@ -46,6 +46,9 @@ export class Textarea extends WJElement {
     }
 
     draw(context, store, params) {
+		if(this.hasAttribute("lang")){
+			this.localizer.setLanguage();
+		}
         let fragment = document.createDocumentFragment();
 
         let native = document.createElement("div");
@@ -59,10 +62,11 @@ export class Textarea extends WJElement {
 
         let inputWrapper = document.createElement("div");
         inputWrapper.classList.add("input-wrapper");
-
+	
         let label = document.createElement("label");
+		const labelValue = this.localizer.translate(this.label);
         label.htmlFor = "textarea";
-        label.innerHTML = this.label || "";
+        label.innerHTML = labelValue || "";
 
         let input = document.createElement("textarea");
         input.id = "textarea";

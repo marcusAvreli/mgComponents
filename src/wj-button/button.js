@@ -1,13 +1,14 @@
 import { default as WJElement,WjElementUtils, event } from "../wj-element/wj-element.js";
 import { bool } from "../utils/wj-utils.js";
 import { elementPrefix } from '../shared/index.js';
-
+import { Localizer } from "../utils/localize.js";
 /**
  * @injectHTML
  */
 export class Button extends WJElement {
     constructor() {
         super();
+		this.localizer = new Localizer(this);
     }
 	static get is() {
 		return `${elementPrefix}-button`;
@@ -83,6 +84,13 @@ export class Button extends WJElement {
        
 
    draw(context, store, params) {
+	   if(this.hasAttribute("lang")){
+			this.localizer.setLanguage();
+		}
+		console.log("button_content:"+this.textContent);
+		const labelValue = this.localizer.translate(this.textContent);
+		console.log("button_content:"+labelValue);
+		this.setDisplayLabel(labelValue);
         let fragment = document.createDocumentFragment();
 
         if(this.disabled)
@@ -178,6 +186,7 @@ export class Button extends WJElement {
 		this.textContent = lblValue;
 	}
     afterDraw() {
+		console.log("button_content 2:"+this.textContent);
         // nastavenie toggle podla atributu, ak nie je nastaveny, tak sa zobrazi vzdy prvy element
         if(this.hasToggle) {
             if (this.toggle === "off") {

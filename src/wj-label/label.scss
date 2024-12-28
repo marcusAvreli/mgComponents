@@ -21,6 +21,7 @@
 
 :host(.wj-color-primary) {
   --wj-color: #{$color-primary} !important;
+  
 }
 
 :host(.wj-color-complete) {
@@ -67,6 +68,8 @@
   white-space: nowrap;
   overflow: hidden;
   box-sizing :border-box;
+   --rtl_ltr:ltr;
+   direction: var(--rtl_ltr);
 }
 
 :host(.wj-color) {

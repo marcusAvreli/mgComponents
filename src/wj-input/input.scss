@@ -31,11 +31,13 @@
   --wj-input-margin-bottom: .5rem;
   --wj-input-line-height: 20px;
   --wj-input-slot-padding-inline: .5rem;
+  --rtl_ltr:ltr;
+  
   //width: 100%;
   //margin-bottom: var(--wj-input-margin-bottom);
   display: flex;
   flex:auto;
-
+	direction: var(--rtl_ltr);
   .wrapper {
     display: flex;
     width: 100%;

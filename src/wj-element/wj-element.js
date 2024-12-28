@@ -37,7 +37,9 @@ static processTemplates (pTemplate, template){
 
 		this.scheludedRefresh = false; 
 	}
-
+	get lang (){
+		return this.getAttribute("lang") || document.documentElement.lang;
+	}
 	get permission() {
 		return this.getAttribute('permission-check');
 	}

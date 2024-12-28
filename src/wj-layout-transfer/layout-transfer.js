@@ -203,9 +203,7 @@ export class LayoutTransfer extends WJElement {
 	   //event.dispatchCustomEvent(this, "wj-list:input");
 		
 		event.dispatchCustomEvent(destinationList, "wj-layout-transfer:test", {
-            data: { top: 'bottom', right: 'left', bottom: 'top', left: 'right' },
-            context: this,
-            event: this
+           
         });
 		
 		
@@ -229,7 +227,7 @@ export class LayoutTransfer extends WJElement {
 	moveAllToDestination(e){
 		console.log("move_all_to_destination_clicked");
 		var checkedElems = this.checkedSourceList;	
-		
+	
 		var destinationList =  null;		
 		this.shadowRoot.querySelector('slot[name="right"]')?.assignedElements?.().forEach((el) => {	
 			destinationList  = el.children[0];		 
@@ -245,7 +243,9 @@ export class LayoutTransfer extends WJElement {
 				checkedElem.parentElement.removeChild(checkedElem);
 			})
 		}
-		
+		event.dispatchCustomEvent(destinationList, "wj-layout-transfer:test", {
+           
+        });
 		console.log(LayoutTransfer.is,"checkedSourceListCount:"+this.checkedSourceListCount);
 		if(this.checkedSourceListCount == 0){
 			this.wjButton1.disabled="";

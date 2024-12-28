@@ -63,12 +63,12 @@
 	
 	
 	 .label {
-	//its_here
+		//its_here
 		flex: 1 1 auto;
 		display: inline-block;
 		text-overflow: ellipsis;
 		overflow: hidden;
-		background-color:green;
+		/*background-color:green;*/
     }
 ::slotted(.fal) { 
   color: green;

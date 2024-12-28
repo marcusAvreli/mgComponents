@@ -164,6 +164,8 @@ export class List extends WJElement {
 	}
 	makeChildrenDraggable(){
 		var counter = 0;
+		console.log("children:"+this.children.length);
+		console.log("root_children:"+this.shadowRoot.children.length);
 		[...this.children].forEach((item) => {
 			console.log("setting_draggable");
 			item.setAttribute("draggable","true");

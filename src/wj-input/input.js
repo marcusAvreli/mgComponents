@@ -1,5 +1,6 @@
 import { default as WJElement, event } from "../wj-element/wj-element.js";
 import { elementPrefix } from '../shared/index.js';
+import { Localizer } from "../utils/localize.js";
 import  {ServiceLocator} from './locator/serviceLocator.js';
 import {ServiceText} from './locator/serviceText.js';
 import {ServiceInteger} from './locator/serviceInteger.js';
@@ -17,7 +18,7 @@ export class Input extends WJElement {
 		
 		this.services = new ServiceLocator();
 		
-		
+		this.localizer = new Localizer(this);
 		this.services.register({
 		  name: 'ServiceText',
 		  constructor: ServiceText,
@@ -71,6 +72,7 @@ export class Input extends WJElement {
 	getDefaultValue(){
 		return this.getAttribute("defaultvalue") ?  this.getAttribute("defaultvalue") : "";
 	}
+	
 	get label (){
 		return this.getAttribute("label") || "";
 	}
@@ -146,7 +148,10 @@ get placeholder(){
     }
 
     draw(context, store, params) {
-	
+		//this.localizer = new Localizer(this);
+		if(this.hasAttribute("lang")){		
+			this.localizer.setLanguage();
+		}
        let hasSlotStart = this.hasSlot(this, "start");
         let hasSlotEnd = this.hasSlot(this, "end");
         let fragment = document.createDocumentFragment();
@@ -166,8 +171,13 @@ get placeholder(){
         inputWrapper.classList.add("input-wrapper");
 
         // Label
+		const labelValue = this.localizer.translate(this.label);
+		console.log("Localizer:"+this.localizer.code);
+		console.log("Localizer:"+this.localizer.name);
+		console.log("Localizer_element_direction:"+this.localizer.getDir());
+		this.style.setProperty("--rtl_ltr", this.localizer.getDir());
         let label = document.createElement("label");
-        label.innerText = this.label;
+        label.innerText = labelValue;
         if(this.value && !this.hasAttribute("error"))
             label.classList.add("fade");
 

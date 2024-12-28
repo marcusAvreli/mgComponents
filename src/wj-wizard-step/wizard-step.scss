@@ -4,25 +4,26 @@
 :host(.wizard-step) {
 	 display: none;
   flex:auto;
-    border:10px double;
+  /*  border:10px double; */
 }
 :host(.wizard-step-active) {
 	 display: flex;
   flex:auto;
-    border:10px double;
+  /*  border:10px double; */
 }
 
 /* FORM_STEPS_START */
-
+/*
 .wizard-step-container {
     display: flex;
-   	background: blue;
+   	background: blue; 
 	border: 10px double;
 	grid-area: m;
 	width:100%;
 	
 	
 }
+*/
 /*
 @keyframes animate {
     from {
@@ -91,7 +92,7 @@ display: flex;    flex: auto;    height: 100%; /*   overflow:auto;*/
 }
 .wizard-step-container {
     display: flex;
-   	background: blue;
+  /* 	background: blue; */
 	border: 10px double;
 	grid-area: m;
 	width:100%;

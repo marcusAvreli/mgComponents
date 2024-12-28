@@ -35,6 +35,10 @@ export class Label extends WJElement {
     }
 
       draw(context, store, params) {
+		if(this.hasAttribute("lang")){
+			this.localizer.setLanguage();
+		}
+		this.style.setProperty("--rtl_ltr", this.localizer.getDir());
         let fragment = document.createDocumentFragment();
 
         if(this.color)

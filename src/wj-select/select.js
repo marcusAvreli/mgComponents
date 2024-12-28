@@ -281,7 +281,7 @@ export class Select extends WJElement {
 	}
     optionChange = (e) => {
         let allOptions = this.getAllOptions();
-
+		console.log("option_change");
         if(!this.hasAttribute("multiple")) {
             allOptions.forEach((option) => {
                 option.selected = false;
@@ -355,6 +355,7 @@ console.log("select_sending_input","1_1",this.value);
 			console.log("select_sending_input","1_4",this.value);
 			console.log("select_sending_input","1_5",value);
             this.input.value = value;
+			
         }
 		event.dispatchCustomEvent(this, "wj:selection-changed", {}); // nepomohlo to, v ff stale je scroll hore
     }

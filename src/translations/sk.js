@@ -1,11 +1,12 @@
 import { Localizer } from "../utils/localize.js";
 
-const sk = {
+export const sk = {
   code: 'sk',
   name: 'Slovak',
   dir: 'ltr',
 
   "welcome": 'Vitajte',
+   "mg.display.name": 'zobrazovaný názov',
   "wj.file.upload.button": "Vybrať súbor",
   "wj.file.upload.uploaded": "Nahraných: ",
   "wj.file.upload.from": "z",

@@ -1,6 +1,7 @@
 import { default as WJElement } from "../../../wj-element/wj-element.js";
 import { Service } from '../../service/service.js';
 import "../wj-filter-save/filter-save.js";
+import { Localizer } from "../../../utils/localize.js";
 //<wj-myflatpickr></wj-myflatpickr>
 /**
  * @injectHTML
@@ -35,7 +36,7 @@ template.innerHTML = `<style>
 export default class Options extends WJElement {
     constructor() {
         super(template);
-
+		this.localizer = new Localizer(this);
         this.store.subscribe("nav", (key, state, oldState) => {
             this.refresh();
         });
@@ -56,6 +57,9 @@ export default class Options extends WJElement {
 
     draw(context, store, params) {
 		//console.log("wj_table_options","draw","start");
+		if(this.hasAttribute("lang")){
+			this.localizer.setLanguage();
+		}
         let fragment = new DocumentFragment();
 
         let slot = document.createElement("slot");
@@ -269,7 +273,8 @@ stringToFragment(string) {
         visibility.classList.add('d-inline-block');
 		let wjButton = document.createElement("wj-button");
 		wjButton.setAttribute("slot","trigger");
-		wjButton.textContent="ffff";
+		const labelValue = this.localizer.translate("mg.export");
+		wjButton.textContent=labelValue;
         visibility.appendChild(wjButton);
 
         this.data.forEach(button => {

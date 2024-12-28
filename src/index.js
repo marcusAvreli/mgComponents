@@ -1,8 +1,9 @@
 import { default as WJElement } from "./wj-element/wj-element.js";
 import { defaultStoreActions, store } from "./wj-store/store.js";
 
-//import { sk } from "./translations/sk.js";
+import { sk } from "./translations/sk.js";
 import { en } from "./translations/en.js";
+import { he } from "./translations/he.js";
 import { Localizer } from "./utils/localize.js";
 
 import { Aside } from "./wj-aside/aside.js";

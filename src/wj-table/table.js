@@ -4,6 +4,7 @@ import { default as Popup} from "./components/wj-table-modules/wj-table-modules.
 import { elementPrefix } from '../shared/index.js';
 import {Checkbox}  from '../wj-checkbox/checkbox.js';
 import {Input}  from '../wj-input/input.js';
+import { Localizer } from "../utils/localize.js";
 //import { DateTime } from 'luxon';
 import {myEditor,dateRangeFilter} from "../utils/wj-utils.js";
 //import { luxon} from 'luxon';
@@ -46,7 +47,7 @@ export class Table extends Service {
 		this.counter = 0;
         // RHR - zaregistrovanie nášho popup modulu
          TabulatorFull.registerModule(Popup);
-		
+		this.localizer = new Localizer(this);
 
 		 
 		//this.store.subscribe("deleteRow", this.testDelete.bind(this));
@@ -248,7 +249,9 @@ export class Table extends Service {
 
     draw() {
         let fragment = new DocumentFragment();
-
+		if(this.hasAttribute("lang")){
+			this.localizer.setLanguage();
+		}
         let controls = document.createElement("div");
         controls.innerHTML = `<slot class="d-flex align-items-center" name="filter"></slot>
             <slot class="d-flex align-items-center ml-3"></slot>`;
@@ -1066,13 +1069,14 @@ this.table.on("rowSelectionChanged", (data, rows) => {
     }
 
     exportType = () => {
+		//const this.localizer.translate("mg.export");
         return [{
-            "title": "Stiahnuť Excel",
+            "title": this.localizer.translate("mg.excel"),
             "type": "xlsx",
             "filename": "data.xlsx",
             "icon": "<style> @import \"assets/all.css\" </style><i slot=\"end\" class=\"fa fa-file-excel\"></i>"
         }, {
-            "title": "Stiahnuť PDF",
+            "title": "PDF",
             "type": "pdf",
             "filename": "data.pdf",
             "icon": "<i class=\"fa-light fa-file-pdf\"></i>"
